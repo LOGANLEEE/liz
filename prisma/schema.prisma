@@ -1,14 +1,33 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["mongodb"]
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model test {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  item Float
+model fresh_post {
+  id          Int       @id @default(autoincrement())
+  link        String    @db.VarChar
+  name        String    @db.VarChar
+  content     String?   @db.VarChar
+  title       String    @db.VarChar
+  hit         Int?
+  author      String?   @db.VarChar
+  upload_date DateTime? @db.Date
+  mark        Boolean
+}
+
+model old_post {
+  id          Int       @id @default(autoincrement())
+  link        String    @db.VarChar
+  name        String    @db.VarChar
+  content     String?   @db.VarChar
+  title       String    @db.VarChar
+  hit         Int?
+  author      String?   @db.VarChar
+  upload_date DateTime? @db.Date
+  mark        Boolean
 }
