@@ -4,7 +4,7 @@ const About = () => {
 
 export default About;
 
-export async function getStaticProps(context: any) {
+function getStaticProps(context: any) {
 	return {
 		props: {}, // will be passed to the page component as props
 	};

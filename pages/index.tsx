@@ -1,12 +1,16 @@
+import { fresh_post } from '@prisma/client';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import Post from '../components/Post';
+import { getFreshPost } from '../lib/crawl/logic/posts';
 
-export default function Home() {
-	useEffect(() => {
-		console.log(process.env.NEXT_PUBLIC_MODE);
-	}, []);
+type Props = {
+	posts: fresh_post[];
+};
 
+console.log('mode:', process.env.NEXT_PUBLIC_MODE);
+
+const Home = ({ posts }: Props) => {
 	return (
 		<div>
 			<Head>
@@ -17,6 +21,11 @@ export default function Home() {
 
 			<main>
 				<div>HOME AND MAIN</div>
+				<div>
+					{posts?.map((post) => (
+						<Post key={post.id} data={post} />
+					))}
+				</div>
 			</main>
 
 			<footer>
@@ -32,4 +41,19 @@ export default function Home() {
 			</footer>
 		</div>
 	);
+};
+export default Home;
+
+export async function getStaticProps() {
+	// Call an external API endpoint to get posts.
+	// You can use any data fetching library
+	const posts = await getFreshPost();
+
+	// By returning { props: { posts } }, the Blog component
+	// will receive `posts` as a prop at build time
+	return {
+		props: {
+			posts,
+		},
+	};
 }
