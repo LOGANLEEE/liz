@@ -9,7 +9,7 @@ const Post = ({ data }: Props) => {
 	return (
 		<Wrapper onClick={() => window.open(data.link)}>
 			<li className='title'>
-				<li className='name'>{data.name}</li>
+				<span className='name'>{data.name}</span>
 				{data.title}
 			</li>
 			{data.hit && <li className='hit'>{numberFormat(data.hit)}</li>}
