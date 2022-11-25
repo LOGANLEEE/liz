@@ -1,4 +1,6 @@
+import { Grid } from '@nextui-org/react';
 import { fresh_post } from '@prisma/client';
+import { InfoBar } from 'containers/InfoBar';
 import { PostContainer } from 'containers/PostContainer';
 import { getFreshPost } from 'lib/crawl/logic/post';
 import Head from 'next/head';
@@ -21,7 +23,16 @@ const Home = ({ posts }: Props) => {
 			</Head>
 
 			<main>
-				<PostContainer posts={posts} />
+				<Grid.Container gap={2} justify='center' direction='row'>
+					<Grid xs={2}>left</Grid>
+					<Grid xs={8}>
+						<Grid.Container gap={2} justify='center' direction='row'>
+							<InfoBar />
+							<PostContainer posts={posts} />
+						</Grid.Container>
+					</Grid>
+					<Grid xs={2}>right</Grid>
+				</Grid.Container>
 			</main>
 
 			<footer>
