@@ -1,3 +1,7 @@
+import styled from 'styled-components';
+
 export const Template = () => {
-	return <div>Template</div>;
+	return <Wrapper>Template</Wrapper>;
 };
+
+const Wrapper = styled.div``;
