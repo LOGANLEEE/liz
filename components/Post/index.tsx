@@ -22,11 +22,6 @@ const Wrapper = styled.ul`
 	padding: 10px;
 	display: flex;
 
-	li {
-		/* flex: auto; */
-		/* flex: 2 1 auto; */
-	}
-
 	.title {
 		display: flex;
 		flex-direction: row;
