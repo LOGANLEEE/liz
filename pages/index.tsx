@@ -1,8 +1,8 @@
 import { fresh_post } from '@prisma/client';
+import { PostContainer } from 'containers/PostContainer';
+import { getFreshPost } from 'lib/crawl/logic/post';
 import Head from 'next/head';
 import Image from 'next/image';
-import Post from '../components/Post';
-import { getFreshPost } from '../lib/crawl/logic/posts';
 
 type Props = {
 	posts: fresh_post[];
@@ -20,12 +20,7 @@ const Home = ({ posts }: Props) => {
 			</Head>
 
 			<main>
-				<div>HOME AND MAIN</div>
-				<div>
-					{posts?.map((post) => (
-						<Post key={post.id} data={post} />
-					))}
-				</div>
+				<PostContainer posts={posts} />
 			</main>
 
 			<footer>
