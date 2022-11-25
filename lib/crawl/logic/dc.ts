@@ -1,7 +1,8 @@
 import { JSDOM } from 'jsdom';
-import { _axios } from '../../axiosInstance';
-import { delay, masking } from '../../util';
-import { names, targetInfo } from '../targetInfo';
+import { _axios } from 'lib/axiosInstance';
+import { names, targetInfo } from 'lib/crawl/targetInfo';
+import { delay, masking } from 'lib/util';
+import { _prisma } from 'prisma/prismaInstance';
 
 export const DCINSIDEAccessor = async (): Promise<{ count: number; isError: boolean; name: string; message: '' }> => {
 	// get target Info

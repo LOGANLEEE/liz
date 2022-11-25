@@ -1,4 +1,4 @@
-import { _prisma } from '../../../prisma/prismaInstance';
+import { _prisma } from 'prisma/prismaInstance';
 
 export const markingFreshPosts = async () => {
 	const { count } = await _prisma.fresh_post.updateMany({ data: { mark: true }, where: { mark: false } });
