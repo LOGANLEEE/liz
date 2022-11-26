@@ -19,10 +19,14 @@ const Post = ({ data }: Props) => {
 export default Post;
 
 const Wrapper = styled.ul`
+	:hover {
+		background-color: #26534b;
+	}
 	padding: 10px;
 	display: flex;
 
 	.title {
+		cursor: pointer;
 		display: flex;
 		flex-direction: row;
 		gap: 10px;
