@@ -10,9 +10,6 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v1
-  
-      - name: Deploy to my EC2 instance
-        uses: easingthemes/ssh-deploy@v2.1.5
       - name: Install Node.js
         uses: actions/setup-node@v1
         with: 
