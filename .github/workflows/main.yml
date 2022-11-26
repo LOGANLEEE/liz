@@ -1,0 +1,37 @@
+name: Node CI Push-to-EC2
+
+on: push
+
+jobs:
+  deploy:
+    name: Push to EC2 Instance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v1
+  
+      - name: Deploy to my EC2 instance
+        uses: easingthemes/ssh-deploy@v2.1.5
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with: 
+          node-version: '18.x'
+      - name: Install yarn dependencies
+        run: yarn install
+      - name: gerenate prisma 
+        run: yarn generate-prod
+      - name: pull prisma 
+        run: yarn pull-prod
+      - name: Run build task
+        run: yarn build
+      - name: Run app
+        run: yarn start
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.liz-webEC2_SSH_KEY }}
+          SOURCE: "./"
+          REMOTE_HOST: "13.124.193.119"
+          REMOTE_USER: "ubuntu"
+          TARGET: "/home/ubuntu/liz-web"
