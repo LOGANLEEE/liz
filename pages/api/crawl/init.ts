@@ -7,7 +7,7 @@ import { _prisma } from 'prisma/prismaInstance';
 // const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	res.status(200).json({ message: 'crawling is starting...' });
+	// res.status(200).json({ message: 'crawling is starting...' });
 	await _prisma.$connect();
 
 	// stage 1
@@ -27,10 +27,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		stage2: { data: result },
 		stage3: { data: { deletedCount, movedCount }, message: `${deletedCount} posts are deleted, ${movedCount} posts are moved` },
 	});
+	// return;
+	res.status(200).json({
+		stage1: { data: { markedCount }, message: `${markedCount} posts are marked` },
+		stage2: { data: result },
+		stage3: { data: { deletedCount, movedCount }, message: `${deletedCount} posts are deleted, ${movedCount} posts are moved` },
+	});
 	return;
-	// res.status(200).json({
-	// 	stage1: { data: { markedCount }, message: `${markedCount} posts are marked` },
-	// 	stage2: { data: result },
-	// 	stage3: { data: { deletedCount, movedCount }, message: `${deletedCount} posts are deleted, ${movedCount} posts are moved` },
-	// });
 }
