@@ -9,7 +9,10 @@
 		"lint": "next lint",
 		"pull-dev": "env-cmd -f ./.env.development yarn prisma db pull",
 		"push-dev": "env-cmd -f ./.env.development yarn prisma db push",
-		"generate-dev": "env-cmd -f ./.env.development yarn prisma generate"
+		"generate-dev": "env-cmd -f ./.env.development yarn prisma generate",
+		"pull-prod": "env-cmd -f ./.env.production yarn prisma db pull",
+		"push-prod": "env-cmd -f ./.env.production yarn prisma db push",
+		"generate-prod": "env-cmd -f ./.env.production yarn prisma generate"
 	},
 	"dependencies": {
 		"@fontsource/roboto": "^4.5.8",
