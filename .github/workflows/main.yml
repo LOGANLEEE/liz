@@ -30,7 +30,7 @@ jobs:
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.liz-webEC2_SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.LIZ_WEB_SSH_KEY }}
           SOURCE: "./"
           REMOTE_HOST: "13.124.193.119"
           REMOTE_USER: "ubuntu"
