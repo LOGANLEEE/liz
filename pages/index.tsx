@@ -24,16 +24,18 @@ const Home = ({ posts }: Props) => {
 
 			<main>
 				<Grid.Container justify='center' direction='row'>
-					<Grid xs={2} xl={0}>
+					<Grid xs={0} sm={2} xl={1.5}>
 						left
 					</Grid>
-					<Grid xs={8}>
+					<Grid xs={12} sm={8} xl={9}>
 						<Grid.Container gap={2} justify='center' direction='row'>
-							<InfoBar />
+							<InfoBar postCount={posts?.length} targetSiteCount={1} />
 							<PostContainer posts={posts} />
 						</Grid.Container>
 					</Grid>
-					<Grid xs={2}>right</Grid>
+					<Grid xs={0} sm={2} xl={1.5}>
+						right
+					</Grid>
 				</Grid.Container>
 			</main>
 
@@ -57,7 +59,6 @@ export async function getServerSideProps() {
 	// Call an external API endpoint to get posts.
 	// You can use any data fetching library
 	const posts = await getFreshPost();
-
 	// By returning { props: { posts } }, the Blog component
 	// will receive `posts` as a prop at build time
 	return {
