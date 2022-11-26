@@ -23,8 +23,10 @@ const Home = ({ posts }: Props) => {
 			</Head>
 
 			<main>
-				<Grid.Container gap={2} justify='center' direction='row'>
-					<Grid xs={2}>left</Grid>
+				<Grid.Container justify='center' direction='row'>
+					<Grid xs={2} xl={0}>
+						left
+					</Grid>
 					<Grid xs={8}>
 						<Grid.Container gap={2} justify='center' direction='row'>
 							<InfoBar />
