@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	console.log('stage 1 finished');
 
 	// stage 2
-	const result = await DCINSIDEAccessor();
+	const DCResult = await DCINSIDEAccessor();
 	console.log('stage 2 finished');
 	// stage 3
 	const { deletedCount, movedCount } = await moveMarkedPosts();
@@ -24,13 +24,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	await _prisma.$disconnect();
 	console.log({
 		stage1: { data: { markedCount }, message: `${markedCount} posts are marked` },
-		stage2: { data: result },
+		stage2: { data: DCResult },
 		stage3: { data: { deletedCount, movedCount }, message: `${deletedCount} posts are deleted, ${movedCount} posts are moved` },
 	});
 	// return;
 	res.status(200).json({
 		stage1: { data: { markedCount }, message: `${markedCount} posts are marked` },
-		stage2: { data: result },
+		stage2: { data: DCResult },
 		stage3: { data: { deletedCount, movedCount }, message: `${deletedCount} posts are deleted, ${movedCount} posts are moved` },
 	});
 	return;
