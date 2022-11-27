@@ -21,6 +21,11 @@ export default Post;
 const Wrapper = styled.ul`
 	padding: 10px;
 	display: flex;
+	cursor: pointer;
+
+	:hover {
+		background-color: #602b2b;
+	}
 
 	.title {
 		display: flex;
