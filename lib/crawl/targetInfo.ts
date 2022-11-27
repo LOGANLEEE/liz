@@ -1,4 +1,4 @@
-export const names = { dc: 'DC' };
+export const names = { dc: '디씨', dq: '더쿠' };
 
 export const targetInfo = [
 	{
