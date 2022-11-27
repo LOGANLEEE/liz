@@ -23,6 +23,7 @@
 		"@types/react-dom": "18.0.9",
 		"axios": "^1.2.0",
 		"env-cmd": "^10.1.0",
+		"iconv-lite": "^0.6.3",
 		"jsdom": "^20.0.3",
 		"next": "13.0.5",
 		"react": "18.2.0",
