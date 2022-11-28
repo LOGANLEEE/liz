@@ -4,5 +4,5 @@ git pull
 yarn 
 yarn generate-prod
 yarn pull-prod
-yarn builld
+yarn build
 yarn start
