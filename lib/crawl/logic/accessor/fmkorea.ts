@@ -17,25 +17,30 @@ export const FMKOREAaccessor = async (): Promise<{ count: number; isError: boole
 
 		for (let postCount = FMKOREA_INFO.postRage[0]; postCount <= FMKOREA_INFO.postRage[1]; postCount += FMKOREA_INFO.postRage[2]) {
 			const title =
-				(await page
-					.waitForSelector(FMKOREA_INFO.link(postCount))
-					.then((element) => element?.evaluate((el) => el.textContent?.trim()))) || null; // select the element
+				(await page.waitForSelector(FMKOREA_INFO.link(postCount)).then((el) => el?.evaluate((el) => el.textContent?.trim()))) ||
+				null;
+
 			const link =
-				(await page
-					.waitForSelector(FMKOREA_INFO.link(postCount))
-					.then((element) => element?.evaluate((el) => el.getAttribute('href')))) || null; // select the element
+				(await page.waitForSelector(FMKOREA_INFO.link(postCount)).then((el) => el?.evaluate((el) => el.getAttribute('href')))) ||
+				null;
 
 			const author =
-				(await page
-					.waitForSelector(FMKOREA_INFO.author(postCount))
-					.then((element) => element?.evaluate((el) => el.getAttribute('href')))) || null; // select the element
+				(await page.waitForSelector(FMKOREA_INFO.author(postCount)).then((el) => el?.evaluate((el) => el.getAttribute('href')))) ||
+				null;
 
-			const hit =
-				(await page
-					.waitForSelector(FMKOREA_INFO.author(postCount))
-					.then((element) => element?.evaluate((el) => parseInt(el.textContent?.trim()?.replaceAll(',', '') || '0')))) || null; // select the element
+			const hit = await page
+				.waitForSelector(FMKOREA_INFO.hit(postCount))
+				.then((el) => el?.evaluate((el) => parseInt(el.textContent?.trim() || '-1')));
 
-			tempHolder.push({ title, link, hit, name: FMKOREA_INFO.name, mark: false, author, content: null });
+			tempHolder.push({
+				title,
+				link: `${FMKOREA_INFO.targetBaseName}${link}`,
+				hit,
+				name: FMKOREA_INFO.name,
+				mark: false,
+				author,
+				content: null,
+			});
 		}
 	}
 	await browser.close();
