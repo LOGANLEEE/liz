@@ -39,7 +39,7 @@ export const DOGDRIP_INFO = {
 
 export const FMKOREA_INFO = {
 	name: names.fm,
-	targetBaseName: 'https://www.fmkorea.com/',
+	targetBaseName: 'https://www.fmkorea.com',
 	targetUrl: (page: number) => `https://www.fmkorea.com/index.php?mid=best&listStyle=list&page=${page}`,
 	pageRange: [1, 5, 1],
 	postRage: [2, 21, 1],
@@ -47,6 +47,6 @@ export const FMKOREA_INFO = {
 	link: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td.title.hotdeal_var8 > a.hx`,
 	//  #bd_189545458_0 > div > table > tbody > tr:nth-child(2) > td.title.hotdeal_var8 > a.hx
 	author: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td.author > span > a`,
-	ht: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td:nth-child(6)`,
+	hit: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td:nth-child(6)`,
 	uploadDate: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td.time`,
 };
