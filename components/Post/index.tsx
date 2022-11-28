@@ -7,7 +7,7 @@ type Props = {
 };
 const Post = ({ data }: Props) => {
 	return (
-		<Wrapper onClick={() => window.open(data.link)}>
+		<Wrapper onClick={() => data.link && window.open(data.link)}>
 			<li className='title'>
 				<span className='name'>{data.name}</span>
 				{data.title}
