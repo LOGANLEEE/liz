@@ -21,10 +21,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	const tempHolder = [];
 	tempHolder.push(await DCINSIDEAccessor());
 	tempHolder.push(await FMKOREAaccessor());
-	// const DCResult = '';
-	// const DogDripResult = await dogDripAccessor();
-	// const DogDripResult = '';
-	// await dogDripAccessor();
 	console.log('stage 2 finished');
 	// stage 3
 	const { deletedCount, movedCount } = await moveMarkedPosts();
