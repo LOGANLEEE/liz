@@ -2,6 +2,7 @@
 import { DCINSIDEAccessor } from 'lib/crawl/logic/accessor/dcinside';
 import { FMKOREAaccessor } from 'lib/crawl/logic/accessor/fmkorea';
 import { markingFreshPosts, moveMarkedPosts } from 'lib/crawl/logic/cleaner';
+import { writeLog } from 'lib/log';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { _prisma } from 'prisma/prismaInstance';
 
@@ -16,14 +17,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	// stage 1
 	const { count: markedCount } = await markingFreshPosts();
 	console.log('stage 1 finished');
+	await writeLog({ name: 'markingFreshPosts', result: 1, body: JSON.stringify(markedCount) });
 
 	// stage 2
 	const tempHolder = [];
 	tempHolder.push(await DCINSIDEAccessor());
 	tempHolder.push(await FMKOREAaccessor());
+	await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
 	console.log('stage 2 finished');
 	// stage 3
 	const { deletedCount, movedCount } = await moveMarkedPosts();
+	await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify({ deletedCount, movedCount }) });
 	console.log('stage 3 finished');
 
 	await _prisma.$disconnect();
