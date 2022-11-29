@@ -13,7 +13,8 @@
 		"generate-dev": "env-cmd -f ./.env.development yarn prisma generate",
 		"pull-prod": "env-cmd -f ./.env.production yarn prisma db pull",
 		"push-prod": "env-cmd -f ./.env.production yarn prisma db push",
-		"generate-prod": "env-cmd -f ./.env.production yarn prisma generate"
+		"generate-prod": "env-cmd -f ./.env.production yarn prisma generate",
+		"prepare": "husky install"
 	},
 	"dependencies": {
 		"@fontsource/roboto": "^4.5.8",
@@ -41,6 +42,7 @@
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-react": "^7.31.11",
 		"eslint-plugin-react-hooks": "^4.6.0",
+		"husky": "^8.0.2",
 		"prisma": "^4.6.1"
 	}
 }
