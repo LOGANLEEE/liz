@@ -1,4 +1,4 @@
-export const names = { dc: '디씨', dog: '개드립', fm: '에펨' };
+export const names = { dc: '디씨', fm: '에펨' };
 
 export const DCINSIDE_INFO = {
 	name: names.dc,
