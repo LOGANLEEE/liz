@@ -35,4 +35,5 @@ model api_log {
   create_date DateTime @default(now()) @db.Date
   name        String?  @db.VarChar
   body        String?  @db.VarChar
+  result      Int
 }
