@@ -19,6 +19,7 @@ const Post = ({ data }: Props) => {
 		const idxList: number[] = JSON.parse(localStorage.getItem('visitedIdList') || '[]');
 		idxList.push(data?.id);
 		localStorage.setItem('visitedIdList', JSON.stringify(idxList));
+		setVisited(true);
 
 		return;
 	}, [data?.id, data.link]);
