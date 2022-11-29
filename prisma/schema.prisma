@@ -29,3 +29,10 @@ model old_post {
   author  String? @db.VarChar
   mark    Boolean
 }
+
+model api_log {
+  id          Int      @id(map: "api_log_pk") @default(autoincrement())
+  create_date DateTime @default(now()) @db.Date
+  name        String?  @db.VarChar
+  body        String?  @db.VarChar
+}
