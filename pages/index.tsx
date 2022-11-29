@@ -3,6 +3,7 @@ import { fresh_post } from '@prisma/client';
 import { InfoBar } from 'containers/InfoBar';
 import { PostContainer } from 'containers/PostContainer';
 import { getFreshPost } from 'lib/crawl/logic/post';
+import { names } from 'lib/crawl/targetInfo';
 import Head from 'next/head';
 import Image from 'next/image';
 
@@ -29,7 +30,7 @@ const Home = ({ posts }: Props) => {
 					</Grid>
 					<Grid xs={12} sm={8} xl={9}>
 						<Grid.Container gap={2} justify='center' direction='row'>
-							<InfoBar postCount={posts?.length} targetSiteCount={1} />
+							<InfoBar postCount={posts?.length} targetSiteCount={Object.keys(names).length} />
 							<PostContainer posts={posts} />
 						</Grid.Container>
 					</Grid>
