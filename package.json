@@ -5,7 +5,8 @@
 	"scripts": {
 		"dev": "next dev -p 3331",
 		"build": "next build",
-		"start": "next build && next start",
+		"start": "next start",
+		"deploy": "./init-prod.sh",
 		"lint": "next lint",
 		"pull-dev": "env-cmd -f ./.env.development yarn prisma db pull",
 		"push-dev": "env-cmd -f ./.env.development yarn prisma db push",
