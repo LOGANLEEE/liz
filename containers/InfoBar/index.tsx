@@ -13,7 +13,7 @@ export const InfoBar = ({ postCount, targetSiteCount }: InfoBarProps) => {
 					<InfoCard count={postCount} title='최근 동작 시점' titleInfo='22년 10월 6일 16시 00분' suffix='개' />
 				</Grid>
 				<Grid xs={4} sm={4} md={4} lg={4} xl={4}>
-					<InfoCard count={targetSiteCount} titleInfo='대상 커뮤니티' suffix='곳' />
+					<InfoCard count={targetSiteCount} titleInfo='대상 커뮤니티' suffix='군데' />
 				</Grid>
 				{/* <Grid xs={4} sm={4} md={4} lg={4} xl={4}>
 					<InfoCard count={209} title='' titleInfo='' />
