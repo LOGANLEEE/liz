@@ -25,7 +25,7 @@ export const FMKOREAaccessor = async (): Promise<{ count: number; isError: boole
 				null;
 
 			const author =
-				(await page.waitForSelector(FMKOREA_INFO.author(postCount)).then((el) => el?.evaluate((el) => el.getAttribute('href')))) ||
+				(await page.waitForSelector(FMKOREA_INFO.author(postCount)).then((el) => el?.evaluate((el) => el.textContent?.trim()))) ||
 				null;
 
 			const hit = await page
