@@ -32,7 +32,7 @@ model old_post {
 
 model api_log {
   id          Int      @id(map: "api_log_pk") @default(autoincrement())
-  create_date DateTime @default(now()) @db.Date
+  create_date DateTime @default(now()) @db.Timestamp(6)
   name        String?  @db.VarChar
   body        String?  @db.VarChar
   result      Int
