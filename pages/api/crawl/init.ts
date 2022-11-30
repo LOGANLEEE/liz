@@ -11,36 +11,37 @@ import { _prisma } from 'prisma/prismaInstance';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	// res.status(200).json({ message: 'crawling is starting...' });
 	await _prisma.$connect();
-
 	res.status(200).json({ message: 'initializing crawling ...' });
 
 	// stage 1
-	const { count: markedCount } = await markingFreshPosts();
-	console.log('stage 1 finished');
-	await writeLog({ name: 'markingFreshPosts', result: 1, body: JSON.stringify(markedCount) });
+	await markingFreshPosts()
+		.then(async ({ count: markedCount }) => {
+			console.log(`stage1: ${markedCount} posts are marked`);
+			await writeLog({ name: 'markingFreshPosts', result: 1, body: JSON.stringify(markedCount) });
+		})
+		.catch(async (error) => await writeLog({ name: 'markingFreshPosts', result: 0, body: JSON.stringify(error) }));
 
 	// stage 2
-	const tempHolder = [];
-	tempHolder.push(await DCINSIDEAccessor());
-	tempHolder.push(await FMKOREAaccessor());
-	await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
-	console.log('stage 2 finished');
+	try {
+		const tempHolder = [];
+		tempHolder.push(await DCINSIDEAccessor());
+		tempHolder.push(await FMKOREAaccessor());
+		console.log(`stage 2: ${tempHolder.map((e) => e)}`);
+		await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
+	} catch (error) {
+		await writeLog({ name: 'accessor', result: 0, body: JSON.stringify(error) });
+	}
+
 	// stage 3
-	const { deletedCount, movedCount } = await moveMarkedPosts();
-	await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify({ deletedCount, movedCount }) });
-	console.log('stage 3 finished');
+	await moveMarkedPosts()
+		.then(async ({ deletedCount, movedCount }) => {
+			console.log(`stage3:${deletedCount} posts are deleted, ${movedCount} posts are moved`);
+			await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify({ deletedCount, movedCount }) });
+		})
+		.catch(async (error) => {
+			await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify(error) });
+		});
 
 	await _prisma.$disconnect();
-	console.log({
-		stage1: { data: { markedCount }, message: `${markedCount} posts are marked` },
-		stage2: { data: tempHolder },
-		stage3: { data: { deletedCount, movedCount }, message: `${deletedCount} posts are deleted, ${movedCount} posts are moved` },
-	});
-	// return;
-	// res.status(200).json({
-	// 	stage1: { data: { markedCount }, message: `${markedCount} posts are marked` },
-	// 	stage2: { data: DCResult },
-	// 	stage3: { data: { deletedCount, movedCount }, message: `${deletedCount} posts are deleted, ${movedCount} posts are moved` },
-	// });
 	return;
 }
