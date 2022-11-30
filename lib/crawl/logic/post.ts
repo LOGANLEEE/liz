@@ -1,10 +1,18 @@
 import { _prisma } from 'prisma/prismaInstance';
 
-export const getFreshPost = async () => {
-	const list = await _prisma.fresh_post.findMany({
-		where: { mark: false },
-		//  orderBy: { hit: 'desc' }
-	});
+type GetFreshPostArgs = {
+	offset?: number;
+	limit?: number;
+};
+export const getFreshPost = async ({ offset, limit }: GetFreshPostArgs) => {
+	const [totalCount, list] = await _prisma.$transaction([
+		_prisma.fresh_post.count(),
+		_prisma.fresh_post.findMany({
+			where: { mark: false },
+			skip: offset,
+			take: limit,
+		}),
+	]);
 
-	return list;
+	return { totalCount, list };
 };
