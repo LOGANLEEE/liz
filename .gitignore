@@ -47,3 +47,8 @@ dummy3.html
 dummy4.html
 dummy5.html
 dummy.html
+
+# prisma schema
+
+/prisma/schema.prisma
+
