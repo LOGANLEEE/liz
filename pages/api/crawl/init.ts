@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		const tempHolder = [];
 		tempHolder.push(await DCINSIDEAccessor());
 		tempHolder.push(await FMKOREAaccessor());
-		console.log(`stage 2: ${tempHolder.map((e) => e)}`);
+		console.log(`stage 2: ${JSON.stringify(tempHolder.map((e) => e))}`);
 		await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
 	} catch (error) {
 		await writeLog({ name: 'accessor', result: 0, body: JSON.stringify(error) });
