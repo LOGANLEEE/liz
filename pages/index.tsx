@@ -9,11 +9,12 @@ import Image from 'next/image';
 
 type Props = {
 	posts: fresh_post[];
+	totalCount: number;
 };
 
 console.log('mode:', process.env.NEXT_PUBLIC_MODE);
 
-const Home = ({ posts }: Props) => {
+const Home = ({ posts, totalCount }: Props) => {
 	return (
 		<div>
 			<Head>
@@ -30,7 +31,7 @@ const Home = ({ posts }: Props) => {
 					</Grid>
 					<Grid xs={12} sm={8} xl={9}>
 						<Grid.Container gap={2} justify='center' direction='row'>
-							<InfoBar postCount={posts?.length} targetSiteCount={Object.keys(names).length} />
+							<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
 							<PostContainer posts={posts} />
 						</Grid.Container>
 					</Grid>
@@ -59,12 +60,13 @@ export default Home;
 export async function getServerSideProps() {
 	// Call an external API endpoint to get posts.
 	// You can use any data fetching library
-	const posts = await getFreshPost();
+	const { totalCount, list } = await getFreshPost({ limit: 20, offset: 0 });
 	// By returning { props: { posts } }, the Blog component
 	// will receive `posts` as a prop at build time
 	return {
 		props: {
-			posts,
+			totalCount,
+			posts: list,
 		},
 	};
 }
