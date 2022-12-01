@@ -2,15 +2,14 @@ import axios from 'axios';
 import { decode } from 'iconv-lite';
 
 export const _axios = axios.create({
-	headers: {
-		'User-Agent':
-			'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
-		'Accept-Encoding': 'gzip, deflate, br',
-	},
-
+	// headers: {
+	// 	'User-Agent':
+	// 		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+	// 	'Accept-Encoding': 'gzip, deflate, br',
+	// },
 	// responseType: 'arraybuffer',
 	// responseEncoding: 'binary',
-	responseEncoding: 'utf8',
+	// responseEncoding: 'utf8',
 	// validateStatus: function (status) {
 	// 	return status < 400; // Resolve only if the status code is less than 500
 	// },
