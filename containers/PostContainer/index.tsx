@@ -1,20 +1,22 @@
 import { fresh_post } from '@prisma/client';
 import Post from 'components/Post';
+import { memo } from 'react';
 import styled from 'styled-components';
 
 declare type Props = {
-	posts: fresh_post[];
+	posts?: fresh_post[];
 };
-export const PostContainer = ({ posts }: Props) => {
+export const PostContainer = memo(({ posts }: Props) => {
 	return (
 		<Wrapper>
-			{posts.map((data) => (
+			{posts?.map((data) => (
 				<Post key={data.id} data={data} />
 			))}
 		</Wrapper>
 	);
-};
+});
 
+PostContainer.displayName = 'PostContainer';
 const Wrapper = styled.div`
 	width: 100%;
 `;
