@@ -1,11 +1,12 @@
 import { Card, Grid, Text } from '@nextui-org/react';
+import { memo } from 'react';
 import styled from 'styled-components';
 
 type InfoBarProps = {
-	postCount?: number;
-	targetSiteCount?: number;
+	postCount: number;
+	targetSiteCount: number;
 };
-export const InfoBar = ({ postCount, targetSiteCount }: InfoBarProps) => {
+export const InfoBar = memo(({ postCount, targetSiteCount }: InfoBarProps) => {
 	return (
 		<Wrapper>
 			<Grid.Container gap={1} justify='flex-start'>
@@ -21,7 +22,9 @@ export const InfoBar = ({ postCount, targetSiteCount }: InfoBarProps) => {
 			</Grid.Container>
 		</Wrapper>
 	);
-};
+});
+
+InfoBar.displayName = 'InfoBar';
 
 const Wrapper = styled.div`
 	width: 100%;
@@ -33,7 +36,7 @@ type InfoCardProps = {
 	count?: number;
 	suffix?: string;
 };
-export const InfoCard = ({ count, title, titleInfo, suffix }: InfoCardProps) => {
+export const InfoCard = memo(({ count, title, titleInfo, suffix }: InfoCardProps) => {
 	return (
 		<InfoCardWrapper variant='bordered'>
 			<Card.Header className='header'>
@@ -50,7 +53,9 @@ export const InfoCard = ({ count, title, titleInfo, suffix }: InfoCardProps) => 
 			{/* <Card.Image src='/images/card1.jpg' objectFit='cover' width='100%' height={200} alt='Card image background' /> */}
 		</InfoCardWrapper>
 	);
-};
+});
+
+InfoCard.displayName = 'InfoCard';
 
 const InfoCardWrapper = styled(Card)`
 	background-color: #424944;
