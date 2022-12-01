@@ -1,20 +1,35 @@
 import { Grid } from '@nextui-org/react';
-import { fresh_post } from '@prisma/client';
+import { BottomPagination } from 'components/BottomPagination';
 import { InfoBar } from 'containers/InfoBar';
 import { PostContainer } from 'containers/PostContainer';
-import { getFreshPost } from 'lib/crawl/logic/post';
+import { usePagination } from 'hook/usePagination';
+import { _axios } from 'lib/axiosInstance';
+import { GetFreshPostReturn } from 'lib/crawl/logic/post';
 import { names } from 'lib/crawl/targetInfo';
 import Head from 'next/head';
 import Image from 'next/image';
+import useSWR from 'swr';
 
 type Props = {
-	posts: fresh_post[];
-	totalCount: number;
+	// posts: fresh_post[];
+	// totalCount: number;
+	some?: any;
 };
 
 console.log('mode:', process.env.NEXT_PUBLIC_MODE);
 
-const Home = ({ posts, totalCount }: Props) => {
+const Home = ({ some }: Props) => {
+	const {
+		pageIdx,
+		limit,
+		actions: { pageIdxHandler },
+	} = usePagination({});
+
+	const { data, error } = useSWR<GetFreshPostReturn>(
+		`/api/crawl/getFreshPost/${pageIdx}`,
+		async () => await _axios.post(`/api/crawl/getFreshPost`, { limit, offset: (pageIdx - 1) * limit }).then((res) => res.data),
+		{}
+	);
 	return (
 		<div>
 			<Head>
@@ -31,8 +46,20 @@ const Home = ({ posts, totalCount }: Props) => {
 					</Grid>
 					<Grid xs={12} sm={8} xl={9}>
 						<Grid.Container gap={2} justify='center' direction='row'>
-							<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
-							<PostContainer posts={posts} />
+							<InfoBar postCount={data?.totalCount || 0} targetSiteCount={Object.keys(names).length} />
+							<BottomPagination
+								limit={limit}
+								totalCount={data?.totalCount || 0}
+								page={pageIdx}
+								onChangeHandler={pageIdxHandler}
+							/>
+							<PostContainer posts={data?.list} />
+							<BottomPagination
+								limit={limit}
+								totalCount={data?.totalCount || 0}
+								page={pageIdx}
+								onChangeHandler={pageIdxHandler}
+							/>
 						</Grid.Container>
 					</Grid>
 					<Grid xs={0} sm={2} xl={1.5}>
@@ -57,16 +84,13 @@ const Home = ({ posts, totalCount }: Props) => {
 };
 export default Home;
 
-export async function getServerSideProps() {
-	// Call an external API endpoint to get posts.
-	// You can use any data fetching library
-	const { totalCount, list } = await getFreshPost({ limit: 20, offset: 0 });
-	// By returning { props: { posts } }, the Blog component
-	// will receive `posts` as a prop at build time
-	return {
-		props: {
-			totalCount,
-			posts: list,
-		},
-	};
-}
+// export async function getServerSideProps() {
+// const { totalCount, list } = await getFreshPost({ limit: 20, offset: 0 });
+// return {
+// 	props: {
+// 		totalCount,
+// 		posts: list,
+// 	},
+// };
+// return;
+// }
