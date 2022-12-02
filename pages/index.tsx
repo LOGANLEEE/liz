@@ -71,7 +71,7 @@ const Home = ({ isMobile }: Props) => {
 							<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
 						</Grid.Container>
 					)}
-					{/* {!isMobile && (
+					{!isMobile && (
 						<Grid.Container justify='center' direction='row'>
 							<Grid xs={0} sm={2} xl={1.5}>
 								left
@@ -98,7 +98,7 @@ const Home = ({ isMobile }: Props) => {
 								right
 							</Grid>
 						</Grid.Container>
-					)} */}
+					)}
 				</main>
 
 				<footer>
