@@ -30,9 +30,9 @@ const Post = ({ data }: Props) => {
 
 	return (
 		<Wrapper onClick={visitHandler} className={`title ${visited ? 'visited' : ''}`}>
-			<li className='title'>
+			<li className='block1'>
 				<span className='name'>{data.name}</span>
-				{data.title}
+				<span className='title'>{data.title}</span>
 			</li>
 			{/* {data?.author && <li className='author'>{data.author}</li>} */}
 			{data.hit && <li className='hit'>🔥{numberFormat(data.hit)}</li>}
@@ -59,7 +59,7 @@ const Wrapper = styled.ul`
 	&.visited {
 		color: #645959 !important;
 	}
-	.title {
+	.block1 {
 		display: flex;
 		flex-direction: row;
 		gap: 10px;
@@ -67,6 +67,9 @@ const Wrapper = styled.ul`
 			flex: auto;
 			border-right: 0.5px solid;
 			padding-right: 8px;
+		}
+		.title {
+			flex: auto;
 		}
 	}
 
