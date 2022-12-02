@@ -11,16 +11,14 @@ type BottomPaginationProps = {
 
 export const BottomPagination = memo(({ totalCount, limit, page, onChangeHandler }: BottomPaginationProps) => {
 	return (
-		<Wrapper>
-			<Grid.Container gap={2} justify='center'>
-				<Grid xs={12}>
-					<Pagination onChange={onChangeHandler} color={'secondary'} total={Math.ceil(totalCount / limit)} page={page} />
-				</Grid>
-			</Grid.Container>
+		<Wrapper justify='center'>
+			<Grid xs>
+				<Pagination onChange={onChangeHandler} color={'secondary'} total={Math.ceil(totalCount / limit)} page={page} />
+			</Grid>
 		</Wrapper>
 	);
 });
 
 BottomPagination.displayName = 'BottomPagination';
 
-const Wrapper = styled(Grid)``;
+const Wrapper = styled(Grid.Container)``;
