@@ -1,13 +1,15 @@
 import { Grid } from '@nextui-org/react';
+import type { fresh_post } from '@prisma/client';
 import { BottomPagination } from 'components/BottomPagination';
 import { InfoBar } from 'containers/InfoBar';
 import { PostContainer } from 'containers/PostContainer';
 import { usePagination } from 'hook/usePagination';
 import { _axios } from 'lib/axiosInstance';
-import { GetFreshPostReturn } from 'lib/crawl/logic/post';
+import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
 import { names } from 'lib/crawl/targetInfo';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 type Props = {
@@ -25,11 +27,26 @@ const Home = ({ some }: Props) => {
 		actions: { pageIdxHandler },
 	} = usePagination({});
 
-	const { data, error } = useSWR<GetFreshPostReturn>(
+	const { data, error, isValidating } = useSWR<GetFreshPostReturn>(
 		`/api/crawl/getFreshPost/${pageIdx}`,
-		async () => await _axios.post(`/api/crawl/getFreshPost`, { limit, offset: (pageIdx - 1) * limit }).then((res) => res.data),
-		{}
+		async () => await _axios.post(`/api/crawl/getFreshPost`, { limit, offset: (pageIdx - 1) * limit }).then((res) => res.data)
 	);
+
+	const [totalCount, setTotalCount] = useState(0);
+	const [freshPostList, setFreshPostList] = useState<fresh_post[]>([]);
+
+	useEffect(() => {
+		if (data?.list && data?.list?.length > 0) {
+			setFreshPostList(data.list);
+		}
+	}, [data?.list]);
+
+	useEffect(() => {
+		if (data?.totalCount && data?.totalCount > 0 && data?.totalCount !== totalCount) {
+			setTotalCount(data.totalCount);
+		}
+	}, [data?.totalCount, totalCount]);
+
 	return (
 		<div>
 			<Head>
@@ -46,20 +63,11 @@ const Home = ({ some }: Props) => {
 					</Grid>
 					<Grid xs={12} sm={8} xl={9}>
 						<Grid.Container gap={2} justify='center' direction='row'>
-							<InfoBar postCount={data?.totalCount || 0} targetSiteCount={Object.keys(names).length} />
-							<BottomPagination
-								limit={limit}
-								totalCount={data?.totalCount || 0}
-								page={pageIdx}
-								onChangeHandler={pageIdxHandler}
-							/>
-							<PostContainer posts={data?.list} />
-							<BottomPagination
-								limit={limit}
-								totalCount={data?.totalCount || 0}
-								page={pageIdx}
-								onChangeHandler={pageIdxHandler}
-							/>
+							<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
+							<PostContainer posts={freshPostList} />
+							<div>
+								<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+							</div>
 						</Grid.Container>
 					</Grid>
 					<Grid xs={0} sm={2} xl={1.5}>
