@@ -9,7 +9,7 @@ export const CustomLoading = memo(() => {
 CustomLoading.displayName = 'CustomLoading';
 
 const StyledLoading = styled(Loading)`
-	position: absolute;
+	position: fixed;
 	top: 0;
 	right: 0;
 `;
