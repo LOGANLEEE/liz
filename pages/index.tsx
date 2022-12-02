@@ -8,20 +8,22 @@ import { usePagination } from 'hook/usePagination';
 import { _axios } from 'lib/axiosInstance';
 import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
 import { names } from 'lib/crawl/targetInfo';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { getSelectorsByUserAgent } from 'react-device-detect';
 import useSWR from 'swr';
 
 type Props = {
 	// posts: fresh_post[];
 	// totalCount: number;
-	some?: any;
+	isMobile: boolean;
 };
 
 console.log('mode:', process.env.NEXT_PUBLIC_MODE);
 
-const Home = ({ some }: Props) => {
+const Home = ({ isMobile }: Props) => {
 	const {
 		pageIdx,
 		limit,
@@ -59,22 +61,60 @@ const Home = ({ some }: Props) => {
 				</Head>
 
 				<main>
-					<Grid.Container justify='center' direction='row'>
-						<Grid xs={0} sm={2} xl={1.5}>
-							left
-						</Grid>
-						<Grid xs={12} sm={8} xl={9}>
-							<Grid.Container gap={2} justify='center' direction='row'>
-								<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
-								<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
-								<PostContainer posts={freshPostList} />
-								<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
-							</Grid.Container>
-						</Grid>
-						<Grid xs={0} sm={2} xl={1.5}>
-							right
-						</Grid>
-					</Grid.Container>
+					{isMobile && (
+						<Grid.Container
+							justify='center'
+							direction='row'
+							// css={{ padding: '12 0 12 0' }}
+						>
+							<Grid xs={12} sm={12} xl={12} md={12} lg={12}>
+								<Grid.Container gap={2} justify='center' direction='row'>
+									<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
+									<BottomPagination
+										limit={limit}
+										totalCount={totalCount}
+										page={pageIdx}
+										onChangeHandler={pageIdxHandler}
+									/>
+									<PostContainer posts={freshPostList} />
+									<BottomPagination
+										limit={limit}
+										totalCount={totalCount}
+										page={pageIdx}
+										onChangeHandler={pageIdxHandler}
+									/>
+								</Grid.Container>
+							</Grid>
+						</Grid.Container>
+					)}
+					{!isMobile && (
+						<Grid.Container justify='center' direction='row'>
+							<Grid xs={0} sm={2} xl={1.5}>
+								left
+							</Grid>
+							<Grid xs={12} sm={8} xl={9}>
+								<Grid.Container gap={2} justify='center' direction='row'>
+									<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
+									<BottomPagination
+										limit={limit}
+										totalCount={totalCount}
+										page={pageIdx}
+										onChangeHandler={pageIdxHandler}
+									/>
+									<PostContainer posts={freshPostList} />
+									<BottomPagination
+										limit={limit}
+										totalCount={totalCount}
+										page={pageIdx}
+										onChangeHandler={pageIdxHandler}
+									/>
+								</Grid.Container>
+							</Grid>
+							<Grid xs={0} sm={2} xl={1.5}>
+								right
+							</Grid>
+						</Grid.Container>
+					)}
 				</main>
 
 				<footer>
@@ -95,13 +135,12 @@ const Home = ({ some }: Props) => {
 };
 export default Home;
 
-// export async function getServerSideProps() {
-// const { totalCount, list } = await getFreshPost({ limit: 20, offset: 0 });
-// return {
-// 	props: {
-// 		totalCount,
-// 		posts: list,
-// 	},
-// };
-// return;
-// }
+export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {
+	const userAgent = req.headers['user-agent'] || '';
+
+	const { isMobile } = getSelectorsByUserAgent(userAgent);
+
+	return {
+		props: { isMobile },
+	};
+}
