@@ -1,4 +1,4 @@
-import { Grid } from '@nextui-org/react';
+import { Grid, Spacer, Text } from '@nextui-org/react';
 import type { fresh_post } from '@prisma/client';
 import { BottomPagination } from 'components/BottomPagination';
 import { CustomLoading } from 'components/CustomLoading';
@@ -10,7 +10,6 @@ import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
 import { names } from 'lib/crawl/targetInfo';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import useSWR from 'swr';
@@ -62,32 +61,17 @@ const Home = ({ isMobile }: Props) => {
 
 				<main>
 					{isMobile && (
-						<Grid.Container
-							justify='center'
-							direction='row'
-							// css={{ padding: '12 0 12 0' }}
-						>
-							<Grid xs={12} sm={12} xl={12} md={12} lg={12}>
-								<Grid.Container gap={2} justify='center' direction='row'>
-									<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
-									<BottomPagination
-										limit={limit}
-										totalCount={totalCount}
-										page={pageIdx}
-										onChangeHandler={pageIdxHandler}
-									/>
-									<PostContainer posts={freshPostList} />
-									<BottomPagination
-										limit={limit}
-										totalCount={totalCount}
-										page={pageIdx}
-										onChangeHandler={pageIdxHandler}
-									/>
-								</Grid.Container>
-							</Grid>
+						<Grid.Container xs sm xl md lg direction='column' justify='flex-start'>
+							<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
+							<Spacer y={1} />
+							<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+							<Spacer y={1} />
+							<PostContainer posts={freshPostList} />
+							<Spacer y={1} />
+							<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
 						</Grid.Container>
 					)}
-					{!isMobile && (
+					{/* {!isMobile && (
 						<Grid.Container justify='center' direction='row'>
 							<Grid xs={0} sm={2} xl={1.5}>
 								left
@@ -114,19 +98,13 @@ const Home = ({ isMobile }: Props) => {
 								right
 							</Grid>
 						</Grid.Container>
-					)}
+					)} */}
 				</main>
 
 				<footer>
-					<a
-						href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-						target='_blank'
-						rel='noopener noreferrer'
-					>
-						<span>
-							<Image src='/vercel.svg' alt='Vercel Logo' width={72} height={16} />
-						</span>
-					</a>
+					<Grid.Container direction='column' justify='center'>
+						<Text css={{ textAlign: 'center' }}>Logan will deserve all rights.</Text>
+					</Grid.Container>
 				</footer>
 			</div>
 			{isValidating && <CustomLoading />}
