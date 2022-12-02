@@ -1,4 +1,4 @@
-import { Card, Grid, Text } from '@nextui-org/react';
+import { Card, Grid, Spacer, Text } from '@nextui-org/react';
 import { memo } from 'react';
 import styled from 'styled-components';
 
@@ -9,11 +9,16 @@ type InfoBarProps = {
 export const InfoBar = memo(({ postCount, targetSiteCount }: InfoBarProps) => {
 	return (
 		<Wrapper>
-			<Grid.Container gap={1} justify='flex-start'>
-				<Grid xs={4} sm={4} md={4} lg={4} xl={4}>
+			<Grid.Container justify='flex-start'>
+				<Grid xs sm md lg xl>
 					<InfoCard count={postCount} title='최근 동작 시점' titleInfo='22년 10월 6일 16시 00분' suffix='개' />
 				</Grid>
-				<Grid xs={4} sm={4} md={4} lg={4} xl={4}>
+				<Spacer x={1} />
+				<Grid xs sm md lg xl>
+					<InfoCard count={targetSiteCount} titleInfo='대상 커뮤니티' suffix='군데' />
+				</Grid>
+				<Spacer x={1} />
+				<Grid xs sm md lg xl>
 					<InfoCard count={targetSiteCount} titleInfo='대상 커뮤니티' suffix='군데' />
 				</Grid>
 				{/* <Grid xs={4} sm={4} md={4} lg={4} xl={4}>
@@ -26,7 +31,7 @@ export const InfoBar = memo(({ postCount, targetSiteCount }: InfoBarProps) => {
 
 InfoBar.displayName = 'InfoBar';
 
-const Wrapper = styled.div`
+const Wrapper = styled(Grid.Container)`
 	width: 100%;
 `;
 
