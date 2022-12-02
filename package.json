@@ -3,9 +3,9 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev -p 3331",
+		"dev": "next dev -p 80",
 		"build": "next build",
-		"start": "next start -p 80",
+		"start": "next start",
 		"deploy": "./init-prod.sh",
 		"lint": "next lint",
 		"pull-dev": "env-cmd -f ./.env.development yarn prisma db pull",
