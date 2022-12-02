@@ -64,10 +64,21 @@ const Home = ({ some }: Props) => {
 					<Grid xs={12} sm={8} xl={9}>
 						<Grid.Container gap={2} justify='center' direction='row'>
 							<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
+							<BottomPagination
+								limit={limit}
+								totalCount={totalCount}
+								page={pageIdx}
+								onChangeHandler={pageIdxHandler}
+								isLoading={isValidating}
+							/>
 							<PostContainer posts={freshPostList} />
-							<div>
-								<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
-							</div>
+							<BottomPagination
+								limit={limit}
+								totalCount={totalCount}
+								page={pageIdx}
+								onChangeHandler={pageIdxHandler}
+								isLoading={isValidating}
+							/>
 						</Grid.Container>
 					</Grid>
 					<Grid xs={0} sm={2} xl={1.5}>
