@@ -1,6 +1,5 @@
-import { Grid, Loading, Pagination } from '@nextui-org/react';
+import { Pagination } from '@nextui-org/react';
 import { memo } from 'react';
-import styled from 'styled-components';
 
 type BottomPaginationProps = {
 	totalCount: number;
@@ -11,14 +10,12 @@ type BottomPaginationProps = {
 
 export const BottomPagination = memo(({ totalCount, limit, page, onChangeHandler }: BottomPaginationProps) => {
 	return (
-		<Wrapper justify='center'>
-			<Grid xs>
-				<Pagination onChange={onChangeHandler} color={'secondary'} total={Math.ceil(totalCount / limit)} page={page} />
-			</Grid>
-		</Wrapper>
+		// <Wrapper>
+		<Pagination onChange={onChangeHandler} color={'secondary'} total={Math.ceil(totalCount / limit)} page={page} />
+		// </Wrapper>
 	);
 });
 
 BottomPagination.displayName = 'BottomPagination';
 
-const Wrapper = styled(Grid.Container)``;
+// const Wrapper = styled.div``;
