@@ -61,40 +61,53 @@ const Home = ({ isMobile }: Props) => {
 
 				<main>
 					{isMobile && (
-						<Grid.Container xs sm xl md lg direction='column' justify='flex-start'>
-							<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
-							<Spacer y={1} />
-							<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
-							<Spacer y={1} />
-							<PostContainer posts={freshPostList} />
-							<Spacer y={1} />
-							<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+						<Grid.Container direction='row' justify='flex-start' gap={1}>
+							<Grid>
+								<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
+							</Grid>
+							<Grid>
+								<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+							</Grid>
+							<Grid>
+								<PostContainer posts={freshPostList} />
+							</Grid>
+							<Grid>
+								<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+							</Grid>
 						</Grid.Container>
 					)}
 					{!isMobile && (
-						<Grid.Container justify='center' direction='row'>
-							<Grid xs={0} sm={2} xl={1.5}>
+						<Grid.Container justify='center' direction='row' gap={1}>
+							<Grid xs={1} sm={2} md={1} lg={1} xl={1}>
 								left
 							</Grid>
-							<Grid xs={12} sm={8} xl={9}>
-								<Grid.Container gap={2} justify='center' direction='row'>
-									<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
-									<BottomPagination
-										limit={limit}
-										totalCount={totalCount}
-										page={pageIdx}
-										onChangeHandler={pageIdxHandler}
-									/>
-									<PostContainer posts={freshPostList} />
-									<BottomPagination
-										limit={limit}
-										totalCount={totalCount}
-										page={pageIdx}
-										onChangeHandler={pageIdxHandler}
-									/>
+							<Grid xs={10} sm={8} md={10} lg={10} xl={10}>
+								<Grid.Container justify='center' direction='row' gap={2}>
+									<Grid xs={12} sm={12} md={11} lg={12} xl={12} justify='center'>
+										<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
+									</Grid>
+									<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
+										<BottomPagination
+											limit={limit}
+											totalCount={totalCount}
+											page={pageIdx}
+											onChangeHandler={pageIdxHandler}
+										/>
+									</Grid>
+									<Grid xs={12} sm={12} md={11} lg={12} xl={12} justify='center'>
+										<PostContainer posts={freshPostList} />
+									</Grid>
+									<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
+										<BottomPagination
+											limit={limit}
+											totalCount={totalCount}
+											page={pageIdx}
+											onChangeHandler={pageIdxHandler}
+										/>
+									</Grid>
 								</Grid.Container>
 							</Grid>
-							<Grid xs={0} sm={2} xl={1.5}>
+							<Grid xs={1} sm={2} md={1} lg={1} xl={1}>
 								right
 							</Grid>
 						</Grid.Container>
