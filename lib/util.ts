@@ -11,3 +11,5 @@ export const masking = '---::--!@£!@£';
 const numberFormatter = new Intl.NumberFormat();
 
 export const numberFormat = (num: number) => numberFormatter.format(num);
+
+export const clientTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
