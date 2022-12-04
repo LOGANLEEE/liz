@@ -38,9 +38,6 @@ const DesktopContainer = ({ limit, pageIdxHandler, pageIdx, targetSiteCount, tot
 							<Grid xs sm md lg xl>
 								<InfoCard count={targetSiteCount} titleInfo='대상 커뮤니티' suffix='군데' />
 							</Grid>
-							<Grid xs sm md lg xl>
-								<InfoCard count={targetSiteCount} titleInfo='대상 커뮤니티' suffix='군데' />
-							</Grid>
 						</Grid.Container>
 					</Grid>
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
