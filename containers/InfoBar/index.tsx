@@ -40,48 +40,43 @@ type InfoCardProps = {
 	titleInfo?: string;
 	count?: number;
 	suffix?: string;
+	prefix?: string;
 };
-export const InfoCard = memo(({ count, title, titleInfo, suffix }: InfoCardProps) => {
+export const InfoCard = memo(({ count, title, titleInfo, suffix, prefix }: InfoCardProps) => {
 	return (
-		<InfoCardWrapper variant='bordered'>
-			<Card.Header className='header'>
-				<Text className='title' size={10} weight='bold' transform='uppercase' color='white'>
-					{title}
+		<InfoCardWrapper direction='column'>
+			{title && (
+				<Grid>
+					<Text className='title' size={12} weight='bold' transform='uppercase' color='white'>
+						{title}
+					</Text>
+				</Grid>
+			)}
+			{titleInfo && (
+				<Grid className='info'>
+					<Text size={12} weight='bold' transform='uppercase' color='white'>
+						{titleInfo}
+					</Text>
+				</Grid>
+			)}
+			<Grid>
+				<Text className='count' size={16} weight='bold' transform='uppercase' color='white'>
+					{prefix} {count} {suffix}
 				</Text>
-				<Text className='title-info' size={14} weight='bold' transform='uppercase' color='white'>
-					{titleInfo}
-				</Text>
-				<Text className='count' size={20} weight='bold' transform='uppercase' color='white'>
-					{count} {suffix}
-				</Text>
-			</Card.Header>
-			{/* <Card.Image src='/images/card1.jpg' objectFit='cover' width='100%' height={200} alt='Card image background' /> */}
+			</Grid>
 		</InfoCardWrapper>
 	);
 });
 
 InfoCard.displayName = 'InfoCard';
 
-const InfoCardWrapper = styled(Card)`
+const InfoCardWrapper = styled(Grid.Container)`
 	background-color: #424944;
+	border-radius: 20px;
+	padding: 20px;
+	height: 100%;
 
-	.header {
-		/* justify-content: flex-end; */
-		display: flex;
-		flex-direction: column;
-		p {
-			width: 100%;
-		}
-
-		.title {
-			text-align: start;
-		}
-		,
-		.title-info {
-			text-align: end;
-		}
-		.count {
-			text-align: start;
-		}
+	.info {
+		text-align: end;
 	}
 `;
