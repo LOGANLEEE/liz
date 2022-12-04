@@ -1,28 +1,28 @@
-import { Grid, Spacer, Text } from '@nextui-org/react';
-import type { fresh_post } from '@prisma/client';
-import { BottomPagination } from 'components/BottomPagination';
+import { Grid, Text } from '@nextui-org/react';
+import type { api_log, fresh_post } from '@prisma/client';
 import { CustomLoading } from 'components/CustomLoading';
-import { InfoBar } from 'containers/InfoBar';
-import { PostContainer } from 'containers/PostContainer';
 import { usePagination } from 'hook/usePagination';
 import { _axios } from 'lib/axiosInstance';
 import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
 import { names } from 'lib/crawl/targetInfo';
+import { getRecentAccessLog } from 'lib/log';
 import { GetServerSidePropsContext } from 'next';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import useSWR from 'swr';
 
 type Props = {
-	// posts: fresh_post[];
-	// totalCount: number;
 	isMobile: boolean;
+	recentAccessLog: api_log;
 };
+const MobileContainer = dynamic(() => import('containers/MobileContainer'), {});
+const DesktopContainer = dynamic(() => import('containers/DesktopContainer'), {});
 
 console.log('mode:', process.env.NEXT_PUBLIC_MODE);
 
-const Home = ({ isMobile }: Props) => {
+const Home = ({ isMobile, recentAccessLog }: Props) => {
 	const {
 		pageIdx,
 		limit,
@@ -61,56 +61,26 @@ const Home = ({ isMobile }: Props) => {
 
 				<main>
 					{isMobile && (
-						<Grid.Container direction='row' justify='flex-start' gap={1}>
-							<Grid>
-								<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
-							</Grid>
-							<Grid>
-								<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
-							</Grid>
-							<Grid>
-								<PostContainer posts={freshPostList} />
-							</Grid>
-							<Grid>
-								<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
-							</Grid>
-						</Grid.Container>
+						<MobileContainer
+							recentAccessLog={recentAccessLog}
+							totalCount={totalCount}
+							targetSiteCount={Object.keys(names).length}
+							limit={limit}
+							pageIdx={pageIdx}
+							pageIdxHandler={pageIdxHandler}
+							freshPostList={freshPostList}
+						/>
 					)}
 					{!isMobile && (
-						<Grid.Container justify='center' direction='row' gap={1}>
-							<Grid xs={1} sm={2} md={1} lg={1} xl={1}>
-								left
-							</Grid>
-							<Grid xs={10} sm={8} md={10} lg={10} xl={10}>
-								<Grid.Container justify='center' direction='row' gap={2}>
-									<Grid xs={12} sm={12} md={11} lg={12} xl={12} justify='center'>
-										<InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} />
-									</Grid>
-									<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
-										<BottomPagination
-											limit={limit}
-											totalCount={totalCount}
-											page={pageIdx}
-											onChangeHandler={pageIdxHandler}
-										/>
-									</Grid>
-									<Grid xs={12} sm={12} md={11} lg={12} xl={12} justify='center'>
-										<PostContainer posts={freshPostList} />
-									</Grid>
-									<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
-										<BottomPagination
-											limit={limit}
-											totalCount={totalCount}
-											page={pageIdx}
-											onChangeHandler={pageIdxHandler}
-										/>
-									</Grid>
-								</Grid.Container>
-							</Grid>
-							<Grid xs={1} sm={2} md={1} lg={1} xl={1}>
-								right
-							</Grid>
-						</Grid.Container>
+						<DesktopContainer
+							recentAccessLog={recentAccessLog}
+							totalCount={totalCount}
+							targetSiteCount={Object.keys(names).length}
+							limit={limit}
+							pageIdx={pageIdx}
+							pageIdxHandler={pageIdxHandler}
+							freshPostList={freshPostList}
+						/>
 					)}
 				</main>
 
@@ -131,7 +101,12 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
 
 	const { isMobile } = getSelectorsByUserAgent(userAgent);
 
+	const recentAccessLog = await getRecentAccessLog();
+
 	return {
-		props: { isMobile },
+		props: {
+			isMobile,
+			recentAccessLog: JSON.parse(JSON.stringify(recentAccessLog)),
+		},
 	};
 }
