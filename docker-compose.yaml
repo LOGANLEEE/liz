@@ -1,9 +1,11 @@
 version: '3.9'
 services:
     nextjs:
+        image: loganlee/liz-web-next-js
         container_name: liz-web
         build: ./
     nginx:
+        image: loganlee/liz-web-nginx
         container_name: nginx
         build: ./nginx
         ports:
