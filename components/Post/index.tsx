@@ -1,5 +1,6 @@
+import { Grid, Link, Text } from '@nextui-org/react';
 import type { fresh_post } from '@prisma/client';
-import { useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { VisitedList } from 'types';
 import { numberFormat } from '../../lib/util';
@@ -7,7 +8,7 @@ import { numberFormat } from '../../lib/util';
 type Props = {
 	data: fresh_post;
 };
-const Post = ({ data }: Props) => {
+const Post = memo(({ data }: Props) => {
 	const [visited, setVisited] = useState(false);
 
 	useEffect(() => {
@@ -29,26 +30,57 @@ const Post = ({ data }: Props) => {
 	}, [data?.id, data.link, data.name, data?.title]);
 
 	return (
-		<Wrapper onClick={visitHandler} className={`title ${visited ? 'visited' : ''}`}>
-			<li className='block1'>
-				<span className='name'>{data.name}</span>
-				<span className='title'>{data.title}</span>
-			</li>
-			{/* {data?.author && <li className='author'>{data.author}</li>} */}
-			{data.hit && <li className='hit'>🔥{numberFormat(data.hit)}</li>}
+		<Wrapper onClick={visitHandler} className={`${visited ? 'visited' : ''}`}>
+			<Grid.Container
+				className='container'
+				gap={1}
+				justify='flex-start'
+				// xs={10} sm={12}
+				direction='row'
+			>
+				<Grid xs={1.2} sm={1} md={1} className='name'>
+					<Text>{data.name}</Text>
+				</Grid>
+				<Grid xs={7.8} sm={8} md={10}>
+					<Text className='title'>{data.title}</Text>
+				</Grid>
+				{data.hit && (
+					<Grid xs={3} sm={3} md={1} justify='flex-end'>
+						<Text className='hit'>🔥{numberFormat(data.hit)}</Text>
+					</Grid>
+				)}
+			</Grid.Container>
 		</Wrapper>
 	);
-};
+});
+
+Post.displayName = 'Post';
 export default Post;
 
-const Wrapper = styled.ul`
-	margin: 5px;
-	padding: 10px;
+const Wrapper = styled.li`
+	width: 100%;
+	.container {
+		padding-right: 0;
+		padding-left: 0;
+	}
 
-	display: flex;
-	cursor: pointer;
-	border: 0.5px #3d582f solid;
-	border-radius: 14px;
+	.name {
+		border-right: 0.5px solid;
+
+		/* padding-right: 5px; */
+		/* margin-right: 10px; */
+	}
+
+	.title {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.hit {
+		/* text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap; */
+	}
 
 	:hover {
 		background-color: #4e2323;
@@ -59,27 +91,41 @@ const Wrapper = styled.ul`
 	&.visited {
 		color: #645959 !important;
 	}
-	.block1 {
-		display: flex;
-		flex-direction: row;
-		gap: 10px;
-		.name {
-			flex: auto;
-			border-right: 0.5px solid;
-			padding-right: 8px;
-		}
-		.title {
-			flex: auto;
-		}
-	}
-
-	.author {
-		font-size: 10px;
-		text-align: end;
-		flex: auto;
-	}
-	.hit {
-		text-align: end;
-		flex: auto;
-	}
 `;
+
+// const Wrapper = styled.li`
+// 	margin: 5px;
+// 	padding: 10px;
+// 	width: 100%;
+
+// 	display: flex;
+// 	flex-direction: row;
+// 	cursor: pointer;
+// 	border: 0.5px #3d582f solid;
+// 	border-radius: 14px;
+
+// 	.name {
+// 		width: 10%;
+// 		border-right: 0.5px solid;
+// 		padding-right: 5px;
+// 		margin-right: 10px;
+// 	}
+// 	.title {
+// 		width: 80%;
+// 	}
+
+// 	.hit {
+// 		width: 10%;
+// 		text-align: end;
+// 	}
+
+// 	:hover {
+// 		background-color: #4e2323;
+// 	}
+// 	:active {
+// 		background-color: #602b2b;
+// 	}
+// 	&.visited {
+// 		color: #645959 !important;
+// 	}
+// `;
