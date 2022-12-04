@@ -17,6 +17,6 @@ export const PostContainer = memo(({ posts }: Props) => {
 });
 
 PostContainer.displayName = 'PostContainer';
-const Wrapper = styled.div`
+const Wrapper = styled.ul`
 	width: 100%;
 `;
