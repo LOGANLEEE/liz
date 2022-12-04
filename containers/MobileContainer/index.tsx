@@ -26,7 +26,7 @@ const MobileContainer = ({ limit, pageIdxHandler, pageIdx, recentAccessLog, targ
 						<InfoCard
 							count={totalCount}
 							title='최근 동작 시점'
-							titleInfo={format(new Date(recentAccessLog.create_date), `HH시 mm분 ss초`)}
+							titleInfo={format(new Date(recentAccessLog.create_date), `MM월 dd일  HH시 mm분 ss초`)}
 							prefix='총'
 							suffix='개'
 						/>
