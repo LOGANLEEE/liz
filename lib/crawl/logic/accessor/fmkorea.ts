@@ -15,7 +15,7 @@ export const FMKOREAaccessor = async (): Promise<{ count: number; isError: boole
 	for (let pageCount = FMKOREA_INFO.pageRange[0]; pageCount <= FMKOREA_INFO.pageRange[1]; pageCount += FMKOREA_INFO.pageRange[2]) {
 		await page.goto(FMKOREA_INFO.targetUrl(pageCount));
 
-		for (let postCount = FMKOREA_INFO.postRage[0]; postCount <= FMKOREA_INFO.postRage[1]; postCount += FMKOREA_INFO.postRage[2]) {
+		for (let postCount = FMKOREA_INFO.postRange[0]; postCount <= FMKOREA_INFO.postRange[1]; postCount += FMKOREA_INFO.postRange[2]) {
 			const title =
 				(await page.waitForSelector(FMKOREA_INFO.link(postCount)).then((el) => el?.evaluate((el) => el.textContent?.trim()))) ||
 				null;
