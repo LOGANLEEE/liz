@@ -39,14 +39,14 @@ const Post = memo(({ data }: Props) => {
 				direction='row'
 			>
 				<Grid xs={1.2} sm={1} md={1} className='name'>
-					<Text>{data.name}</Text>
+					<Text className='text'>{data.name}</Text>
 				</Grid>
 				<Grid xs={7.8} sm={8} md={10}>
-					<Text className='title'>{data.title}</Text>
+					<Text className='title text'>{data.title}</Text>
 				</Grid>
 				{data.hit && (
 					<Grid xs={3} sm={3} md={1} justify='flex-end'>
-						<Text className='hit'>🔥{numberFormat(data.hit)}</Text>
+						<Text className='hit text'>🔥{numberFormat(data.hit)}</Text>
 					</Grid>
 				)}
 			</Grid.Container>
@@ -59,6 +59,12 @@ export default Post;
 
 const Wrapper = styled.li`
 	width: 100%;
+	padding: 5px;
+	cursor: pointer;
+	border: 0.5px #3d582f solid;
+	border-radius: 14px;
+	margin: 5px;
+
 	.container {
 		padding-right: 0;
 		padding-left: 0;
@@ -66,6 +72,7 @@ const Wrapper = styled.li`
 
 	.name {
 		border-right: 0.5px solid;
+		border-color: inherit;
 
 		/* padding-right: 5px; */
 		/* margin-right: 10px; */
@@ -85,9 +92,15 @@ const Wrapper = styled.li`
 	:hover {
 		background-color: #4e2323;
 	}
+
 	:active {
 		background-color: #602b2b;
 	}
+
+	.text {
+		color: inherit;
+	}
+
 	&.visited {
 		color: #645959 !important;
 	}
