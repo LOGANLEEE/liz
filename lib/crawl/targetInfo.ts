@@ -1,4 +1,4 @@
-export const names = { dc: '디씨', fm: '에펨' };
+export const names = { dc: '디씨', fm: '에펨', rr: '루리웹' };
 
 export const DCINSIDE_INFO = {
 	name: names.dc,
@@ -20,29 +20,25 @@ export const DCINSIDE_INFO = {
 		`#container > section.left_content > article:nth-child(3) > div.gall_listwrap.list > table > tbody > tr:nth-child(${idx}) > td.gall_count`,
 };
 
-// export const DOGDRIP_INFO = {
-// 	name: names.dog,
-// 	targetUrl: (page: number) => `https://www.dogdrip.net/dogdrip?page=${page}`,
-// 	page: [1, 5],
-// 	range: [2, 21],
-// 	rangeGap: 1,
-// 	garbage: (idx: number) => [
-// 		`#container > section.left_content > article:nth-child(3) > div.gall_listwrap.list > table > tbody > tr:nth-child(${idx}) > td.gall_tit.ub-word > a:nth-child(1) > strong`,
-// 	],
-// 	link: (idx: number) =>
-// 		`#main > div > div.eq.section.secontent.background-color-content > div > div.ed.board-list > table > tbody > tr:nth-child(${idx}) > td.title > span > a`,
-// 	title: (idx: number) =>
-// 		`#main > div > div.eq.section.secontent.background-color-content > div > div.ed.board-list > table > tbody > tr:nth-child(${idx}) > td.title > span > a > span.ed.title-link`,
-// 	author: (idx: number) =>
-// 		`#main > div > div.eq.section.secontent.background-color-content > div > div.ed.board-list > table > tbody > tr:nth-child(${idx}) > td.author > a`,
-// };
+export const RULIWEB_INFO = {
+	name: names.rr,
+	targetBaseName: 'https://bbs.ruliweb.com',
+	targetUrl: (page: number) => `https://bbs.ruliweb.com/best/all/now?orderby=readcount&range=24h&page=${page}`,
+	pageRange: [1, 5, 1],
+	postRange: [1, 28, 1],
+	garbage: (idx: number) => [`#best_body > table > tbody > tr:nth-child(${idx}) > td > div > div > div.col_10.text_wrapper > a > span`],
+	title: (idx: number) => `#best_body > table > tbody > tr:nth-child(${idx}) > td > div > div > div.col_10.text_wrapper > a`,
+	hit: (idx: number) =>
+		`#best_body > table > tbody > tr:nth-child(${idx}) > td > div > div > div.col_10.text_wrapper > div > span.hit > strong`,
+	author: (idx: number) => `#best_body > table > tbody > tr:nth-child(${idx}) > td > div > div > div.col_10.text_wrapper > div > a.nick`,
+};
 
 export const FMKOREA_INFO = {
 	name: names.fm,
 	targetBaseName: 'https://www.fmkorea.com',
 	targetUrl: (page: number) => `https://www.fmkorea.com/index.php?mid=best&listStyle=list&page=${page}`,
 	pageRange: [1, 5, 1],
-	postRage: [2, 21, 1],
+	postRange: [2, 21, 1],
 	garbage: (idx: number) => [],
 	link: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td.title.hotdeal_var8 > a.hx`,
 	//  #bd_189545458_0 > div > table > tbody > tr:nth-child(2) > td.title.hotdeal_var8 > a.hx
