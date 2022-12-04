@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { DCINSIDEAccessor } from 'lib/crawl/logic/accessor/dcinside';
 import { FMKOREAaccessor } from 'lib/crawl/logic/accessor/fmkorea';
+import { RULIWEBAccessor } from 'lib/crawl/logic/accessor/ruliweb';
 import { markingFreshPosts, moveMarkedPosts } from 'lib/crawl/logic/cleaner';
 import { writeLog } from 'lib/log';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -26,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		const tempHolder = [];
 		tempHolder.push(await DCINSIDEAccessor());
 		tempHolder.push(await FMKOREAaccessor());
+		tempHolder.push(await RULIWEBAccessor());
 		console.log(`stage 2: ${JSON.stringify(tempHolder.map((e) => e))}`);
 		await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
 	} catch (error) {
