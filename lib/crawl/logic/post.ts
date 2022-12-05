@@ -14,7 +14,7 @@ export declare type GetFreshPostReturn = {
 
 export const getFreshPost = async ({ offset, limit, orderByHit }: GetFreshPostArgs): Promise<GetFreshPostReturn> => {
 	const [totalCount, list] = await _prisma.$transaction([
-		_prisma.fresh_post.count(),
+		_prisma.fresh_post.count({ where: { mark: false } }),
 		_prisma.fresh_post.findMany({
 			where: { mark: false },
 			skip: offset,
