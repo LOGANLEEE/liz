@@ -1,12 +1,14 @@
 version: '3.9'
 services:
     nextjs:
-        image: loganlee/liz-web-next-js
+        image: loganlee/liz-web-next-js:latest
         container_name: liz-web
         build: ./
     nginx:
-        image: loganlee/liz-web-nginx
+        image: loganlee/liz-web-nginx:latest
         container_name: nginx
         build: ./nginx
         ports:
             - 80:80
+        depends_on:
+            - nextjs
