@@ -1,4 +1,5 @@
 import { RULIWEB_INFO } from 'lib/crawl/targetInfo';
+import { delay } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 import puppeteer from 'puppeteer';
 
@@ -13,15 +14,14 @@ export const RULIWEBAccessor = async (): Promise<{ count: number; isError: boole
 	const tempHolder = [];
 
 	for (let pageCount = RULIWEB_INFO.pageRange[0]; pageCount <= RULIWEB_INFO.pageRange[1]; pageCount += RULIWEB_INFO.pageRange[2]) {
+		await delay(pageCount * 500);
 		await page.goto(RULIWEB_INFO.targetUrl(pageCount));
 
 		// await writeFile('./dummy.html', await page.content()).then(() => console.log('file wrote'));
 
 		for (let postCount = RULIWEB_INFO.postRange[0]; postCount <= RULIWEB_INFO.postRange[1]; postCount += RULIWEB_INFO.postRange[2]) {
-			await Promise.all(
-				RULIWEB_INFO.garbage(postCount).map(
-					async (path) => await page.waitForSelector(path).then((element) => element?.evaluate((el) => el.remove()))
-				)
+			RULIWEB_INFO.garbage(postCount).map(
+				async (path) => await page.waitForSelector(path).then((element) => element?.evaluate((el) => el.remove()))
 			);
 
 			const title =
@@ -42,7 +42,7 @@ export const RULIWEBAccessor = async (): Promise<{ count: number; isError: boole
 			const hit =
 				(await page
 					.waitForSelector(RULIWEB_INFO.hit(postCount))
-					.then((element) => element?.evaluate((el) => parseInt(el.textContent?.trim()?.replaceAll(',', '') || '0')))) || null; // select the element
+					.then((element) => element?.evaluate((el) => parseInt(el.textContent?.trim()?.replaceAll(',', '') || '0')))) || null;
 
 			tempHolder.push({ title, link, hit, name: RULIWEB_INFO.name, mark: false, author, content: null });
 		}
