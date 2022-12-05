@@ -5,13 +5,11 @@ import { RULIWEBAccessor } from 'lib/crawl/logic/accessor/ruliweb';
 import { markingFreshPosts, moveMarkedPosts } from 'lib/crawl/logic/cleaner';
 import { writeLog } from 'lib/log';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { _prisma } from 'prisma/prismaInstance';
 
 // const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	// res.status(200).json({ message: 'crawling is starting...' });
-	await _prisma.$connect();
 	res.status(200).json({ message: 'initializing crawling ...' });
 
 	// stage 1
@@ -44,6 +42,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify(error) });
 		});
 
-	await _prisma.$disconnect();
 	return;
 }
