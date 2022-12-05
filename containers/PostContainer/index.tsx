@@ -18,6 +18,7 @@ export const PostContainer = memo(({ posts }: Props) => {
 		}
 	}, []);
 
+	// todo 실행 후 실시간 반영 안됨
 	const openPosts = useCallback(() => {
 		if (showButton) {
 			const visitedList: VisitedList = JSON.parse(localStorage.getItem('visitedIdList') || '[]');
