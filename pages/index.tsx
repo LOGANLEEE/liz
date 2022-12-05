@@ -31,7 +31,10 @@ const Home = ({ isMobile, recentAccessLog }: Props) => {
 
 	const { data, error, isValidating } = useSWR<GetFreshPostReturn>(
 		`/api/crawl/getFreshPost/${pageIdx}`,
-		async () => await _axios.post(`/api/crawl/getFreshPost`, { limit, offset: (pageIdx - 1) * limit }).then((res) => res.data)
+		async () =>
+			await _axios
+				.post(`/api/crawl/getFreshPost`, { orderByHit: 'desc', limit, offset: (pageIdx - 1) * limit })
+				.then((res) => res.data)
 	);
 
 	const [totalCount, setTotalCount] = useState(0);
@@ -87,6 +90,7 @@ const Home = ({ isMobile, recentAccessLog }: Props) => {
 				<footer>
 					<Grid.Container direction='column' justify='center'>
 						<Text css={{ textAlign: 'center' }}>Logan will deserve all rights.</Text>
+						<Text css={{ textAlign: 'center' }}>ver.0.0.1</Text>
 					</Grid.Container>
 				</footer>
 			</div>
