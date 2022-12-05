@@ -1,4 +1,4 @@
-import { Grid, Link, Text } from '@nextui-org/react';
+import { Grid, Text } from '@nextui-org/react';
 import type { fresh_post } from '@prisma/client';
 import { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
