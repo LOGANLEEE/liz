@@ -51,4 +51,5 @@ dummy.html
 # prisma schema
 
 /prisma/schema.prisma
+.cache
 
