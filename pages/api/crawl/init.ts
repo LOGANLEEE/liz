@@ -23,16 +23,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		.catch(async (error) => await writeLog({ name: 'markingFreshPosts', result: 0, body: JSON.stringify(error) }));
 
 	// stage 2
-	try {
-		const tempHolder = [];
-		tempHolder.push(await DCINSIDEAccessor());
-		tempHolder.push(await FMKOREAaccessor());
-		tempHolder.push(await RULIWEBAccessor());
-		console.log(`stage 2: ${JSON.stringify(tempHolder.map((e) => e))}`);
-		await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
-	} catch (error) {
-		await writeLog({ name: 'accessor', result: 0, body: JSON.stringify(error) });
-	}
+	// try {
+	const tempHolder = await Promise.all(
+		[await DCINSIDEAccessor(), await FMKOREAaccessor(), await RULIWEBAccessor()].map((result) => result)
+	);
+
+	console.log(`stage 2: ${JSON.stringify(tempHolder.map((e) => e))}`);
+	await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
+	// } catch (error) {
+	// await writeLog({ name: 'accessor', result: 0, body: JSON.stringify(error) });
+	// }
 
 	// stage 3
 	await moveMarkedPosts()
