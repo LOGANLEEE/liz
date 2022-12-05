@@ -1,9 +1,10 @@
 import { FMKOREA_INFO } from 'lib/crawl/targetInfo';
+import { puppeteerArgs } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 import puppeteer from 'puppeteer';
 
 export const accessorTemplate = async (): Promise<{ count: number; isError: boolean; name: string; message: string }> => {
-	const browser = await puppeteer.launch({ headless: true });
+	const browser = await puppeteer.launch({ headless: true, args: puppeteerArgs });
 
 	const page = await browser.newPage();
 	await page.setUserAgent(

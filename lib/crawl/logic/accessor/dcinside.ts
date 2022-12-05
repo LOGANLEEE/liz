@@ -1,13 +1,11 @@
-import { writeFile } from 'fs/promises';
 import { DCINSIDE_INFO } from 'lib/crawl/targetInfo';
-import { delay, masking } from 'lib/util';
+import { delay, masking, puppeteerArgs } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 import puppeteer from 'puppeteer';
 
 export const DCINSIDEAccessor = async (): Promise<{ count: number; isError: boolean; name: string; message: string }> => {
 	// get target Info
-
-	const browser = await puppeteer.launch({ headless: true });
+	const browser = await puppeteer.launch({ headless: true, args: puppeteerArgs });
 
 	const page = await browser.newPage();
 	await page.setUserAgent(
