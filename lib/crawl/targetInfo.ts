@@ -1,4 +1,4 @@
-export const names = { dc: '디씨', fm: '에펨', rr: '루리웹', pp: 뿜뿌 };
+export const names = { dc: '디씨', fm: '에펨', rr: '루리웹', pp: '뿜뿌' };
 
 type TargetInfo = {
 	name: string;
