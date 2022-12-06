@@ -1,5 +1,5 @@
 import { DCINSIDE_INFO } from 'lib/crawl/targetInfo';
-import { delay, masking, puppeteerArgs } from 'lib/util';
+import { delay, masking, puppeteerArgs, puppeteerUserAgent } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 import puppeteer from 'puppeteer';
 
@@ -8,9 +8,8 @@ export const DCINSIDEAccessor = async (): Promise<{ count: number; isError: bool
 	const browser = await puppeteer.launch({ headless: true, args: puppeteerArgs });
 
 	const page = await browser.newPage();
-	await page.setUserAgent(
-		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
-	);
+	await page.setUserAgent(puppeteerUserAgent);
+
 	const tempHolder = [];
 
 	for (let pageCount = DCINSIDE_INFO.pageRange[0]; pageCount <= DCINSIDE_INFO.pageRange[1]; pageCount += DCINSIDE_INFO.pageRange[2]) {
@@ -57,7 +56,7 @@ export const DCINSIDEAccessor = async (): Promise<{ count: number; isError: bool
 			if (author === masking) return { count: 0, isError: true, name: DCINSIDE_INFO.name, message: 'empty author' };
 
 			tempHolder.push({
-				link: `${DCINSIDE_INFO.targetHostName}${link}`,
+				link: `${DCINSIDE_INFO.targetBaseName}${link}`,
 				author,
 				hit,
 				name: DCINSIDE_INFO.name,

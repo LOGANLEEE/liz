@@ -1,5 +1,5 @@
 import { FMKOREA_INFO } from 'lib/crawl/targetInfo';
-import { delay, puppeteerArgs } from 'lib/util';
+import { delay, puppeteerArgs, puppeteerUserAgent } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 import puppeteer from 'puppeteer';
 
@@ -8,9 +8,7 @@ export const FMKOREAaccessor = async (): Promise<{ count: number; isError: boole
 		const browser = await puppeteer.launch({ headless: true, args: puppeteerArgs });
 
 		const page = await browser.newPage();
-		await page.setUserAgent(
-			'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
-		);
+		await page.setUserAgent(puppeteerUserAgent);
 
 		const tempHolder = [];
 
