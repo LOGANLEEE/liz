@@ -10,8 +10,8 @@ type TargetInfo = {
 	targetIndex?: (idx: number) => string;
 	link: (idx: number) => string;
 	title?: (idx: number) => string;
-	author?: (idx: number) => string;
-	hit?: (idx: number) => string;
+	author: (idx: number) => string;
+	hit: (idx: number) => string;
 	uploadDate?: (idx: number) => string;
 };
 // https://www.ppomppu.co.kr/hot.php?id=&page=1&category=999&search_type=&keyword=&page_num=&del_flag=&bbs_list_category=0
