@@ -1,9 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { universalAccessor } from 'lib/crawl/logic/accessor/universalAccessor';
-import { DCINSIDEAccessor } from 'lib/crawl/logic/accessor/dcinside';
-import { FMKOREAaccessor } from 'lib/crawl/logic/accessor/fmkorea';
-import { PPOMPPUAccessor } from 'lib/crawl/logic/accessor/ppompu';
-import { RULIWEBAccessor } from 'lib/crawl/logic/accessor/ruliweb';
 import { markingFreshPosts, moveMarkedPosts } from 'lib/crawl/logic/cleaner';
 import { writeLog } from 'lib/log';
 import { getBrowser } from 'lib/pptrInstace';
@@ -22,12 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			await writeLog({ name: 'markingFreshPosts', result: 1, body: JSON.stringify(markedCount) });
 		})
 		.catch(async (error) => await writeLog({ name: 'markingFreshPosts', result: 0, body: JSON.stringify(error) }));
-
-	// const tempHolder = [];
-	// tempHolder.push(await DCINSIDEAccessor());
-	// tempHolder.push(await FMKOREAaccessor());
-	// tempHolder.push(await RULIWEBAccessor());
-	// tempHolder.push(await PPOMPPUAccessor());
 
 	// stage 2
 	const { browser } = await getBrowser();
