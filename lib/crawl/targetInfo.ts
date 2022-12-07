@@ -52,7 +52,7 @@ export const DCINSIDE_INFO: TargetInfo = {
 
 export const RULIWEB_INFO: TargetInfo = {
 	name: names.rr,
-	targetBaseName: 'https://bbs.ruliweb.com',
+	targetBaseName: '',
 	targetUrl: (page: number) => `https://bbs.ruliweb.com/best/all/now?orderby=readcount&range=24h&page=${page}`,
 	pageRange: [1, 5, 1],
 	postRange: [1, 28, 1],
