@@ -24,12 +24,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	const tempHolder = await universalAccessor({ browser }).finally(async () => {
 		await browser.close();
 	});
+	console.log('stage 2:');
 
-	console.log(`stage 2: ${JSON.stringify(tempHolder.map((e) => e))}`);
+	tempHolder.map((e) => console.log(e));
 	await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
-	// } catch (error) {
-	// await writeLog({ name: 'accessor', result: 0, body: JSON.stringify(error) });
-	// }
 
 	// stage 3
 	await moveMarkedPosts()
