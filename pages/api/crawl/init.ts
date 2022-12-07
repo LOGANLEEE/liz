@@ -21,12 +21,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 	// stage 2
 	const { browser } = await getBrowser();
-	const tempHolder = await universalAccessor({ browser }).finally(async () => {
-		await browser.close();
-	});
+	const tempHolder = await universalAccessor({ browser })
+		.catch((err) => {
+			console.log('stage 2: error', JSON.stringify(err));
+		})
+		.finally(async () => {
+			await browser.close();
+		});
 	console.log('stage 2:');
 
-	tempHolder.map((e) => console.log(e));
+	tempHolder?.map((e) => console.log(e));
 	await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
 
 	// stage 3
