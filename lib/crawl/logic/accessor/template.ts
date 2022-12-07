@@ -18,21 +18,37 @@ export const accessorTemplate = async (): Promise<{ count: number; isError: bool
 			const title =
 				(await page
 					.waitForSelector(FMKOREA_INFO.link(postCount))
-					.then((element) => element?.evaluate((el) => el.textContent?.trim()))) || null; // select the element
+					.then((element) => element?.evaluate((el) => el.textContent?.trim()))
+					.catch((err) => {
+						console.log(err);
+						return 'error title';
+					})) || null;
 			const link =
 				(await page
 					.waitForSelector(FMKOREA_INFO.link(postCount))
-					.then((element) => element?.evaluate((el) => el.getAttribute('href')))) || null; // select the element
+					.then((element) => element?.evaluate((el) => el.getAttribute('href')))
+					.catch((err) => {
+						console.log(err);
+						return 'error link';
+					})) || null;
 
 			const author =
 				(await page
 					.waitForSelector(FMKOREA_INFO.author(postCount))
-					.then((element) => element?.evaluate((el) => el.getAttribute('href')))) || null; // select the element
+					.then((element) => element?.evaluate((el) => el.textContent?.trim()))
+					.catch((err) => {
+						console.log(err);
+						return 'error author';
+					})) || null;
 
 			const hit =
 				(await page
-					.waitForSelector(FMKOREA_INFO.author(postCount))
-					.then((element) => element?.evaluate((el) => parseInt(el.textContent?.trim()?.replaceAll(',', '') || '0')))) || null; // select the element
+					.waitForSelector(FMKOREA_INFO.hit(postCount))
+					.then((element) => element?.evaluate((el) => parseInt(el.textContent?.trim()?.replaceAll(',', '') || '0')))
+					.catch((err) => {
+						console.log(err);
+						return -1;
+					})) || null;
 
 			tempHolder.push({ title, link, hit, name: FMKOREA_INFO.name, mark: false, author, content: null });
 		}
