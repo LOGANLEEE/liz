@@ -1,7 +1,8 @@
-export const names = { dc: '디씨', fm: '에펨', rr: '루리웹', pp: '뿜뿌' };
+export const names = { dc: '디씨', fm: '에펨', rr: '루리웹', pp: '뿜뿌', ilbe: '일베' };
 
 type TargetInfo = {
 	name: string;
+	enable: boolean;
 	targetBaseName?: string;
 	targetUrl: (page: number) => string;
 	pageRange: number[];
@@ -16,21 +17,9 @@ type TargetInfo = {
 };
 // https://www.ppomppu.co.kr/hot.php?id=&page=1&category=999&search_type=&keyword=&page_num=&del_flag=&bbs_list_category=0
 
-const template: TargetInfo = {
-	name: names.dc,
-	targetBaseName: 'template',
-	targetUrl: (page: number) => `${page}`,
-	pageRange: [1, 2, 1],
-	postRange: [1, 101, 1],
-	garbage: (idx: number) => [`${idx}`],
-	targetIndex: (idx: number) => `${idx}`,
-	link: (idx: number) => `${idx}`,
-	author: (idx: number) => `${idx}`,
-	hit: (idx: number) => `${idx}`,
-};
-
 export const DCINSIDE_INFO: TargetInfo = {
 	name: names.dc,
+	enable: true,
 	targetBaseName: 'https://gall.dcinside.com',
 	targetUrl: (page: number) => `https://gall.dcinside.com/board/lists/?id=dcbest&list_num=100&sort_type=N&search_head=9&page=${page}`,
 	pageRange: [1, 1, 1],
@@ -52,6 +41,7 @@ export const DCINSIDE_INFO: TargetInfo = {
 
 export const RULIWEB_INFO: TargetInfo = {
 	name: names.rr,
+	enable: true,
 	targetBaseName: '',
 	targetUrl: (page: number) => `https://bbs.ruliweb.com/best/all/now?orderby=readcount&range=24h&page=${page}`,
 	pageRange: [1, 5, 1],
@@ -65,6 +55,7 @@ export const RULIWEB_INFO: TargetInfo = {
 
 export const FMKOREA_INFO: TargetInfo = {
 	name: names.fm,
+	enable: true,
 	targetBaseName: 'https://www.fmkorea.com',
 	targetUrl: (page: number) => `https://www.fmkorea.com/index.php?mid=best&listStyle=list&page=${page}`,
 	pageRange: [1, 5, 1],
@@ -78,6 +69,7 @@ export const FMKOREA_INFO: TargetInfo = {
 
 export const PPOMPPU_INFO: TargetInfo = {
 	name: names.pp,
+	enable: true,
 	targetBaseName: 'https://www.ppomppu.co.kr',
 	targetUrl: (page: number) =>
 		`https://www.ppomppu.co.kr/hot.php?id=&page=${page}&category=999&search_type=&keyword=&page_num=&del_flag=&bbs_list_category=0`,
@@ -93,4 +85,32 @@ export const PPOMPPU_INFO: TargetInfo = {
 		`body > div > div.contents > div.container > div:nth-child(2) > div.board_box > table.board_table > tbody > tr:nth-child(${idx}) > td:nth-child(7)`,
 };
 
-export const infoList: TargetInfo[] = [DCINSIDE_INFO, PPOMPPU_INFO, RULIWEB_INFO, FMKOREA_INFO];
+const template: TargetInfo = {
+	name: names.dc,
+	targetBaseName: 'template',
+	enable: false,
+	targetUrl: (page: number) => ``,
+	pageRange: [1, 2, 1],
+	postRange: [1, 101, 1],
+	garbage: (idx: number) => [],
+	targetIndex: (idx: number) => ``,
+	link: (idx: number) => ``,
+	author: (idx: number) => ``,
+	hit: (idx: number) => ``,
+};
+
+export const ILBE_INFO: TargetInfo = {
+	name: names.ilbe,
+	targetBaseName: 'https://www.ilbe.com',
+	enable: true,
+	targetUrl: (page: number) => `https://www.ilbe.com/list/ilbe?page=${page}&listSize=60&listStyle=list`,
+	pageRange: [1, 2, 1],
+	postRange: [5, 64, 1],
+	garbage: (idx: number) => [],
+	// targetIndex: (idx: number) => `${idx}`,
+	link: (idx: number) => `#content-wrap > div > div.board-list > ul > li:nth-child(${idx}) > span.title > a`,
+	author: (idx: number) => `#content-wrap > div > div.board-list > ul > li:nth-child(${idx}) > span.global-nick.nick > a`,
+	hit: (idx: number) => `#content-wrap > div > div.board-list > ul > li:nth-child(${idx}) > span.view`,
+};
+
+export const infoList: TargetInfo[] = [DCINSIDE_INFO, PPOMPPU_INFO, RULIWEB_INFO, FMKOREA_INFO, ILBE_INFO];
