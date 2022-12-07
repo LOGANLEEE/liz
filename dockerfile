@@ -62,7 +62,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # Install PM2 globallyw
-RUN yarn global add pm2
+# RUN yarn global add pm2
 
 COPY --from=builder /app/public ./public
 
@@ -77,8 +77,8 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-# CMD ["node", "server.js"]
-CMD ["pm2-runtime", "start", "server.js", "--name", "liz-web", "--", "-p"]
+CMD ["node", "server.js"]
+# CMD ["pm2-runtime", "start", "server.js", "--name", "liz-web", "--", "-p"]
 
 # CMD ["pm2-runtime", "start" ,"yarn" ,"--interpreter" ,"sh" ,"--name" ,"liz-web", "--","start"]
 
