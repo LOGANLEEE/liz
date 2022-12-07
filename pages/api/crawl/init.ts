@@ -1,9 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { universalAccessor } from 'lib/crawl/logic/accessor/universalAccessor';
 import { DCINSIDEAccessor } from 'lib/crawl/logic/accessor/dcinside';
 import { FMKOREAaccessor } from 'lib/crawl/logic/accessor/fmkorea';
+import { PPOMPPUAccessor } from 'lib/crawl/logic/accessor/ppompu';
 import { RULIWEBAccessor } from 'lib/crawl/logic/accessor/ruliweb';
 import { markingFreshPosts, moveMarkedPosts } from 'lib/crawl/logic/cleaner';
 import { writeLog } from 'lib/log';
+import { getBrowser } from 'lib/pptrInstace';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 // const fetcher = (url) => axios.get(url).then((res) => res.data);
@@ -20,11 +23,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		})
 		.catch(async (error) => await writeLog({ name: 'markingFreshPosts', result: 0, body: JSON.stringify(error) }));
 
+	// const tempHolder = [];
+	// tempHolder.push(await DCINSIDEAccessor());
+	// tempHolder.push(await FMKOREAaccessor());
+	// tempHolder.push(await RULIWEBAccessor());
+	// tempHolder.push(await PPOMPPUAccessor());
+
 	// stage 2
-	// try {
-	const tempHolder = await Promise.all(
-		[await DCINSIDEAccessor(), await FMKOREAaccessor(), await RULIWEBAccessor()].map((result) => result)
-	);
+	const { browser } = await getBrowser();
+	const tempHolder = await universalAccessor({ browser }).finally(async () => {
+		await browser.close();
+	});
 
 	console.log(`stage 2: ${JSON.stringify(tempHolder.map((e) => e))}`);
 	await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
