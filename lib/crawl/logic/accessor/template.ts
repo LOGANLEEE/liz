@@ -1,23 +1,28 @@
-import { FMKOREA_INFO } from 'lib/crawl/targetInfo';
-import { puppeteerArgs, puppeteerUserAgent } from 'lib/util';
+import { ILBE_INFO } from 'lib/crawl/targetInfo';
+import { puppeteerUserAgent } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
-import puppeteer from 'puppeteer';
+import { Browser } from 'puppeteer';
 
-export const accessorTemplate = async (): Promise<{ count: number; isError: boolean; name: string; message: string }> => {
-	const browser = await puppeteer.launch({ headless: true, args: puppeteerArgs });
+type AccessorTemplateArgs = {
+	browser: Browser;
+};
+
+export const accessorTemplate = async ({
+	browser,
+}: AccessorTemplateArgs): Promise<{ count: number; isError: boolean; name: string; message: string }> => {
+	let totalCount = 0;
 
 	const page = await browser.newPage();
 	await page.setUserAgent(puppeteerUserAgent);
 
-	const tempHolder = [];
+	for (let pageCount = ILBE_INFO.pageRange[0]; pageCount <= ILBE_INFO.pageRange[1]; pageCount += ILBE_INFO.pageRange[2]) {
+		const tempHolder = [];
+		await page.goto(ILBE_INFO.targetUrl(pageCount));
 
-	for (let pageCount = FMKOREA_INFO.pageRange[0]; pageCount <= FMKOREA_INFO.pageRange[1]; pageCount += FMKOREA_INFO.pageRange[2]) {
-		await page.goto(FMKOREA_INFO.targetUrl(pageCount));
-
-		for (let postCount = FMKOREA_INFO.postRange[0]; postCount <= FMKOREA_INFO.postRange[1]; postCount += FMKOREA_INFO.postRange[2]) {
+		for (let postCount = ILBE_INFO.postRange[0]; postCount <= ILBE_INFO.postRange[1]; postCount += ILBE_INFO.postRange[2]) {
 			const title =
 				(await page
-					.waitForSelector(FMKOREA_INFO.link(postCount))
+					.waitForSelector(ILBE_INFO.link(postCount))
 					.then((element) => element?.evaluate((el) => el.textContent?.trim()))
 					.catch((err) => {
 						console.log(err);
@@ -25,7 +30,7 @@ export const accessorTemplate = async (): Promise<{ count: number; isError: bool
 					})) || null;
 			const link =
 				(await page
-					.waitForSelector(FMKOREA_INFO.link(postCount))
+					.waitForSelector(ILBE_INFO.link(postCount))
 					.then((element) => element?.evaluate((el) => el.getAttribute('href')))
 					.catch((err) => {
 						console.log(err);
@@ -34,7 +39,7 @@ export const accessorTemplate = async (): Promise<{ count: number; isError: bool
 
 			const author =
 				(await page
-					.waitForSelector(FMKOREA_INFO.author(postCount))
+					.waitForSelector(ILBE_INFO.author(postCount))
 					.then((element) => element?.evaluate((el) => el.textContent?.trim()))
 					.catch((err) => {
 						console.log(err);
@@ -43,21 +48,22 @@ export const accessorTemplate = async (): Promise<{ count: number; isError: bool
 
 			const hit =
 				(await page
-					.waitForSelector(FMKOREA_INFO.hit(postCount))
+					.waitForSelector(ILBE_INFO.hit(postCount))
 					.then((element) => element?.evaluate((el) => parseInt(el.textContent?.trim()?.replaceAll(',', '') || '0')))
 					.catch((err) => {
 						console.log(err);
 						return -1;
 					})) || null;
 
-			tempHolder.push({ title, link, hit, name: FMKOREA_INFO.name, mark: false, author, content: null });
+			if (!title && !link) continue;
+
+			tempHolder.push({ title, link, hit, name: ILBE_INFO.name, mark: false, author, content: null });
 		}
+		const { count } = await _prisma.fresh_post.createMany({ data: tempHolder });
+		totalCount += count;
 	}
-	await browser.close();
-
-	const { count } = await _prisma.fresh_post.createMany({ data: tempHolder });
-
-	return { count, isError: false, message: 'good', name: FMKOREA_INFO.name };
+	await page.close();
+	return { count: totalCount, isError: false, message: 'good', name: ILBE_INFO.name };
 };
 
 // await writeFile('./dummy.html', await newPage.content()).then(() => {
