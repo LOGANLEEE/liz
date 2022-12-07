@@ -3,7 +3,6 @@ services:
     nextjs:
         image: loganlee/liz-web-next-js:latest
         container_name: liz-web
-        build: ./
         # deploy:
         #     resources:
         #         limits:
@@ -15,7 +14,6 @@ services:
     nginx:
         image: loganlee/liz-web-nginx:latest
         container_name: nginx
-        build: ./nginx
         ports:
             - 80:80
         depends_on:
