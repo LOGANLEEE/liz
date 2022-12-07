@@ -2,7 +2,7 @@ import { Button } from '@nextui-org/react';
 import type { fresh_post } from '@prisma/client';
 import Post from 'components/Post';
 import { memo, useCallback, useEffect, useState } from 'react';
-import { isSafari } from 'react-device-detect';
+import { isSafari, isMobileSafari } from 'react-device-detect';
 import styled from 'styled-components';
 import { VisitedList } from 'types';
 
@@ -13,7 +13,7 @@ export const PostContainer = memo(({ posts }: Props) => {
 	const [showButton, setShowButton] = useState(false);
 
 	useEffect(() => {
-		if (isSafari) {
+		if (isSafari && !isMobileSafari) {
 			setShowButton(true);
 		}
 	}, []);
