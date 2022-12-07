@@ -1,4 +1,4 @@
-export const names = { dc: '디씨', fm: '에펨', rr: '루리웹', pp: '뿜뿌', ilbe: '일베' };
+export const names = { dc: '디씨', fm: '에펨', rr: '루리웹', pp: '뿜뿌', ilbe: '일베', clien: '클리앙', bobae: '보배', iv: '인벤' };
 
 type TargetInfo = {
 	name: string;
@@ -85,20 +85,6 @@ export const PPOMPPU_INFO: TargetInfo = {
 		`body > div > div.contents > div.container > div:nth-child(2) > div.board_box > table.board_table > tbody > tr:nth-child(${idx}) > td:nth-child(7)`,
 };
 
-const template: TargetInfo = {
-	name: names.dc,
-	targetBaseName: 'template',
-	enable: false,
-	targetUrl: (page: number) => ``,
-	pageRange: [1, 2, 1],
-	postRange: [1, 101, 1],
-	garbage: (idx: number) => [],
-	targetIndex: (idx: number) => ``,
-	link: (idx: number) => ``,
-	author: (idx: number) => ``,
-	hit: (idx: number) => ``,
-};
-
 export const ILBE_INFO: TargetInfo = {
 	name: names.ilbe,
 	targetBaseName: 'https://www.ilbe.com',
@@ -113,4 +99,72 @@ export const ILBE_INFO: TargetInfo = {
 	hit: (idx: number) => `#content-wrap > div > div.board-list > ul > li:nth-child(${idx}) > span.view`,
 };
 
-export const infoList: TargetInfo[] = [DCINSIDE_INFO, PPOMPPU_INFO, RULIWEB_INFO, FMKOREA_INFO, ILBE_INFO];
+export const CLIEN_INFO: TargetInfo = {
+	name: names.clien,
+	targetBaseName: 'https://www.clien.net',
+	enable: true,
+	targetUrl: (page: number) => `https://www.clien.net/service/recommend`,
+	pageRange: [1, 1, 1],
+	postRange: [1, 50, 1],
+	garbage: (idx: number) => [],
+	link: (idx: number) => `#div_content > div.recommend_underList > div:nth-child(${idx}) > div.list_title > a.list_subject`,
+	title: (idx: number) =>
+		`#div_content > div.recommend_underList > div:nth-child(${idx}) > div.list_title > a.list_subject > span.subject_fixed`,
+	author: (idx: number) => `#div_content > div.recommend_underList > div:nth-child(${idx}) > div.list_author > span.nickname > span`,
+	hit: (idx: number) => `#div_content > div.recommend_underList > div:nth-child(${idx}) > div.list_hit > span`,
+};
+
+export const BOBAE_INFO: TargetInfo = {
+	name: names.bobae,
+	targetBaseName: 'https://www.bobaedream.co.kr',
+	enable: true,
+	targetUrl: (page: number) =>
+		`https://www.bobaedream.co.kr/list?code=best&s_cate=&maker_no=&model_no=&or_gu=10&or_se=desc&s_selday=&pagescale=50&info3=&noticeShow=&s_select=Subject&s_key=&level_no=&bestCode=&bestDays=&bestbbs=&vdate=&type=list&page=${page}`,
+	pageRange: [1, 2, 1],
+	postRange: [1, 50, 1],
+	garbage: (idx: number) => [],
+	link: (idx: number) => `#boardlist > tbody > tr:nth-child(${idx}) > td.pl14 > a.bsubject`,
+	author: (idx: number) => `#boardlist > tbody > tr:nth-child(${idx}) > td.author02 > span.author`,
+	hit: (idx: number) => `#boardlist > tbody > tr:nth-child(${idx}) > td.count`,
+};
+
+export const INVEN_INFO: TargetInfo = {
+	name: names.iv,
+	targetBaseName: '',
+	enable: true,
+	targetUrl: (page: number) => `https://www.inven.co.kr/board/webzine/2097?my=chu&p=${page}`,
+	pageRange: [1, 2, 1],
+	postRange: [1, 50, 1],
+	garbage: (idx: number) => [
+		`#new-board > form > div > table > tbody > tr:nth-child(${idx}) > td.tit > div > div > a > span`,
+		`#new-board > form > div > table > tbody > tr:nth-child(${idx}) > td.tit > div > span.con-comment`,
+	],
+	link: (idx: number) => `#new-board > form > div > table > tbody > tr:nth-child(${idx}) > td.tit > div > div > a`,
+	author: (idx: number) => `#new-board > form > div > table > tbody > tr:nth-child(${idx}) > td.user > span`,
+	hit: (idx: number) => `#new-board > form > div > table > tbody > tr:nth-child(${idx}) > td.view`,
+};
+
+const template: TargetInfo = {
+	name: names.dc,
+	targetBaseName: 'template',
+	enable: false,
+	targetUrl: (page: number) => ``,
+	pageRange: [1, 2, 1],
+	postRange: [1, 101, 1],
+	garbage: (idx: number) => [],
+	targetIndex: (idx: number) => ``,
+	link: (idx: number) => ``,
+	author: (idx: number) => ``,
+	hit: (idx: number) => ``,
+};
+
+export const infoList: TargetInfo[] = [
+	DCINSIDE_INFO,
+	PPOMPPU_INFO,
+	RULIWEB_INFO,
+	FMKOREA_INFO,
+	ILBE_INFO,
+	CLIEN_INFO,
+	BOBAE_INFO,
+	INVEN_INFO,
+];
