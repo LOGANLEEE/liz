@@ -30,58 +30,57 @@ export const universalAccessor = async ({ browser }: universalAccessorArgs) => {
 							const postIndex =
 								(await page
 									.waitForSelector(targetInfo?.targetIndex ? targetInfo?.targetIndex(postCount) : '')
-									.then((element) => element?.evaluate((el) => el?.textContent?.trim()))) || '';
+									.then((element) => element?.evaluate((el) => el?.textContent?.trim()))
+									.catch(() => '')) || '';
 
 							if (isNaN(parseInt(postIndex))) continue;
 						}
 
 						// remove garbage tag
-						if (targetInfo.garbage) {
-							targetInfo
-								.garbage(postCount)
-								.forEach(
-									async (path) =>
-										await page
-											.waitForSelector(path)
-											.then((element) => element?.evaluate((el) => el.remove()).catch(() => {}))
-								);
+						if (targetInfo?.garbage) {
+							await Promise.all(
+								targetInfo
+									.garbage(postCount)
+									.map(
+										async (path) =>
+											await page
+												.waitForSelector(path)
+												.then((element) => element?.evaluate((el) => el.remove()).catch(() => {}))
+									)
+							);
 						}
-						const title =
-							(await page
-								.waitForSelector(targetInfo.link(postCount))
-								.then((element) => element?.evaluate((el) => el.textContent?.trim()))
-								.catch((err) => {
-									console.log(err);
-									return null;
-								})) || null;
-						const link =
-							(await page
-								.waitForSelector(targetInfo.link(postCount))
-								.then((element) => element?.evaluate((el) => el.getAttribute('href')))
-								.catch((err) => {
-									console.log(err);
-									return 'error link';
-								})) || null;
+						const title = await page
+							.waitForSelector(targetInfo.link(postCount))
+							.then((element) => element?.evaluate((el) => el.textContent?.trim()))
+							.catch(() => null);
 
-						const author =
-							(await page
-								.waitForSelector(targetInfo.author(postCount))
-								.then((element) => element?.evaluate((el) => el.textContent?.trim()))
-								.catch((err) => {
-									console.log(err);
-									return 'error author';
-								})) || null;
+						const link = await page
+							.waitForSelector(targetInfo.link(postCount))
+							.then((element) => element?.evaluate((el) => el.getAttribute('href')))
+							.catch(() => null);
 
-						const hit =
-							(await page
-								.waitForSelector(targetInfo.hit(postCount))
-								.then((element) => element?.evaluate((el) => parseInt(el.textContent?.trim()?.replaceAll(',', '') || '0')))
-								.catch((err) => {
-									console.log(err);
-									return -1;
-								})) || null;
+						const author = await page
+							.waitForSelector(targetInfo.author(postCount))
+							.then((element) => element?.evaluate((el) => el.textContent?.trim()))
+							.catch(() => '::author::');
 
-						if (!title && !link) return;
+						const hit = await page
+							.waitForSelector(targetInfo.hit(postCount))
+							.then((element) =>
+								element?.evaluate((el) =>
+									parseInt(
+										el.textContent
+											?.trim()
+											?.replaceAll(' ', '')
+											.replaceAll(',', '')
+											.replaceAll('.', '')
+											.replaceAll('k', '00') || '-1'
+									)
+								)
+							)
+							.catch(() => -1);
+
+						if (!title && !link) continue;
 
 						tempHolder.push({
 							title,
