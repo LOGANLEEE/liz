@@ -1,6 +1,6 @@
 export const names = { dc: '디씨', fm: '에펨', rr: '루리웹', pp: '뿜뿌', ilbe: '일베', clien: '클리앙', bobae: '보배', iv: '인벤' };
 
-type TargetInfo = {
+export type TargetInfo = {
 	name: string;
 	enable: boolean;
 	targetBaseName?: string;
