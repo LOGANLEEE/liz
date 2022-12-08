@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { universalAccessor } from 'lib/crawl/logic/accessor/universalAccessor';
 import { markingFreshPosts, moveMarkedPosts } from 'lib/crawl/logic/cleaner';
+import { infoList } from 'lib/crawl/targetInfo';
 import { writeLog } from 'lib/log';
 import { getBrowser } from 'lib/pptrInstace';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -21,13 +22,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 	// stage 2
 	const { browser } = await getBrowser();
-	const tempHolder = await universalAccessor({ browser })
-		.catch((err) => {
-			console.log('stage 2: error', JSON.stringify(err));
-		})
-		.finally(async () => {
-			await browser.close();
-		});
+	const targetInfos = infoList.filter((e) => e.enable);
+	const tempHolder = [];
+
+	for (const targetInfo of targetInfos) {
+		const result = await universalAccessor({ targetInfo, browser });
+		tempHolder.push(result);
+	}
+
+	await browser.close();
 	console.log('stage 2:');
 
 	tempHolder?.map((e) => console.log(e));
