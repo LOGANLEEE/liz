@@ -25,19 +25,18 @@ export const TopNavigationBar = () => {
 
 	return (
 		<Wrapper justify='center' direction='row' gap={0.5}>
-			{/* {currentServerState?.isCrawling && ( */}
-
-			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5}>
-				<Grid.Container direction='row' justify='center'>
-					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
-						<p>데이터를 수집 중 입니다.</p>
-					</Grid>
-					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
-						<Progress indeterminated value={30} shadow color='success' />
-					</Grid>
-				</Grid.Container>
-			</Grid>
-			{/* )} */}
+			{currentServerState?.isCrawling && (
+				<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5}>
+					<Grid.Container direction='row' justify='center'>
+						<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
+							<p>데이터를 수집 중 입니다.</p>
+						</Grid>
+						<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
+							<Progress indeterminated value={30} shadow color='success' />
+						</Grid>
+					</Grid.Container>
+				</Grid>
+			)}
 		</Wrapper>
 	);
 };
