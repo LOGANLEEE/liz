@@ -43,6 +43,7 @@ const DesktopContainer = ({ limit, pageIdxHandler, pageIdx, targetSiteCount, tot
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
 						<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
 					</Grid>
+
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
 						<PostContainer posts={freshPostList} />
 					</Grid>
