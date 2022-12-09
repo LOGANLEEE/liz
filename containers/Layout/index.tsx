@@ -1,6 +1,6 @@
+import { TopNavigationBar } from 'components/TopNavigationBar';
 import type { ReactNode } from 'react';
 import styled from 'styled-components';
-import { TopNavigationBar } from '../../components/TopNavigationBar';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
 	return (
