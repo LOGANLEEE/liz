@@ -11,11 +11,21 @@ type universalAccessorArgs = {
 export const universalAccessor = async ({ browser, targetInfo }: universalAccessorArgs) => {
 	const page = await browser.newPage();
 	await page.setUserAgent(puppeteerUserAgent);
+	page.setDefaultNavigationTimeout(0);
+	let isError = false;
 
 	let totalCount = 0;
 	for (let pageCount = targetInfo.pageRange[0]; pageCount <= targetInfo.pageRange[1]; pageCount += targetInfo.pageRange[2]) {
 		console.log(`===> ${targetInfo.name} ${pageCount} / ${targetInfo.pageRange[1]}`);
-		await page.goto(targetInfo.targetUrl(pageCount));
+		try {
+			await page.goto(targetInfo.targetUrl(pageCount));
+		} catch (error) {
+			isError = true;
+			console.log(error);
+			console.log(`page go to error occurred. skip ${targetInfo.name} ${pageCount}`);
+			continue;
+		}
+
 		const tempHolder = [];
 
 		for (let postCount = targetInfo.postRange[0]; postCount <= targetInfo.postRange[1]; postCount += targetInfo.postRange[2]) {
@@ -42,6 +52,7 @@ export const universalAccessor = async ({ browser, targetInfo }: universalAccess
 									?.evaluate((el) => el.remove())
 									.catch((err) => {
 										// console.log('garbage:', err);
+										isError = true;
 										return null;
 									})
 							)
@@ -53,6 +64,7 @@ export const universalAccessor = async ({ browser, targetInfo }: universalAccess
 				.then((element) => element?.evaluate((el) => el?.textContent?.trim()))
 				.catch((err) => {
 					// console.log('title:', err);
+					isError = true;
 					return null;
 				});
 
@@ -61,6 +73,7 @@ export const universalAccessor = async ({ browser, targetInfo }: universalAccess
 				.then((element) => element?.evaluate((el) => el?.getAttribute('href')))
 				.catch((err) => {
 					// console.log('link:', err);
+					isError = true;
 					return null;
 				});
 
@@ -69,7 +82,7 @@ export const universalAccessor = async ({ browser, targetInfo }: universalAccess
 				.then((element) => element?.evaluate((el) => el?.textContent?.trim()))
 				.catch((err) => {
 					// console.log('author:', err);
-
+					isError = true;
 					return '::author::';
 				});
 
@@ -85,6 +98,7 @@ export const universalAccessor = async ({ browser, targetInfo }: universalAccess
 				)
 				.catch((err) => {
 					// console.log('hit:', err);
+					isError = true;
 					return -1;
 				});
 
@@ -104,7 +118,7 @@ export const universalAccessor = async ({ browser, targetInfo }: universalAccess
 		totalCount += count;
 	}
 	await page.close();
-	return { count: totalCount, isError: false, message: 'good', name: targetInfo.name };
+	return { count: totalCount, isError, message: 'good', name: targetInfo.name };
 };
 
 // await writeFile('./dummy.html', await newPage.content()).then(() => {
