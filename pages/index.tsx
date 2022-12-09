@@ -9,7 +9,7 @@ import { getRecentAccessLog } from 'lib/log';
 import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import useSWR from 'swr';
 
@@ -52,28 +52,8 @@ const Home = ({ isMobile, recentAccessLog }: Props) => {
 		}
 	}, [data?.totalCount, totalCount]);
 
-	const [isCrawling, setIsCrawling] = useState(false);
-
-	const callStatusAPI = useCallback(async () => {
-		const result = await _axios(`${process.env.NEXT_PUBLIC_STATE_URL}/api/crawl/status`).then((res) => res?.data);
-		setIsCrawling(result.isCrawling);
-
-		return result;
-	}, []);
-
-	useEffect(() => {
-		const intervalId = setInterval(() => {
-			callStatusAPI();
-		}, 1000 * 10);
-
-		return () => {
-			clearInterval(intervalId);
-		};
-	}, [callStatusAPI]);
-
 	return (
 		<>
-			<div>isCrawling: {isCrawling ? '크롤링 중' : '끝!'}</div>
 			<div>
 				<Head>
 					<title>Seize what you want without NO LIMIT.</title>
