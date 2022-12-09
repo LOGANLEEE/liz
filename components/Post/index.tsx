@@ -72,7 +72,10 @@ const Wrapper = styled.li`
 
 	.name {
 		background-color: #102d27;
-		border-radius: 8;
+		border-radius: 8px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 
 	.title {
