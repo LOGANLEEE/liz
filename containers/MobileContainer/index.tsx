@@ -18,10 +18,10 @@ type Props = {
 
 const MobileContainer = ({ limit, pageIdxHandler, pageIdx, recentAccessLog, targetSiteCount, totalCount, freshPostList }: Props) => {
 	return (
-		<Wrapper direction='column' justify='flex-start' gap={1}>
-			<Grid xs={12} sm={12}>
+		<Wrapper direction='row' justify='center' gap={1}>
+			<Grid xs={11} sm={11} md={11} lg={11} xl={11} justify='center'>
 				{/* <InfoBar postCount={totalCount} targetSiteCount={Object.keys(names).length} /> */}
-				<Grid.Container justify='center'>
+				<Grid.Container justify='center' gap={1}>
 					<Grid xs sm>
 						<InfoCard
 							count={totalCount}
@@ -36,13 +36,13 @@ const MobileContainer = ({ limit, pageIdxHandler, pageIdx, recentAccessLog, targ
 					</Grid>
 				</Grid.Container>
 			</Grid>
-			<Grid justify='center' xs={12} sm={12}>
+			<Grid xs={11} sm={11} md={11} lg={11} xl={11} justify='center'>
 				<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
 			</Grid>
-			<Grid xs={12} sm={12}>
+			<Grid xs={11} sm={11} md={11} lg={11} xl={11} justify='center'>
 				<PostContainer posts={freshPostList} />
 			</Grid>
-			<Grid justify='center' xs={12} sm={12}>
+			<Grid xs={11} sm={11} md={11} lg={11} xl={11} justify='center'>
 				<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
 			</Grid>
 		</Wrapper>
