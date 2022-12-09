@@ -1,13 +1,13 @@
-import { stateTest } from 'lib/util';
+import { serverState } from 'lib/util';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	res.status(200).json(stateTest);
+	res.status(200).json(serverState);
 
-	stateTest.isCrawling = true;
+	serverState.isCrawling = true;
 
 	setTimeout(() => {
-		stateTest.isCrawling = false;
+		serverState.isCrawling = false;
 	}, 5000);
 	return;
 };
