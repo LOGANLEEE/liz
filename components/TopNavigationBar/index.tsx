@@ -16,7 +16,7 @@ export const TopNavigationBar = () => {
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			callStatusAPI();
-		}, 1000 * 10);
+		}, 1000 * 8);
 
 		return () => {
 			clearInterval(intervalId);
@@ -24,15 +24,24 @@ export const TopNavigationBar = () => {
 	}, [callStatusAPI]);
 
 	return (
-		<Wrapper justify='center'>
-			{currentServerState?.isCrawling && (
-				<Grid xs={11} sm={1} md={11} lg={11} xl={11} justify='center' direction='column'>
-					<p>데이터를 수집 중 입니다.</p>
-					<Progress indeterminated value={30} shadow color='success' />
-				</Grid>
-			)}
+		<Wrapper justify='center' direction='row' gap={0.5}>
+			{/* {currentServerState?.isCrawling && ( */}
+
+			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5}>
+				<Grid.Container direction='row' justify='center'>
+					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
+						<p>데이터를 수집 중 입니다.</p>
+					</Grid>
+					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
+						<Progress indeterminated value={30} shadow color='success' />
+					</Grid>
+				</Grid.Container>
+			</Grid>
+			{/* )} */}
 		</Wrapper>
 	);
 };
 
-const Wrapper = styled(Grid.Container)``;
+const Wrapper = styled(Grid.Container)`
+	width: 100%;
+`;
