@@ -4,6 +4,7 @@ import { markingFreshPosts, moveMarkedPosts } from 'lib/crawl/logic/cleaner';
 import { infoList } from 'lib/crawl/targetInfo';
 import { writeLog } from 'lib/log';
 import { getBrowser } from 'lib/pptrInstace';
+import { stateTest } from 'lib/util';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 // const fetcher = (url) => axios.get(url).then((res) => res.data);
@@ -11,6 +12,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	// res.status(200).json({ message: 'crawling is starting...' });
 	res.status(200).json({ message: 'initializing crawling ...' });
+
+	stateTest.isCrawling = true;
 
 	// stage 1
 	await markingFreshPosts()
@@ -44,6 +47,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		})
 		.catch(async (error) => {
 			await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify(error) });
+		})
+		.finally(() => {
+			stateTest.isCrawling = false;
 		});
 
 	return;
