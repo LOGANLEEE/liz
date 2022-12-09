@@ -1,4 +1,4 @@
-import { Card, Grid, Spacer, Text } from '@nextui-org/react';
+import { Grid, Spacer, Text } from '@nextui-org/react';
 import { memo } from 'react';
 import styled from 'styled-components';
 
