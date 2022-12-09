@@ -33,12 +33,12 @@ const Post = memo(({ data }: Props) => {
 		<Wrapper onClick={visitHandler} className={`${visited ? 'visited' : ''}`}>
 			<Grid.Container
 				className='container'
-				gap={1}
+				gap={0.5}
 				justify='flex-start'
 				// xs={10} sm={12}
 				direction='row'
 			>
-				<Grid xs={1.2} sm={1} md={1} className='name'>
+				<Grid xs={1.2} sm={1} md={1} className='name' justify='center'>
 					<Text className='text'>{data.name}</Text>
 				</Grid>
 				<Grid xs={7.8} sm={8} md={10}>
@@ -79,6 +79,8 @@ const Wrapper = styled.li`
 	}
 
 	.title {
+		padding-left: 0.5px;
+		/* border-color: inherit; */
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
