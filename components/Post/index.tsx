@@ -71,15 +71,12 @@ const Wrapper = styled.li`
 	}
 
 	.name {
-		border-right: 0.5px solid;
-		border-color: inherit;
-
-		/* padding-right: 5px; */
-		/* margin-right: 10px; */
+		background-color: #102d27;
+		border-radius: 8;
 	}
 
 	.title {
-		padding-left: 0.5px;
+		padding-left: 1px;
 		/* border-color: inherit; */
 		text-overflow: ellipsis;
 		overflow: hidden;
