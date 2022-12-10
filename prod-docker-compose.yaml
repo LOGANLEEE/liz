@@ -3,14 +3,6 @@ services:
     nextjs:
         image: loganlee/liz-web-next-js:latest
         container_name: liz-web
-        # deploy:
-        #     resources:
-        #         limits:
-        #             cpus: '1.00'
-        #             memory: 800M
-        #         reservations:
-        #             cpus: '0.25'
-        #             memory: 128M
     nginx:
         image: loganlee/liz-web-nginx:latest
         container_name: nginx
