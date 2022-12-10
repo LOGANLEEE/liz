@@ -26,7 +26,7 @@ export const PostContainer = memo(({ posts = [] }: Props) => {
 
 			for (const { post, idx } of posts.map((post, idx) => ({ idx, post }))) {
 				if (post.link) {
-					if (idx % 5 === 0) await delay(1);
+					if (idx % 5 === 0) await delay(500);
 					const child = window.open(post.link, '');
 					child?.blur();
 					window.focus();
