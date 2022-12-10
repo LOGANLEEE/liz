@@ -4,14 +4,18 @@ import { markingFreshPosts, moveMarkedPosts } from 'lib/crawl/logic/cleaner';
 import { infoList } from 'lib/crawl/targetInfo';
 import { writeLog } from 'lib/log';
 import { getBrowser } from 'lib/pptrInstace';
-import { serverState } from 'lib/util';
+import { puppeteerUserAgent, serverState } from 'lib/util';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 // const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	// res.status(200).json({ message: 'crawling is starting...' });
-	res.status(200).json({ message: 'initializing crawling ...' });
+	if (serverState.isCrawling) {
+		res.status(200).json({ message: 'crawling is proceeding...' });
+		return;
+	}
+	if (!serverState.isCrawling) res.status(200).json({ message: 'start crawling...' });
 
 	serverState.isCrawling = true;
 
@@ -23,19 +27,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		})
 		.catch(async (error) => await writeLog({ name: 'markingFreshPosts', result: 0, body: JSON.stringify(error) }));
 
+	const startTime = performance.now();
+
 	// stage 2
 	const { browser } = await getBrowser();
 	const targetInfos = infoList.filter((e) => e.enable);
 	const tempHolder = [];
+	const page = await browser.newPage();
+	await page.setUserAgent(puppeteerUserAgent);
+	page.setDefaultNavigationTimeout(0);
 
 	for (const targetInfo of targetInfos) {
-		const result = await universalAccessor({ targetInfo, browser });
+		const result = await universalAccessor({ targetInfo, page });
 		tempHolder.push(result);
 	}
 
+	await page.close();
 	await browser.close();
-	console.log('stage 2:');
+	const endTime = performance.now();
 
+	console.log(`stage 2:, ${(endTime - startTime) / 1000 / 60} minutes`);
 	tempHolder?.map((e) => console.log(e));
 	await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(tempHolder) });
 
@@ -46,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify({ deletedCount, movedCount }) });
 		})
 		.catch(async (error) => {
-			await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify(error) });
+			await writeLog({ name: 'moveMarkedPosts', result: 0, body: JSON.stringify(error) });
 		})
 		.finally(() => {
 			serverState.isCrawling = false;
