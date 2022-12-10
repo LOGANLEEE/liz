@@ -1,17 +1,13 @@
 import type { TargetInfo } from 'lib/crawl/targetInfo';
-import { puppeteerUserAgent } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
-import { Browser } from 'puppeteer';
+import type { Page } from 'puppeteer';
 
 type universalAccessorArgs = {
-	browser: Browser;
+	page: Page;
 	targetInfo: TargetInfo;
 };
 
-export const universalAccessor = async ({ browser, targetInfo }: universalAccessorArgs) => {
-	const page = await browser.newPage();
-	await page.setUserAgent(puppeteerUserAgent);
-	page.setDefaultNavigationTimeout(0);
+export const universalAccessor = async ({ page, targetInfo }: universalAccessorArgs) => {
 	let isError = false;
 
 	let totalCount = 0;
@@ -117,7 +113,7 @@ export const universalAccessor = async ({ browser, targetInfo }: universalAccess
 		const { count } = await _prisma.fresh_post.createMany({ data: tempHolder });
 		totalCount += count;
 	}
-	await page.close();
+	// await page.close();
 	return { count: totalCount, isError, message: 'good', name: targetInfo.name };
 };
 
