@@ -25,9 +25,13 @@ export const PostContainer = memo(({ posts = [] }: Props) => {
 			const visitedList: VisitedList = JSON.parse(localStorage.getItem('visitedIdList') || '[]');
 
 			for (const { post, idx } of posts.map((post, idx) => ({ idx, post }))) {
-				if (idx % 5 === 0) await delay(1000);
-				post.link && window.open(post.link, '');
-				visitedList.push({ id: post?.id, title: post?.title || undefined, name: post.name || '' });
+				if (post.link) {
+					if (idx % 5 === 0) await delay(1);
+					const child = window.open(post.link, '');
+					child?.blur();
+					window.focus();
+					visitedList.push({ id: post?.id, title: post?.title || undefined, name: post.name || '' });
+				}
 			}
 
 			localStorage.setItem('visitedIdList', JSON.stringify(visitedList));
