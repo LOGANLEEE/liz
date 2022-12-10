@@ -15,12 +15,10 @@ import useSWR from 'swr';
 
 type Props = {
 	isMobile: boolean;
-	recentAccessLog: api_log;
+	recentAccessLog?: api_log;
 };
-const MobileContainer = dynamic(() => import('containers/MobileContainer'), {});
-const DesktopContainer = dynamic(() => import('containers/DesktopContainer'), {});
-
-console.log('mode:', process.env.NEXT_PUBLIC_MODE);
+const MobileContainer = dynamic(() => import('containers/page/MobileContainer'), {});
+const DesktopContainer = dynamic(() => import('containers/page/DesktopContainer'), {});
 
 const Home = ({ isMobile, recentAccessLog }: Props) => {
 	const {
