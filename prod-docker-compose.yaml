@@ -3,10 +3,12 @@ services:
     nextjs:
         image: loganlee/liz-web-next-js:latest
         container_name: liz-web
+        restart: always
 
     nginx:
         image: loganlee/liz-web-nginx:latest
         container_name: nginx
+        restart: always
         ports:
             - 80:80
         depends_on:
