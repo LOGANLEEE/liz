@@ -1,7 +1,7 @@
 version: '3.9'
 services:
     nextjs:
-        platform: linux/arm64/v8
+        # platform: linux/arm64/v8
         restart: always
         image: loganlee/liz-web-next-js:latest
         container_name: liz-web
@@ -16,7 +16,7 @@ services:
         #             memory: 128M
     nginx:
         restart: always
-        platform: linux/arm64/v8
+        # platform: linux/arm64/v8
         image: loganlee/liz-web-nginx:latest
         container_name: nginx
         build: ./nginx
