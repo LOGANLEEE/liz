@@ -14,6 +14,10 @@ export const TopNavigationBar = () => {
 	}, []);
 
 	useEffect(() => {
+		callStatusAPI();
+	}, []);
+
+	useEffect(() => {
 		const intervalId = setInterval(() => {
 			callStatusAPI();
 		}, 1000 * 8);
