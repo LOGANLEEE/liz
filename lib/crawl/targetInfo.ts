@@ -168,3 +168,7 @@ export const infoList: TargetInfo[] = [
 	BOBAE_INFO,
 	INVEN_INFO,
 ];
+
+export const infoList1: TargetInfo[] = [DCINSIDE_INFO, PPOMPPU_INFO, RULIWEB_INFO, FMKOREA_INFO];
+
+export const infoList2: TargetInfo[] = [ILBE_INFO, CLIEN_INFO, BOBAE_INFO, INVEN_INFO];
