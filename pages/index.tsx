@@ -20,7 +20,7 @@ type Props = {
 const MobileContainer = dynamic(() => import('containers/page/MobileContainer'), {});
 const DesktopContainer = dynamic(() => import('containers/page/DesktopContainer'), {});
 
-const Home = ({ isMobile, recentAccessLog }: Props) => {
+const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 	const {
 		pageIdx,
 		limit,
