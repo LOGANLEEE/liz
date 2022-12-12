@@ -19,7 +19,7 @@ export type TargetInfo = {
 
 export const DCINSIDE_INFO: TargetInfo = {
 	name: names.dc,
-	enable: true,
+	enable: false,
 	targetBaseName: 'https://gall.dcinside.com',
 	targetUrl: (page: number) => `https://gall.dcinside.com/board/lists/?id=dcbest&list_num=100&sort_type=N&search_head=9&page=${page}`,
 	pageRange: [1, 1, 1],
@@ -41,7 +41,7 @@ export const DCINSIDE_INFO: TargetInfo = {
 
 export const RULIWEB_INFO: TargetInfo = {
 	name: names.rr,
-	enable: true,
+	enable: false,
 	targetBaseName: '',
 	targetUrl: (page: number) => `https://bbs.ruliweb.com/best/all/now?orderby=readcount&range=24h&page=${page}`,
 	pageRange: [1, 5, 1],
@@ -55,7 +55,7 @@ export const RULIWEB_INFO: TargetInfo = {
 
 export const FMKOREA_INFO: TargetInfo = {
 	name: names.fm,
-	enable: true,
+	enable: false,
 	targetBaseName: 'https://www.fmkorea.com',
 	targetUrl: (page: number) => `https://www.fmkorea.com/index.php?mid=best&listStyle=list&page=${page}`,
 	pageRange: [1, 5, 1],
@@ -69,7 +69,7 @@ export const FMKOREA_INFO: TargetInfo = {
 
 export const PPOMPPU_INFO: TargetInfo = {
 	name: names.pp,
-	enable: true,
+	enable: false,
 	targetBaseName: 'https://www.ppomppu.co.kr',
 	targetUrl: (page: number) =>
 		`https://www.ppomppu.co.kr/hot.php?id=&page=${page}&category=999&search_type=&keyword=&page_num=&del_flag=&bbs_list_category=0`,
@@ -88,7 +88,7 @@ export const PPOMPPU_INFO: TargetInfo = {
 export const ILBE_INFO: TargetInfo = {
 	name: names.ilbe,
 	targetBaseName: 'https://www.ilbe.com',
-	enable: true,
+	enable: false,
 	targetUrl: (page: number) => `https://www.ilbe.com/list/ilbe?page=${page}&listSize=60&listStyle=list`,
 	pageRange: [1, 2, 1],
 	postRange: [5, 64, 1],
@@ -102,7 +102,7 @@ export const ILBE_INFO: TargetInfo = {
 export const CLIEN_INFO: TargetInfo = {
 	name: names.clien,
 	targetBaseName: 'https://www.clien.net',
-	enable: true,
+	enable: false,
 	targetUrl: (page: number) => `https://www.clien.net/service/recommend`,
 	pageRange: [1, 1, 1],
 	postRange: [1, 50, 1],
@@ -117,7 +117,7 @@ export const CLIEN_INFO: TargetInfo = {
 export const BOBAE_INFO: TargetInfo = {
 	name: names.bobae,
 	targetBaseName: 'https://www.bobaedream.co.kr',
-	enable: true,
+	enable: false,
 	targetUrl: (page: number) =>
 		`https://www.bobaedream.co.kr/list?code=best&s_cate=&maker_no=&model_no=&or_gu=10&or_se=desc&s_selday=&pagescale=50&info3=&noticeShow=&s_select=Subject&s_key=&level_no=&bestCode=&bestDays=&bestbbs=&vdate=&type=list&page=${page}`,
 	pageRange: [1, 2, 1],
@@ -131,7 +131,7 @@ export const BOBAE_INFO: TargetInfo = {
 export const INVEN_INFO: TargetInfo = {
 	name: names.iv,
 	targetBaseName: '',
-	enable: true,
+	enable: false,
 	targetUrl: (page: number) => `https://www.inven.co.kr/board/webzine/2097?my=chu&p=${page}`,
 	pageRange: [1, 2, 1],
 	postRange: [1, 50, 1],
@@ -158,7 +158,7 @@ const template: TargetInfo = {
 	hit: (idx: number) => ``,
 };
 
-export const infoList: TargetInfo[] = [
+export const targetList: TargetInfo[] = [
 	DCINSIDE_INFO,
 	PPOMPPU_INFO,
 	RULIWEB_INFO,
@@ -168,7 +168,3 @@ export const infoList: TargetInfo[] = [
 	BOBAE_INFO,
 	INVEN_INFO,
 ];
-
-export const infoList1: TargetInfo[] = [DCINSIDE_INFO, PPOMPPU_INFO, RULIWEB_INFO, FMKOREA_INFO];
-
-export const infoList2: TargetInfo[] = [ILBE_INFO, CLIEN_INFO, BOBAE_INFO, INVEN_INFO];
