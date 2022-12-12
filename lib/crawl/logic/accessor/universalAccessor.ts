@@ -1,29 +1,47 @@
+import { Prisma } from '@prisma/client';
+import { format } from 'date-fns';
 import type { TargetInfo } from 'lib/crawl/targetInfo';
-import { _prisma } from 'prisma/prismaInstance';
-import type { Page } from 'puppeteer';
+import { puppeteerUserAgent } from 'lib/util';
+import type { Browser } from 'puppeteer';
 
-type universalAccessorArgs = {
-	page: Page;
+type UniversalAccessorArgs = {
+	// page: Page;
 	targetInfo: TargetInfo;
+	browser: Browser;
+	pageCount: number;
 };
 
-export const universalAccessor = async ({ page, targetInfo }: universalAccessorArgs) => {
+type UniversalAccessorReturn = {
+	list: Prisma.fresh_postCreateInput[];
+	isError: boolean;
+	message: string;
+	name: string;
+};
+
+export const universalAccessor = async ({ browser, targetInfo, pageCount }: UniversalAccessorArgs): Promise<UniversalAccessorReturn> => {
 	let isError = false;
 
-	let totalCount = 0;
-	for (let pageCount = targetInfo.pageRange[0]; pageCount <= targetInfo.pageRange[1]; pageCount += targetInfo.pageRange[2]) {
-		console.log(`===> ${targetInfo.name} ${pageCount} / ${targetInfo.pageRange[1]}`);
-		try {
-			await page.goto(targetInfo.targetUrl(pageCount));
-		} catch (error) {
-			isError = true;
-			console.log(error);
-			console.log(`page go to error occurred. skip ${targetInfo.name} ${pageCount}`);
-			continue;
-		}
+	const tempHolder: Prisma.fresh_postCreateInput[] = [];
+	const result = (message: string) => ({ list: tempHolder, isError, message, name: targetInfo.name });
 
-		const tempHolder = [];
+	const page = await browser.newPage();
+	await page.setUserAgent(puppeteerUserAgent);
+	page.setDefaultNavigationTimeout(1000 * 60 * 3);
+	// page.setDefaultNavigationTimeout(0);
 
+	console.log(`===>  ${targetInfo.name}  ${pageCount}/${targetInfo.pageRange[1]} ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
+
+	try {
+		await page.goto(targetInfo.targetUrl(pageCount));
+	} catch (error) {
+		isError = true;
+		// console.log(error);
+		console.log(`page go to error occurred. skip ${targetInfo.name} ${pageCount} ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
+		await page.close();
+		return result('goto error');
+	}
+
+	try {
 		for (let postCount = targetInfo.postRange[0]; postCount <= targetInfo.postRange[1]; postCount += targetInfo.postRange[2]) {
 			if (targetInfo?.targetIndex) {
 				const postIndex =
@@ -43,15 +61,14 @@ export const universalAccessor = async ({ page, targetInfo }: universalAccessorA
 				await Promise.all(
 					targetInfo?.garbage(postCount)?.map(
 						async (path) =>
-							await page.waitForSelector(path).then((element) =>
-								element
-									?.evaluate((el) => el.remove())
-									.catch((err) => {
-										// console.log('garbage:', err);
-										isError = true;
-										return null;
-									})
-							)
+							await page
+								.waitForSelector(path)
+								.then((element) => element?.evaluate((el) => el?.remove()))
+								.catch((err) => {
+									// console.log('garbage:', err);
+									isError = true;
+									return null;
+								})
 					)
 				);
 			}
@@ -61,7 +78,7 @@ export const universalAccessor = async ({ page, targetInfo }: universalAccessorA
 				.catch((err) => {
 					// console.log('title:', err);
 					isError = true;
-					return null;
+					return undefined;
 				});
 
 			const link = await page
@@ -70,7 +87,7 @@ export const universalAccessor = async ({ page, targetInfo }: universalAccessorA
 				.catch((err) => {
 					// console.log('link:', err);
 					isError = true;
-					return null;
+					return undefined;
 				});
 
 			const author = await page
@@ -110,11 +127,13 @@ export const universalAccessor = async ({ page, targetInfo }: universalAccessorA
 				content: null,
 			});
 		}
-		const { count } = await _prisma.fresh_post.createMany({ data: tempHolder });
-		totalCount += count;
+	} catch (error) {
+		await page.close();
+		return result(`selector error ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
 	}
-	// await page.close();
-	return { count: totalCount, isError, message: 'good', name: targetInfo.name };
+
+	await page.close();
+	return result('good');
 };
 
 // await writeFile('./dummy.html', await newPage.content()).then(() => {
