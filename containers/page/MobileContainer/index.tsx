@@ -1,9 +1,11 @@
 import { Grid } from '@nextui-org/react';
 import type { api_log, fresh_post } from '@prisma/client';
-import { BottomPagination } from 'components/BottomPagination';
+import { PaginationComp } from 'components/PaginationComp';
 import { InfoText } from 'components/InfoText';
 import { PostContainer } from 'containers/PostContainer';
 import styled from 'styled-components';
+import { PostOrder } from 'components/PostOrder';
+import { OrderBy } from 'lib/crawl/logic/post';
 
 type Props = {
 	totalCount: number;
@@ -13,22 +15,35 @@ type Props = {
 	pageIdxHandler: (pageNum: number) => void;
 	freshPostList: fresh_post[];
 	recentAccessLog?: api_log;
+	orderByHit: OrderBy;
+	toggleOrderByHit: () => void;
 };
 
-const MobileContainer = ({ limit, pageIdxHandler, pageIdx, recentAccessLog, targetSiteCount, totalCount, freshPostList }: Props) => {
+const MobileContainer = ({
+	limit,
+	pageIdxHandler,
+	pageIdx,
+	recentAccessLog,
+	targetSiteCount,
+	totalCount,
+	freshPostList,
+	orderByHit,
+	toggleOrderByHit,
+}: Props) => {
 	return (
 		<Wrapper direction='row' justify='center' gap={1}>
 			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
 				<InfoText targetSiteCount={targetSiteCount} postCount={totalCount} recentAccessLog={recentAccessLog} />
 			</Grid>
 			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
-				<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+				<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+				<PostOrder orderByHit={orderByHit} toggleOrderByHit={toggleOrderByHit} />
 			</Grid>
 			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
 				<PostContainer posts={freshPostList} />
 			</Grid>
 			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
-				<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+				<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
 			</Grid>
 		</Wrapper>
 	);

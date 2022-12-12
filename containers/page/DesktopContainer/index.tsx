@@ -1,8 +1,10 @@
 import { Grid } from '@nextui-org/react';
 import type { api_log, fresh_post } from '@prisma/client';
-import { BottomPagination } from 'components/BottomPagination';
+import { PaginationComp } from 'components/PaginationComp';
 import { InfoText } from 'components/InfoText';
 import { PostContainer } from 'containers/PostContainer';
+import { PostOrder } from 'components/PostOrder';
+import { OrderBy } from 'lib/crawl/logic/post';
 
 type Props = {
 	totalCount: number;
@@ -12,9 +14,21 @@ type Props = {
 	pageIdxHandler: (pageNum: number) => void;
 	freshPostList: fresh_post[];
 	recentAccessLog?: api_log;
+	orderByHit: OrderBy;
+	toggleOrderByHit: () => void;
 };
 
-const DesktopContainer = ({ limit, pageIdxHandler, pageIdx, targetSiteCount, totalCount, freshPostList, recentAccessLog }: Props) => {
+const DesktopContainer = ({
+	orderByHit,
+	toggleOrderByHit,
+	limit,
+	pageIdxHandler,
+	pageIdx,
+	targetSiteCount,
+	totalCount,
+	freshPostList,
+	recentAccessLog,
+}: Props) => {
 	return (
 		<Grid.Container justify='center' direction='row' gap={1}>
 			<Grid xs={1} sm={2} md={1} lg={1} xl={1}>
@@ -26,14 +40,15 @@ const DesktopContainer = ({ limit, pageIdxHandler, pageIdx, targetSiteCount, tot
 						<InfoText targetSiteCount={targetSiteCount} postCount={totalCount} recentAccessLog={recentAccessLog} />
 					</Grid>
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
-						<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+						<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+						<PostOrder orderByHit={orderByHit} toggleOrderByHit={toggleOrderByHit} />
 					</Grid>
 
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
 						<PostContainer posts={freshPostList} />
 					</Grid>
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
-						<BottomPagination limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+						<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
 					</Grid>
 				</Grid.Container>
 			</Grid>
