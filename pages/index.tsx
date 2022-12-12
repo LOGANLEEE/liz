@@ -24,14 +24,15 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 	const {
 		pageIdx,
 		limit,
+		order,
 		actions: { pageIdxHandler },
 	} = usePagination({});
 
 	const { data, error, isValidating } = useSWR<GetFreshPostReturn>(
-		`/api/crawl/getFreshPost/${pageIdx}`,
+		`/api/crawl/getFreshPost/${pageIdx}/${order.orderByHit}`,
 		async () =>
 			await _axios
-				.post(`/api/crawl/getFreshPost`, { orderByHit: 'desc', limit, offset: (pageIdx - 1) * limit })
+				.post(`/api/crawl/getFreshPost`, { orderByHit: order.orderByHit, limit, offset: (pageIdx - 1) * limit })
 				.then((res) => res.data)
 	);
 
@@ -63,6 +64,7 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 				<main>
 					{isMobile && (
 						<MobileContainer
+							{...order}
 							recentAccessLog={recentAccessLog}
 							totalCount={totalCount}
 							targetSiteCount={Object.keys(names).length}
@@ -74,6 +76,7 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 					)}
 					{!isMobile && (
 						<DesktopContainer
+							{...order}
 							recentAccessLog={recentAccessLog}
 							totalCount={totalCount}
 							targetSiteCount={Object.keys(names).length}
