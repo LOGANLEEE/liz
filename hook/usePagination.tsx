@@ -1,3 +1,4 @@
+import { OrderBy } from 'lib/crawl/logic/post';
 import { useCallback, useEffect, useState } from 'react';
 
 const paginationKey = 'pagination';
@@ -12,6 +13,7 @@ type Pagination = {
 
 export const usePagination = ({ some }: usePaginationArgs) => {
 	const [pageIdx, setPageIdx] = useState(1);
+	const [orderByHit, setOrderByHit] = useState<OrderBy>('desc');
 	const limit = 20;
 
 	const pageIdxHandler = useCallback((pageIdx: number) => {
@@ -20,6 +22,10 @@ export const usePagination = ({ some }: usePaginationArgs) => {
 		sessionStorage.setItem(paginationKey, JSON.stringify({ pageIdx }));
 		return;
 	}, []);
+
+	const toggleOrderByHit = useCallback(() => {
+		setOrderByHit(orderByHit === 'desc' ? 'asc' : 'desc');
+	}, [orderByHit]);
 
 	useEffect(() => {
 		const pagination: Pagination = JSON.parse(sessionStorage.getItem(paginationKey) || '{}');
@@ -33,5 +39,5 @@ export const usePagination = ({ some }: usePaginationArgs) => {
 		return;
 	}, []);
 
-	return { pageIdx, limit, actions: { pageIdxHandler } };
+	return { pageIdx, limit, order: { orderByHit, toggleOrderByHit }, actions: { pageIdxHandler } };
 };
