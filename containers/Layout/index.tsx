@@ -1,3 +1,4 @@
+import { BottomNavigation } from 'components/BottomNavigation';
 import { TopNavigationBar } from 'components/TopNavigationBar';
 import type { ReactNode } from 'react';
 import styled from 'styled-components';
@@ -7,6 +8,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 		<Wrapper>
 			<TopNavigationBar />
 			<main>{children}</main>
+			<BottomNavigation />
 		</Wrapper>
 	);
 };
