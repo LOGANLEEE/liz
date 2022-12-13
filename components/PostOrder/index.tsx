@@ -6,9 +6,15 @@ type Props = { orderByHit: OrderBy; toggleOrderByHit: () => void };
 export const PostOrder = ({ orderByHit, toggleOrderByHit }: Props) => {
 	return (
 		<Wrapper>
-			<Button onClick={toggleOrderByHit}>조회순 {orderByHit === 'desc' ? '⬆' : '⬇'}</Button>
+			<Button size='xs' onClick={toggleOrderByHit} color='secondary'>
+				조회순 {orderByHit === 'desc' ? '⬆' : '⬇'}
+			</Button>
 		</Wrapper>
 	);
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+	button {
+		height: 100%;
+	}
+`;
