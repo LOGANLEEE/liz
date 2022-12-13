@@ -25,7 +25,7 @@ export const InfoText = memo(({ postCount, targetSiteCount, recentAccessLog }: P
 				<Grid xs sm md lg xl>
 					<Text>매 </Text>
 					<Spacer x={0.2} />
-					<Text color='primary'>30분</Text>
+					<Text color='primary'>60분</Text>
 					<Spacer x={0.2} />
 					<Text>마다 동작할 예정이에요.</Text>
 				</Grid>
@@ -45,7 +45,7 @@ export const InfoText = memo(({ postCount, targetSiteCount, recentAccessLog }: P
 	);
 });
 
-InfoText.displayName = 'InfoBar';
+InfoText.displayName = 'InfoText';
 
 const Wrapper = styled(Grid.Container)`
 	background-color: #193631;
