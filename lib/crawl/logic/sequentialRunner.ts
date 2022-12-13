@@ -1,5 +1,4 @@
 import { format } from 'date-fns';
-import { writeFile } from 'fs/promises';
 import { universalAccessor } from 'lib/crawl/logic/accessor/universalAccessor';
 import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
 import { targetList } from 'lib/crawl/targetInfo';
@@ -22,9 +21,9 @@ export const sequentialRunner = async () => {
 
 	// stage 1
 	for (const targetInfo of targetList) {
-		try {
-			const st = performance.now();
-			for (let pageCount = targetInfo.pageRange[0]; pageCount <= targetInfo.pageRange[1]; pageCount += targetInfo.pageRange[2]) {
+		const st = performance.now();
+		for (let pageCount = targetInfo.pageRange[0]; pageCount <= targetInfo.pageRange[1]; pageCount += targetInfo.pageRange[2]) {
+			try {
 				const pageHolder = [];
 				const pageResult = await universalAccessor({ targetInfo, pageCount, browser });
 				pageHolder.push(pageResult);
@@ -39,16 +38,20 @@ export const sequentialRunner = async () => {
 				});
 
 				stage1Holder.push({ count, isError: pageHolder.some((e) => e.isError), name: targetInfo.name });
+			} catch (error) {
+				console.log(`error stage 1 >> ${JSON.stringify(error)}`);
 				continue;
 			}
-			console.log(`${targetInfo.name}: ${measure(st, performance.now(), 1000)} sec ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
-		} catch (error) {
-			console.log(`error stage 1 >> ${JSON.stringify(error)}`);
-			continue;
 		}
+		console.log(`${targetInfo.name}: ${measure(st, performance.now(), 1000)} sec ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
 	}
 
-	console.log(`stage1 >> ${measure(stage1startTime, performance.now(), 1000)} sec ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
+	console.log(
+		`stage1 >> ${measure(stage1startTime, performance.now(), 1000)} sec ${format(
+			new Date(),
+			'yyyy-MM-dd HH:mm:ss'
+		)} ${stage1Holder.reduce((prev, cur) => prev + cur.count, 0)} created`
+	);
 
 	await writeLog({ name: 'accessor', result: 1, body: JSON.stringify(stage1Holder) });
 	// stage1Holder?.map((e) => console.log(e));
