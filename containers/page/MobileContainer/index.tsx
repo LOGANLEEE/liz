@@ -17,6 +17,9 @@ type Props = {
 	recentAccessLog?: api_log;
 	orderByHit: OrderBy;
 	toggleOrderByHit: () => void;
+	searchText: string;
+	clearSearchText: () => void;
+	searchTextHandler: (e: React.ChangeEvent<FormElement>) => void;
 };
 
 const MobileContainer = ({
@@ -29,14 +32,25 @@ const MobileContainer = ({
 	freshPostList,
 	orderByHit,
 	toggleOrderByHit,
+	clearSearchText,
+	searchText,
+	searchTextHandler,
 }: Props) => {
 	return (
 		<Wrapper direction='row' justify='center' gap={1}>
 			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
 				<InfoText targetSiteCount={targetSiteCount} postCount={totalCount} recentAccessLog={recentAccessLog} />
 			</Grid>
-			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='flex-end'>
-				<Input clearable underlined placeholder='Search...' initialValue='' width='100%' />
+			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='space-between'>
+				<Input
+					clearable
+					underlined
+					placeholder='Search...'
+					width='70%'
+					onClearClick={clearSearchText}
+					onChange={searchTextHandler}
+					initialValue={searchText}
+				/>
 				<PostOrder orderByHit={orderByHit} toggleOrderByHit={toggleOrderByHit} />
 			</Grid>
 			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>

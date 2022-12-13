@@ -16,6 +16,9 @@ type Props = {
 	recentAccessLog?: api_log;
 	orderByHit: OrderBy;
 	toggleOrderByHit: () => void;
+	searchText: string;
+	clearSearchText: () => void;
+	searchTextHandler: (e: React.ChangeEvent<FormElement>) => void;
 };
 
 const DesktopContainer = ({
@@ -28,6 +31,9 @@ const DesktopContainer = ({
 	totalCount,
 	freshPostList,
 	recentAccessLog,
+	clearSearchText,
+	searchText,
+	searchTextHandler,
 }: Props) => {
 	return (
 		<Grid.Container justify='center' direction='row' gap={1}>
@@ -39,8 +45,16 @@ const DesktopContainer = ({
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
 						<InfoText targetSiteCount={targetSiteCount} postCount={totalCount} recentAccessLog={recentAccessLog} />
 					</Grid>
-					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='flex-end'>
-						<Input clearable underlined placeholder='Search...' initialValue='' width='100%' />
+					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='space-between'>
+						<Input
+							clearable
+							onClearClick={clearSearchText}
+							onChange={searchTextHandler}
+							initialValue={searchText}
+							underlined
+							placeholder='Search...'
+							width='90%'
+						/>
 						<PostOrder orderByHit={orderByHit} toggleOrderByHit={toggleOrderByHit} />
 					</Grid>
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
