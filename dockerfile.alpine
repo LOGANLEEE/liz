@@ -1,7 +1,8 @@
 # Install dependencies only when needed
 FROM node:lts-alpine AS deps
+
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -16,6 +17,7 @@ RUN \
 
 # Rebuild the source code only when needed
 FROM node:lts-alpine AS builder
+
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -36,7 +38,23 @@ RUN yarn build
 
 # Production image, copy all the files and run next
 FROM node:lts-alpine AS runner
+
+RUN apk add --no-cache \
+    libc6-compat\
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    nodejs \
+    yarn 
+
 WORKDIR /app
+
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
 
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
@@ -46,7 +64,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # Install PM2 globallyw
-RUN yarn global add pm2
+# RUN yarn global add pm2
 
 COPY --from=builder /app/public ./public
 
@@ -61,8 +79,8 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-# CMD ["node", "server.js"]
-CMD ["pm2-runtime", "start", "server.js", "--name", "liz-web", "--", "-p"]
+CMD ["node", "server.js"]
+# CMD ["pm2-runtime", "start", "server.js", "--name", "liz-web", "--", "-p"]
 
 # CMD ["pm2-runtime", "start" ,"yarn" ,"--interpreter" ,"sh" ,"--name" ,"liz-web", "--","start"]
 

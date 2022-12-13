@@ -1,6 +1,6 @@
 # Install dependencies only when needed
-FROM node:lts-alpine AS deps
-# FROM --platform=linux/arm64/v8 node:lts-alpine AS deps
+FROM node:lts-slim AS deps
+
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 
 WORKDIR /app
@@ -16,8 +16,7 @@ RUN \
 
 
 # Rebuild the source code only when needed
-FROM node:lts-alpine AS builder
-# FROM  --platform=linux/arm64/v8 node:lts-alpine AS builder
+FROM node:lts-slim AS builder
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -25,8 +24,6 @@ COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN yarn generate-prod
 
@@ -38,24 +35,16 @@ RUN yarn build
 # RUN npm run build
 
 # Production image, copy all the files and run next
-FROM node:lts-alpine AS runner
-# FROM  --platform=linux/arm64/v8 node:lts-alpine AS runner
+FROM node:lts-slim AS runner
 
-RUN apk add --no-cache \
-    libc6-compat\
-    chromium \
-    nss \
-    freetype \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont \
-    nodejs \
-    yarn
+RUN apt-get update \
+    && apt-get install -y \
+    chromium
 
 WORKDIR /app
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 
 ENV NODE_ENV production
@@ -65,8 +54,6 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Install PM2 globallyw
-# RUN yarn global add pm2
 
 COPY --from=builder /app/public ./public
 
@@ -82,7 +69,4 @@ EXPOSE 3000
 ENV PORT 3000
 
 CMD ["node", "server.js"]
-# CMD ["pm2-runtime", "start", "server.js", "--name", "liz-web", "--", "-p"]
-
-# CMD ["pm2-runtime", "start" ,"yarn" ,"--interpreter" ,"sh" ,"--name" ,"liz-web", "--","start"]
 
