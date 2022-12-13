@@ -1,4 +1,4 @@
-import { Grid } from '@nextui-org/react';
+import { Grid, Input } from '@nextui-org/react';
 import type { api_log, fresh_post } from '@prisma/client';
 import { PaginationComp } from 'components/PaginationComp';
 import { InfoText } from 'components/InfoText';
@@ -39,9 +39,12 @@ const DesktopContainer = ({
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
 						<InfoText targetSiteCount={targetSiteCount} postCount={totalCount} recentAccessLog={recentAccessLog} />
 					</Grid>
+					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='flex-end'>
+						<Input clearable underlined placeholder='Search...' initialValue='' width='100%' />
+						<PostOrder orderByHit={orderByHit} toggleOrderByHit={toggleOrderByHit} />
+					</Grid>
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
 						<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
-						<PostOrder orderByHit={orderByHit} toggleOrderByHit={toggleOrderByHit} />
 					</Grid>
 
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
