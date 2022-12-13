@@ -17,6 +17,7 @@ export const clientTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 // export const puppeteerArgs = ['--disable-gpu', '--disable-dev-shm-usage', '--no-sandbox', '--disabled-setupid-sandbox', '--single-process'];
 
 export const puppeteerArgs = [
+	'--single-process',
 	'--autoplay-policy=user-gesture-required',
 	'--disable-background-networking',
 	'--disable-background-timer-throttling',
