@@ -1,5 +1,6 @@
+import { FormElement } from '@nextui-org/react';
 import { OrderBy } from 'lib/crawl/logic/post';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 const paginationKey = 'pagination';
 
@@ -15,6 +16,15 @@ export const usePagination = ({ some }: usePaginationArgs) => {
 	const [pageIdx, setPageIdx] = useState(1);
 	const [orderByHit, setOrderByHit] = useState<OrderBy>('desc');
 	const limit = 20;
+	const [searchText, setSearchText] = useState('');
+
+	const searchTextHandler = useCallback((e: React.ChangeEvent<FormElement>) => {
+		setSearchText(e.target.value);
+	}, []);
+
+	const clearSearchText = useCallback(() => {
+		setSearchText('');
+	}, []);
 
 	const pageIdxHandler = useCallback((pageIdx: number) => {
 		window.scrollTo({ behavior: 'smooth', top: 0 });
@@ -39,5 +49,11 @@ export const usePagination = ({ some }: usePaginationArgs) => {
 		return;
 	}, []);
 
-	return { pageIdx, limit, order: { orderByHit, toggleOrderByHit }, actions: { pageIdxHandler } };
+	return {
+		pageIdx,
+		limit,
+		order: { orderByHit, toggleOrderByHit },
+		actions: { pageIdxHandler },
+		search: { searchText, clearSearchText, searchTextHandler },
+	};
 };
