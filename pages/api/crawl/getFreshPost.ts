@@ -8,12 +8,12 @@ const getFreshPostHandler = async (req: NextApiRequest, res: NextApiResponse) =>
 		return;
 	}
 
-	const { offset, limit, orderByHit } = req.body;
+	const { offset, limit, orderByHit, searchText } = req.body;
 	// console.log('limit:', limit);
 	// console.log('offset:', offset);
 
 	await _prisma.$connect();
-	const data = await getFreshPost({ limit, offset, orderByHit });
+	const data = await getFreshPost({ limit, offset, orderByHit, searchText });
 	res.status(200).json(data);
 	await _prisma.$disconnect();
 	return;
