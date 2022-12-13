@@ -26,13 +26,19 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 		limit,
 		order,
 		actions: { pageIdxHandler },
+		search,
 	} = usePagination({});
 
 	const { data, error, isValidating } = useSWR<GetFreshPostReturn>(
-		`/api/crawl/getFreshPost/${pageIdx}/${order.orderByHit}`,
+		`/api/crawl/getFreshPost/${pageIdx}/${order.orderByHit}/${search.searchText}`,
 		async () =>
 			await _axios
-				.post(`/api/crawl/getFreshPost`, { orderByHit: order.orderByHit, limit, offset: (pageIdx - 1) * limit })
+				.post(`/api/crawl/getFreshPost`, {
+					orderByHit: order.orderByHit,
+					limit,
+					offset: (pageIdx - 1) * limit,
+					searchText: search.searchText,
+				})
 				.then((res) => res.data)
 	);
 
@@ -61,10 +67,16 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 					<meta name='viewport' content='initial-scale=1, width=device-width' />
 				</Head>
 
-				<main>
+				<main
+					tabIndex={0}
+					onKeyDown={(e) => {
+						console.log('keyDown:', e.key);
+					}}
+				>
 					{isMobile && (
 						<MobileContainer
 							{...order}
+							{...search}
 							recentAccessLog={recentAccessLog}
 							totalCount={totalCount}
 							targetSiteCount={Object.keys(names).length}
@@ -77,6 +89,7 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 					{!isMobile && (
 						<DesktopContainer
 							{...order}
+							{...search}
 							recentAccessLog={recentAccessLog}
 							totalCount={totalCount}
 							targetSiteCount={Object.keys(names).length}
@@ -104,14 +117,13 @@ export default Home;
 export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {
 	const userAgent = req.headers['user-agent'] || '';
 
-	const { isMobile } = getSelectorsByUserAgent(userAgent);
-	// { isMobile }
+	const detect = getSelectorsByUserAgent(userAgent);
 
 	const recentAccessLog = await getRecentAccessLog();
 
 	return {
 		props: {
-			isMobile,
+			isMobile: detect?.isMobile || true,
 			recentAccessLog: JSON.parse(JSON.stringify(recentAccessLog)),
 		},
 	};
