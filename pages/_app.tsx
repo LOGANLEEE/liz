@@ -27,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
 				// you can also create your own color
 				myColor: '#ff4ecd',
+				secondary: '#193631',
 
 				// ...  more colors
 			},
