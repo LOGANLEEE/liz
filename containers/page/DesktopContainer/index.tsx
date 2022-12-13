@@ -1,10 +1,11 @@
-import { Grid, Input } from '@nextui-org/react';
+import { FormElement, Grid, Input } from '@nextui-org/react';
 import type { api_log, fresh_post } from '@prisma/client';
 import { PaginationComp } from 'components/PaginationComp';
 import { InfoText } from 'components/InfoText';
 import { PostContainer } from 'containers/PostContainer';
 import { PostOrder } from 'components/PostOrder';
 import { OrderBy } from 'lib/crawl/logic/post';
+import React from 'react';
 
 type Props = {
 	totalCount: number;
