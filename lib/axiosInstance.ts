@@ -3,7 +3,7 @@ import { decode } from 'iconv-lite';
 
 export const _axios = axios.create({});
 
-axios.interceptors.request.use(
+_axios.interceptors.request.use(
 	(req) => {
 		// console.log('req:', req);
 
@@ -14,7 +14,7 @@ axios.interceptors.request.use(
 	}
 );
 
-axios.interceptors.response.use(
+_axios.interceptors.response.use(
 	(res) => {
 		const ctype = res.headers['content-type'];
 
@@ -28,10 +28,10 @@ axios.interceptors.response.use(
 );
 
 export const _axiosCrawler = axios.create({
-	// headers: {
-	// 'User-Agent':
-	// 	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
-	// },
+	headers: {
+		'User-Agent':
+			'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+	},
 	responseType: 'arraybuffer',
 	// responseEncoding: 'binary',
 	// responseEncoding: 'utf8',
