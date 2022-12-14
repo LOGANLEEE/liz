@@ -2,7 +2,8 @@ import { Prisma } from '@prisma/client';
 import { load } from 'cheerio';
 import { format } from 'date-fns';
 import { _axiosCrawler } from 'lib/axiosInstance';
-import type { TargetInfo } from 'lib/crawl/targetInfo';
+import { names, TargetInfo } from 'lib/crawl/targetInfo';
+import { humorUniCookie } from 'lib/util';
 
 type UniversalAccessorArgs = {
 	// page: Page;
@@ -23,10 +24,15 @@ export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessor
 	const tempHolder: Prisma.fresh_postCreateInput[] = [];
 	const result = (message: string) => ({ list: tempHolder, isError, message, name: targetInfo.name });
 
-	// console.log(`===>  ${targetInfo.name}  ${pageCount}/${targetInfo.pageRange[1]} ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
+	const headers: any = {};
 
+	if (targetInfo.name === names.ud) {
+		headers.Cookie = humorUniCookie;
+	}
 	const { data, err } = await _axiosCrawler
-		.get(targetInfo.targetUrl(pageCount))
+		.get(targetInfo.targetUrl(pageCount), {
+			headers,
+		})
 		.then((res) => ({ ...res, err: false }))
 		.catch((err) => ({ err, data: undefined }));
 
@@ -41,15 +47,19 @@ export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessor
 
 		for (let postCount = targetInfo.postRange[0]; postCount <= targetInfo.postRange[1]; postCount += targetInfo.postRange[2]) {
 			if (targetInfo?.targetIndex) {
-				const postIndex = $(targetInfo?.targetIndex(postCount)).text()?.trim();
-				console.log('postIndex:', postIndex, isNaN(parseInt(postIndex)));
-
-				if (isNaN(parseInt(postIndex))) continue;
+				if (targetInfo?.targetIndex(postCount) !== '') {
+					const postIndex = $(targetInfo?.targetIndex(postCount))?.text()?.trim();
+					if (isNaN(parseInt(postIndex))) continue;
+				}
 			}
 
 			// remove garbage tag
 			if (targetInfo?.garbage) {
-				await Promise.all(targetInfo?.garbage(postCount)?.map(async (path) => $(path)?.remove()));
+				targetInfo.garbage(postCount)?.forEach((path) => {
+					if (path) {
+						$(path)?.remove();
+					}
+				});
 			}
 			const title = $(targetInfo.title ? targetInfo.title(postCount) : targetInfo.link(postCount))
 				.text()
@@ -61,16 +71,17 @@ export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessor
 				link = targetInfo.linkHandler(link);
 			}
 
-			const author = $(targetInfo.author(postCount)).text()?.trim();
+			const author = $(targetInfo.author(postCount))?.text()?.trim();
 
 			const hit = parseInt(
 				$(targetInfo.hit(postCount))
-					.text()
+					?.text()
 					?.trim()
 					?.replaceAll(' ', '')
 					.replaceAll(',', '')
 					.replaceAll('.', '')
-					.replaceAll('k', '00'),
+					.replaceAll('k', '00')
+					.replaceAll('조회', ''),
 				10
 			);
 
@@ -98,7 +109,7 @@ export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessor
 		return result('good');
 	} catch (error) {
 		isError = true;
-		console.log('parsing error: ', JSON.stringify(error));
+		// console.log('parsing error: ', error);
 
 		return result(`selector error ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
 	}
