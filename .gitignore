@@ -36,6 +36,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+dummy.jsonc
 dummy1.jsonc
 dummy2.jsonc
 dummy3.jsonc
