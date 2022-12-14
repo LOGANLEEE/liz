@@ -1,8 +1,6 @@
 import { axiosAccessor } from 'lib/crawl/logic/accessor/axiosAccessor';
-import { pptrAccessor } from 'lib/crawl/logic/accessor/pptrAccessor';
 import { targetList } from 'lib/crawl/targetInfo';
 import { writeLog } from 'lib/log';
-import { getBrowser } from 'lib/pptrInstace';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
