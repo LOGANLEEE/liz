@@ -16,10 +16,6 @@ _axios.interceptors.request.use(
 
 _axios.interceptors.response.use(
 	(res) => {
-		const ctype = res.headers['content-type'];
-
-		if (ctype?.includes('charset=euc-kr')) res.data = decode(Buffer.from(res.data), 'euc-kr');
-
 		return res;
 	},
 	(error) => {
@@ -30,8 +26,9 @@ _axios.interceptors.response.use(
 export const _axiosCrawler = axios.create({
 	headers: {
 		'User-Agent':
-			'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+			'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
 	},
+	// withCredentials: true,
 	responseType: 'arraybuffer',
 	// responseEncoding: 'binary',
 	// responseEncoding: 'utf8',
@@ -53,9 +50,11 @@ _axiosCrawler.interceptors.request.use(
 
 _axiosCrawler.interceptors.response.use(
 	(res) => {
-		const ctype = res.headers['content-type'];
+		const isEUCKR = res.headers['content-type']?.includes('charset=euc-kr');
 
-		if (ctype?.includes('charset=euc-kr')) {
+		const isHumorUni = res.config.url?.includes('humoruniv'); //link=ok; path=/; domain=.humoruniv.com
+
+		if (isEUCKR || isHumorUni) {
 			res.data = decode(Buffer.from(res.data), 'euc-kr');
 		}
 		return res;
