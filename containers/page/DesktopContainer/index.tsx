@@ -12,7 +12,6 @@ type Props = {
 	targetSiteCount: number;
 	limit: number;
 	pageIdx: number;
-	pageIdxHandler: (pageNum: number) => void;
 	freshPostList: fresh_post[];
 	recentAccessLog?: api_log;
 	orderByHit: OrderBy;
@@ -26,7 +25,7 @@ const DesktopContainer = ({
 	orderByHit,
 	toggleOrderByHit,
 	limit,
-	pageIdxHandler,
+	pageIndexHandler,
 	pageIdx,
 	targetSiteCount,
 	totalCount,
@@ -59,14 +58,14 @@ const DesktopContainer = ({
 						<PostOrder orderByHit={orderByHit} toggleOrderByHit={toggleOrderByHit} />
 					</Grid>
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
-						<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+						<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
 					</Grid>
 
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
 						<PostContainer posts={freshPostList} />
 					</Grid>
 					<Grid xs={12} sm={12} md={12} lg={12} xl={12} justify='center'>
-						<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+						<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
 					</Grid>
 				</Grid.Container>
 			</Grid>

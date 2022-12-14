@@ -25,7 +25,7 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 		pageIdx,
 		limit,
 		order,
-		actions: { pageIdxHandler },
+		actions: { pageIndexHandler },
 		search,
 	} = usePagination({});
 
@@ -68,10 +68,10 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 				</Head>
 
 				<main
-					tabIndex={0}
-					onKeyDown={(e) => {
-						console.log('keyDown:', e.key);
-					}}
+				// tabIndex={0}
+				// onKeyDown={(e) => {
+				// 	console.log('keyDown:', e.key);
+				// }}
 				>
 					{isMobile && (
 						<MobileContainer
@@ -82,7 +82,7 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 							targetSiteCount={Object.keys(names).length}
 							limit={limit}
 							pageIdx={pageIdx}
-							pageIdxHandler={pageIdxHandler}
+							pageIndexHandler={pageIndexHandler}
 							freshPostList={freshPostList}
 						/>
 					)}
@@ -95,7 +95,7 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 							targetSiteCount={Object.keys(names).length}
 							limit={limit}
 							pageIdx={pageIdx}
-							pageIdxHandler={pageIdxHandler}
+							pageIndexHandler={pageIndexHandler}
 							freshPostList={freshPostList}
 						/>
 					)}

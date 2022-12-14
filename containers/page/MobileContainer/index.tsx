@@ -13,7 +13,7 @@ type Props = {
 	targetSiteCount: number;
 	limit: number;
 	pageIdx: number;
-	pageIdxHandler: (pageNum: number) => void;
+	pageIndexHandler: (pageNum: number) => void;
 	freshPostList: fresh_post[];
 	recentAccessLog?: api_log;
 	orderByHit: OrderBy;
@@ -25,7 +25,7 @@ type Props = {
 
 const MobileContainer = ({
 	limit,
-	pageIdxHandler,
+	pageIndexHandler,
 	pageIdx,
 	recentAccessLog,
 	targetSiteCount,
@@ -55,13 +55,13 @@ const MobileContainer = ({
 				<PostOrder orderByHit={orderByHit} toggleOrderByHit={toggleOrderByHit} />
 			</Grid>
 			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
-				<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+				<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
 			</Grid>
 			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
 				<PostContainer posts={freshPostList} />
 			</Grid>
 			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
-				<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIdxHandler} />
+				<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
 			</Grid>
 		</Wrapper>
 	);
