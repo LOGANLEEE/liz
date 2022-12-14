@@ -26,7 +26,7 @@ export const usePagination = ({ some }: usePaginationArgs) => {
 		setSearchText('');
 	}, []);
 
-	const pageIdxHandler = useCallback((pageIdx: number) => {
+	const pageIndexHandler = useCallback((pageIdx: number) => {
 		window.scrollTo({ behavior: 'smooth', top: 0 });
 		setPageIdx(pageIdx);
 		sessionStorage.setItem(paginationKey, JSON.stringify({ pageIdx }));
@@ -53,7 +53,7 @@ export const usePagination = ({ some }: usePaginationArgs) => {
 		pageIdx,
 		limit,
 		order: { orderByHit, toggleOrderByHit },
-		actions: { pageIdxHandler },
+		actions: { pageIndexHandler },
 		search: { searchText, clearSearchText, searchTextHandler },
 	};
 };
