@@ -1,4 +1,18 @@
-export const names = { dc: '디씨', fm: '에펨', rr: '루리웹', pp: '뿜뿌', ilbe: '일베', clien: '클리앙', bobae: '보배', iv: '인벤' };
+export const names = {
+	gs: '가생이',
+	ou: '오유',
+	ck: '82쿡',
+	slr: 'SLR',
+	dc: '디씨',
+	fm: '에펨',
+	rr: '루리웹',
+	pp: '뿜뿌',
+	ilbe: '일베',
+	clien: '클리앙',
+	bobae: '보배',
+	iv: '인벤',
+	et: '이토',
+};
 
 export type TargetInfo = {
 	name: string;
@@ -14,6 +28,7 @@ export type TargetInfo = {
 	author: (idx: number) => string;
 	hit: (idx: number) => string;
 	uploadDate?: (idx: number) => string;
+	linkHandler?: (val: string) => string;
 };
 // https://www.ppomppu.co.kr/hot.php?id=&page=1&category=999&search_type=&keyword=&page_num=&del_flag=&bbs_list_category=0
 
@@ -144,6 +159,89 @@ export const INVEN_INFO: TargetInfo = {
 	hit: (idx: number) => `#new-board > form > div > table > tbody > tr:nth-child(${idx}) > td.view`,
 };
 
+export const ETOLAND_INFO: TargetInfo = {
+	name: names.et,
+	targetBaseName: 'https://www.etoland.co.kr/bbs',
+	enable: false,
+	targetUrl: (page: number) => `https://www.etoland.co.kr/bbs/hit.php?stx_h=day&bo_table_n=&page=1&sword=`,
+	pageRange: [1, 1, 1],
+	postRange: [5, 64, 1],
+	targetIndex: (idx: number) => `#container > div.right > div.board_hit_wrap > ul > li:nth-child(${idx}) > div.board > a`,
+
+	garbage: (idx: number) => [
+		`#container > div.right > div.board_hit_wrap > ul > li.list.is_notice`,
+		`#container > div.right > div.board_hit_wrap > ul > li.list.ad_list`,
+	],
+
+	title: (idx: number) =>
+		`#container > div.right > div.board_hit_wrap > ul > li:nth-child(${idx}) > div.subject > a.sub_link > span.subject_txt`,
+	link: (idx: number) => `#container > div.right > div.board_hit_wrap > ul > li:nth-child(${idx}) > div.subject > a.sub_link`,
+	linkHandler: (val: string) => val.replaceAll('./', '/'),
+	author: (idx: number) => `#container > div.right > div.board_hit_wrap > ul > li:nth-child(${idx}) > div.writer > a > span`,
+	hit: (idx: number) => `#container > div.right > div.board_hit_wrap > ul > li:nth-child(${idx}) > div.wr_hit`,
+};
+// http://www.slrclub.com/bbs/zboard.php?id=best_article
+const SLR_INFO: TargetInfo = {
+	name: names.slr,
+	targetBaseName: 'http://www.slrclub.com',
+	enable: false,
+	targetUrl: (page: number) => `http://www.slrclub.com/bbs/zboard.php?id=best_article`,
+	pageRange: [1, 1, 1],
+	postRange: [1, 30, 1],
+	garbage: (idx: number) => [],
+	targetIndex: (idx: number) => ``,
+	link: (idx: number) => `#bbs_list > tbody > tr:nth-child(${idx}) > td.sbj > a`,
+	author: (idx: number) => `#bbs_list > tbody > tr:nth-child(${idx}) > td.list_name > span`,
+	hit: (idx: number) => `#bbs_list > tbody > tr:nth-child(${idx}) > td.list_click.no_att`,
+};
+
+const COOK_INFO: TargetInfo = {
+	name: names.ck,
+	targetBaseName: 'https://www.82cook.com',
+	enable: false,
+	targetUrl: (page: number) => `https://www.82cook.com/entiz/enti.php?bn=15&page=${page}`,
+	pageRange: [1, 1, 1],
+	postRange: [1, 10, 1],
+	garbage: (idx: number) => [],
+	link: (idx: number) => `#column1 > div.leftbox.Best > ul > li:nth-child(${idx}) > a`,
+	author: (idx: number) => ``,
+	hit: (idx: number) => ``,
+};
+
+const TODAY_HUMOR_INFO: TargetInfo = {
+	name: names.ou,
+	targetBaseName: 'https://www.todayhumor.co.kr',
+	enable: false,
+	targetUrl: (page: number) => `https://www.todayhumor.co.kr/board/list.php?table=bestofbest&page=${page}`,
+	pageRange: [1, 2, 1],
+	postRange: [2, 31, 1],
+	garbage: (idx: number) => [],
+	link: (idx: number) => `body > div.whole_box > div > div > table > tbody > tr:nth-child(${idx}) > td.subject > a`,
+	author: (idx: number) => `body > div.whole_box > div > div > table > tbody > tr:nth-child(${idx}) > td.name > a`,
+	hit: (idx: number) => `body > div.whole_box > div > div > table > tbody > tr:nth-child(${idx}) > td.hits`,
+};
+
+const GASENGI_1_INFO: TargetInfo = {
+	name: names.gs,
+	targetBaseName: 'template',
+	enable: false,
+	targetUrl: (page: number) => {
+		if (page === 1) return `http://www.gasengi.com/main/board.php?bo_table=commu08`;
+		return `http://www.gasengi.com/main/board.php?bo_table=humor04`;
+	},
+
+	pageRange: [1, 2, 1],
+	postRange: [1, 10, 1],
+	garbage: (idx: number) => [],
+	targetIndex: (idx: number) => ``,
+	link: (idx: number) => {
+		if (idx < 5) return `#rightcolumn > div.rank_div > div.rank_dbox > ol > span:nth-child(1) > li:nth-child(${idx}) > a,`;
+		return `#rightcolumn > div.rank_div > div.rank_dbox > ol > span:nth-child(2) > li:nth-child(${idx - 5}) > a,`;
+	},
+	author: (idx: number) => ``,
+	hit: (idx: number) => ``,
+};
+
 const template: TargetInfo = {
 	name: names.dc,
 	targetBaseName: 'template',
@@ -159,6 +257,10 @@ const template: TargetInfo = {
 };
 
 export const targetList: TargetInfo[] = [
+	// GASENGI_1_INFO,
+	TODAY_HUMOR_INFO,
+	COOK_INFO,
+	SLR_INFO,
 	DCINSIDE_INFO,
 	PPOMPPU_INFO,
 	RULIWEB_INFO,
@@ -167,4 +269,5 @@ export const targetList: TargetInfo[] = [
 	CLIEN_INFO,
 	BOBAE_INFO,
 	INVEN_INFO,
+	ETOLAND_INFO,
 ];
