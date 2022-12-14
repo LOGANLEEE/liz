@@ -40,12 +40,12 @@ export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessor
 		const $ = load(data);
 
 		for (let postCount = targetInfo.postRange[0]; postCount <= targetInfo.postRange[1]; postCount += targetInfo.postRange[2]) {
-			// if (targetInfo?.targetIndex) {
-			// 	const postIndex = $(targetInfo?.targetIndex(pageCount)).text()?.trim();
-			// 	console.log('postIndex:', postIndex);
+			if (targetInfo?.targetIndex) {
+				const postIndex = $(targetInfo?.targetIndex(postCount)).text()?.trim();
+				console.log('postIndex:', postIndex, isNaN(parseInt(postIndex)));
 
-			// 	if (isNaN(parseInt(postIndex))) continue;
-			// }
+				if (isNaN(parseInt(postIndex))) continue;
+			}
 
 			// remove garbage tag
 			if (targetInfo?.garbage) {
