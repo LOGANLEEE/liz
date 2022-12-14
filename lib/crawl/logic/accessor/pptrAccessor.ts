@@ -18,7 +18,7 @@ type UniversalAccessorReturn = {
 	name: string;
 };
 
-export const universalAccessor = async ({ browser, targetInfo, pageCount }: UniversalAccessorArgs): Promise<UniversalAccessorReturn> => {
+export const pptrAccessor = async ({ browser, targetInfo, pageCount }: UniversalAccessorArgs): Promise<UniversalAccessorReturn> => {
 	let isError = false;
 
 	const tempHolder: Prisma.fresh_postCreateInput[] = [];
@@ -128,8 +128,14 @@ export const universalAccessor = async ({ browser, targetInfo, pageCount }: Univ
 			});
 		}
 	} catch (error) {
+		isError = true;
 		await page.close();
 		return result(`selector error ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
+	}
+
+	if (tempHolder.length < 1) {
+		isError = true;
+		return result('holder length 0');
 	}
 
 	await page.close();

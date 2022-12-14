@@ -17,7 +17,7 @@ type UniversalAccessorReturn = {
 	name: string;
 };
 
-export const axiosUniversalAccessor = async ({ targetInfo, pageCount }: UniversalAccessorArgs): Promise<UniversalAccessorReturn> => {
+export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessorArgs): Promise<UniversalAccessorReturn> => {
 	let isError = false;
 
 	const tempHolder: Prisma.fresh_postCreateInput[] = [];
@@ -30,19 +30,22 @@ export const axiosUniversalAccessor = async ({ targetInfo, pageCount }: Universa
 		.then((res) => ({ ...res, err: false }))
 		.catch((err) => ({ err, data: undefined }));
 
-	if (!data && err) return result(`axios error ${JSON.stringify(err)}`);
+	if (!data && err) {
+		return result(`axios error: ${JSON.stringify(err)}`);
+	}
+
+	// await writeFile('./dummy.html', data);
 
 	try {
 		const $ = load(data);
 
 		for (let postCount = targetInfo.postRange[0]; postCount <= targetInfo.postRange[1]; postCount += targetInfo.postRange[2]) {
-			if (targetInfo?.targetIndex) {
-				const postIndex = $(targetInfo?.targetIndex ? targetInfo?.targetIndex(postCount) : '')
-					.text()
-					?.trim();
+			// if (targetInfo?.targetIndex) {
+			// 	const postIndex = $(targetInfo?.targetIndex(pageCount)).text()?.trim();
+			// 	console.log('postIndex:', postIndex);
 
-				if (isNaN(parseInt(postIndex))) continue;
-			}
+			// 	if (isNaN(parseInt(postIndex))) continue;
+			// }
 
 			// remove garbage tag
 			if (targetInfo?.garbage) {
@@ -52,7 +55,11 @@ export const axiosUniversalAccessor = async ({ targetInfo, pageCount }: Universa
 				.text()
 				?.trim();
 
-			const link = $(targetInfo.link(postCount))?.attr('href');
+			let link = $(targetInfo.link(postCount))?.attr('href');
+
+			if (targetInfo.linkHandler && link) {
+				link = targetInfo.linkHandler(link);
+			}
 
 			const author = $(targetInfo.author(postCount)).text()?.trim();
 
@@ -67,6 +74,11 @@ export const axiosUniversalAccessor = async ({ targetInfo, pageCount }: Universa
 				10
 			);
 
+			// console.log('title:', title);
+			// console.log('link:', `${targetInfo.targetBaseName}${link}`);
+			// console.log('hit:', isNaN(hit) ? -1 : hit);
+			// console.log('author:', author);
+
 			if (!title && !link) continue;
 
 			tempHolder.push({
@@ -74,13 +86,18 @@ export const axiosUniversalAccessor = async ({ targetInfo, pageCount }: Universa
 				link: `${targetInfo.targetBaseName}${link}`,
 				hit: isNaN(hit) ? -1 : hit,
 				name: targetInfo.name,
-				mark: false,
 				author,
+				mark: false,
 				content: null,
 			});
 		}
+		if (tempHolder.length < 1) {
+			isError = true;
+			throw 'holder length 0';
+		}
 		return result('good');
 	} catch (error) {
+		isError = true;
 		console.log('parsing error: ', JSON.stringify(error));
 
 		return result(`selector error ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
