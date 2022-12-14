@@ -1,4 +1,6 @@
 export const names = {
+	nt: '네이트판',
+	ud: '웃대',
 	gs: '가생이',
 	ou: '오유',
 	ck: '82쿡',
@@ -21,7 +23,7 @@ export type TargetInfo = {
 	targetUrl: (page: number) => string;
 	pageRange: number[];
 	postRange: number[];
-	garbage: (idx: number) => string[];
+	garbage?: (idx: number) => string[];
 	targetIndex?: (idx: number) => string;
 	link: (idx: number) => string;
 	title?: (idx: number) => string;
@@ -75,7 +77,7 @@ export const FMKOREA_INFO: TargetInfo = {
 	targetUrl: (page: number) => `https://www.fmkorea.com/index.php?mid=best&listStyle=list&page=${page}`,
 	pageRange: [1, 5, 1],
 	postRange: [2, 21, 1],
-	garbage: (idx: number) => [],
+
 	link: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td.title.hotdeal_var8 > a.hx`,
 	author: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td.author > span > a`,
 	hit: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td:nth-child(6)`,
@@ -90,7 +92,7 @@ export const PPOMPPU_INFO: TargetInfo = {
 		`https://www.ppomppu.co.kr/hot.php?id=&page=${page}&category=999&search_type=&keyword=&page_num=&del_flag=&bbs_list_category=0`,
 	pageRange: [1, 5, 1],
 	postRange: [4, 23, 1],
-	garbage: (idx: number) => [],
+
 	link: (idx: number) =>
 		`body > div > div.contents > div.container > div:nth-child(2) > div.board_box > table.board_table > tbody > tr:nth-child(${idx}) > td:nth-child(4) > a`,
 	// body > div > div.contents > div.container > div:nth-child(2) > div.board_box > table.board_table > tbody > tr:nth-child(13) > td:nth-child(4)
@@ -107,7 +109,7 @@ export const ILBE_INFO: TargetInfo = {
 	targetUrl: (page: number) => `https://www.ilbe.com/list/ilbe?page=${page}&listSize=60&listStyle=list`,
 	pageRange: [1, 2, 1],
 	postRange: [5, 64, 1],
-	garbage: (idx: number) => [],
+
 	// targetIndex: (idx: number) => `${idx}`,
 	link: (idx: number) => `#content-wrap > div > div.board-list > ul > li:nth-child(${idx}) > span.title > a`,
 	author: (idx: number) => `#content-wrap > div > div.board-list > ul > li:nth-child(${idx}) > span.global-nick.nick > a`,
@@ -121,7 +123,7 @@ export const CLIEN_INFO: TargetInfo = {
 	targetUrl: (page: number) => `https://www.clien.net/service/recommend`,
 	pageRange: [1, 1, 1],
 	postRange: [1, 50, 1],
-	garbage: (idx: number) => [],
+
 	link: (idx: number) => `#div_content > div.recommend_underList > div:nth-child(${idx}) > div.list_title > a.list_subject`,
 	title: (idx: number) =>
 		`#div_content > div.recommend_underList > div:nth-child(${idx}) > div.list_title > a.list_subject > span.subject_fixed`,
@@ -137,7 +139,7 @@ export const BOBAE_INFO: TargetInfo = {
 		`https://www.bobaedream.co.kr/list?code=best&s_cate=&maker_no=&model_no=&or_gu=10&or_se=desc&s_selday=&pagescale=50&info3=&noticeShow=&s_select=Subject&s_key=&level_no=&bestCode=&bestDays=&bestbbs=&vdate=&type=list&page=${page}`,
 	pageRange: [1, 2, 1],
 	postRange: [1, 50, 1],
-	garbage: (idx: number) => [],
+
 	link: (idx: number) => `#boardlist > tbody > tr:nth-child(${idx}) > td.pl14 > a.bsubject`,
 	author: (idx: number) => `#boardlist > tbody > tr:nth-child(${idx}) > td.author02 > span.author`,
 	hit: (idx: number) => `#boardlist > tbody > tr:nth-child(${idx}) > td.count`,
@@ -188,8 +190,6 @@ const SLR_INFO: TargetInfo = {
 	targetUrl: (page: number) => `http://www.slrclub.com/bbs/zboard.php?id=best_article`,
 	pageRange: [1, 1, 1],
 	postRange: [1, 30, 1],
-	garbage: (idx: number) => [],
-	targetIndex: (idx: number) => ``,
 	link: (idx: number) => `#bbs_list > tbody > tr:nth-child(${idx}) > td.sbj > a`,
 	author: (idx: number) => `#bbs_list > tbody > tr:nth-child(${idx}) > td.list_name > span`,
 	hit: (idx: number) => `#bbs_list > tbody > tr:nth-child(${idx}) > td.list_click.no_att`,
@@ -202,7 +202,7 @@ const COOK_INFO: TargetInfo = {
 	targetUrl: (page: number) => `https://www.82cook.com/entiz/enti.php?bn=15&page=${page}`,
 	pageRange: [1, 1, 1],
 	postRange: [1, 10, 1],
-	garbage: (idx: number) => [],
+
 	link: (idx: number) => `#column1 > div.leftbox.Best > ul > li:nth-child(${idx}) > a`,
 	author: (idx: number) => ``,
 	hit: (idx: number) => ``,
@@ -215,49 +215,63 @@ const TODAY_HUMOR_INFO: TargetInfo = {
 	targetUrl: (page: number) => `https://www.todayhumor.co.kr/board/list.php?table=bestofbest&page=${page}`,
 	pageRange: [1, 2, 1],
 	postRange: [2, 31, 1],
-	garbage: (idx: number) => [],
+
 	link: (idx: number) => `body > div.whole_box > div > div > table > tbody > tr:nth-child(${idx}) > td.subject > a`,
 	author: (idx: number) => `body > div.whole_box > div > div > table > tbody > tr:nth-child(${idx}) > td.name > a`,
 	hit: (idx: number) => `body > div.whole_box > div > div > table > tbody > tr:nth-child(${idx}) > td.hits`,
 };
 
-const GASENGI_1_INFO: TargetInfo = {
+const GASENGI_INFO: TargetInfo = {
 	name: names.gs,
-	targetBaseName: 'template',
+	targetBaseName: 'http://www.gasengi.com',
 	enable: false,
 	targetUrl: (page: number) => {
 		if (page === 1) return `http://www.gasengi.com/main/board.php?bo_table=commu08`;
-		return `http://www.gasengi.com/main/board.php?bo_table=humor04`;
+		if (page === 2) return `http://www.gasengi.com/main/board.php?bo_table=humor04`;
+		return '';
 	},
-
 	pageRange: [1, 2, 1],
 	postRange: [1, 10, 1],
-	garbage: (idx: number) => [],
-	targetIndex: (idx: number) => ``,
 	link: (idx: number) => {
-		if (idx < 5) return `#rightcolumn > div.rank_div > div.rank_dbox > ol > span:nth-child(1) > li:nth-child(${idx}) > a,`;
-		return `#rightcolumn > div.rank_div > div.rank_dbox > ol > span:nth-child(2) > li:nth-child(${idx - 5}) > a,`;
+		if (idx <= 5) return `#rightcolumn > div.rank_div > div.rank_dbox > ol > span:nth-child(1) > li:nth-child(${idx}) > a`;
+		if (idx >= 6) return `#rightcolumn > div.rank_div > div.rank_dbox > ol > span:nth-child(2) > li:nth-child(${idx - 5}) > a`;
+		return '';
 	},
+	linkHandler: (val: string) => val.replaceAll('../', '/'),
 	author: (idx: number) => ``,
 	hit: (idx: number) => ``,
 };
 
-const template: TargetInfo = {
-	name: names.dc,
-	targetBaseName: 'template',
+const HUMOR_UNI_INFO: TargetInfo = {
+	name: names.ud,
+	targetBaseName: 'http://web.humoruniv.com/board/humor/',
 	enable: false,
-	targetUrl: (page: number) => ``,
+	targetUrl: (page: number) => `http://web.humoruniv.com/board/humor/list.html?table=pds&st=day&pg=${page}`,
+	pageRange: [1, 3, 1],
+	postRange: [1, 39, 1],
+	link: (idx: number) => `#post_list > tbody > tr:nth-child(${idx}) > td.li_sbj > a`,
+	author: (idx: number) => `#post_list > tbody > tr:nth-child(${idx}) > td.li_icn > table > tbody > tr > td.g6 > span > span`,
+	hit: (idx: number) => `#post_list > tbody > tr:nth-child(${idx}) > td:nth-child(5)`,
+};
+// https://pann.nate.com/talk/ranking?rankingType=total&page=1
+const NATE_INFO: TargetInfo = {
+	name: names.nt,
+	targetBaseName: 'https://pann.nate.com',
+	enable: false,
+	targetUrl: (page: number) => `https://pann.nate.com/talk/ranking?rankingType=total&page=${page}`,
 	pageRange: [1, 2, 1],
-	postRange: [1, 101, 1],
-	garbage: (idx: number) => [],
-	targetIndex: (idx: number) => ``,
-	link: (idx: number) => ``,
+	postRange: [1, 50, 1],
+	link: (idx: number) =>
+		`#container > div.content.sub > div.mainarea > div.tsCnt > div.cntList > ul > li:nth-child(${idx}) > dl > dt > a`,
+	hit: (idx: number) =>
+		`#container > div.content.sub > div.mainarea > div.tsCnt > div.cntList > ul > li:nth-child(${idx}) > dl > dd.info > span.count`,
 	author: (idx: number) => ``,
-	hit: (idx: number) => ``,
 };
 
 export const targetList: TargetInfo[] = [
-	// GASENGI_1_INFO,
+	HUMOR_UNI_INFO,
+	NATE_INFO,
+	GASENGI_INFO,
 	TODAY_HUMOR_INFO,
 	COOK_INFO,
 	SLR_INFO,
