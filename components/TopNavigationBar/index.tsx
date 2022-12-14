@@ -1,5 +1,5 @@
 import { Grid, Progress } from '@nextui-org/react';
-import { _axiosCrawler } from 'lib/axiosInstance';
+import { _axios } from 'lib/axiosInstance';
 import { ServerState } from 'lib/state';
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ export const TopNavigationBar = () => {
 	const [currentServerState, setCurrentServerState] = useState<ServerState>();
 
 	const callStatusAPI = useCallback(async () => {
-		const result: ServerState = await _axiosCrawler(`${process.env.NEXT_PUBLIC_STATE_URL}/api/crawl/status`).then((res) => res?.data);
+		const result: ServerState = await _axios(`${process.env.NEXT_PUBLIC_STATE_URL}/api/crawl/status`).then((res) => res?.data);
 		setCurrentServerState(result);
 		return result;
 	}, []);
