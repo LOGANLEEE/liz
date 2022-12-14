@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { universalAccessor } from 'lib/crawl/logic/accessor/universalAccessor';
+import { pptrAccessor } from 'lib/crawl/logic/accessor/pptrAccessor';
 import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
 import { targetList } from 'lib/crawl/targetInfo';
 import { writeLog } from 'lib/log';
@@ -8,7 +8,7 @@ import { serverState } from 'lib/state';
 import { measure } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 
-export const sequentialRunner = async () => {
+export const pptrSequentialRunner = async () => {
 	serverState.isCrawling = true;
 
 	serverState.listStatus = serverState.listStatus.map((e) => ({ ...e, on: false }));
@@ -25,7 +25,7 @@ export const sequentialRunner = async () => {
 		for (let pageCount = targetInfo.pageRange[0]; pageCount <= targetInfo.pageRange[1]; pageCount += targetInfo.pageRange[2]) {
 			try {
 				const pageHolder = [];
-				const pageResult = await universalAccessor({ targetInfo, pageCount, browser });
+				const pageResult = await pptrAccessor({ targetInfo, pageCount, browser });
 				pageHolder.push(pageResult);
 
 				const { count } = await _prisma.fresh_post.createMany({

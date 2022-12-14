@@ -1,19 +1,16 @@
 import { format } from 'date-fns';
-import { universalAccessor } from 'lib/crawl/logic/accessor/universalAccessor';
+import { axiosAccessor } from 'lib/crawl/logic/accessor/axiosAccessor';
 import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
 import { targetList } from 'lib/crawl/targetInfo';
 import { writeLog } from 'lib/log';
-import { getBrowser } from 'lib/pptrInstace';
 import { serverState } from 'lib/state';
 import { measure } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 
-export const parallelRunner = async () => {
+export const axiosParallelRunner = async () => {
 	serverState.isCrawling = true;
 
 	serverState.listStatus = serverState.listStatus.map((e) => ({ ...e, on: false }));
-
-	const { browser } = await getBrowser();
 
 	const stage1startTime = performance.now();
 
@@ -27,8 +24,21 @@ export const parallelRunner = async () => {
 
 			const st = performance.now();
 			const pageHolder = await Promise.all(
-				pageRange.map(async (pageCount) => await universalAccessor({ targetInfo, pageCount, browser }))
+				pageRange.map(async (pageCount) => {
+					const firstResult = await axiosAccessor({ targetInfo, pageCount });
+					// if (firstResult.isError) {
+					// 	return await pptrAccessor({ pageCount, targetInfo, browser: (await getBrowser()).browser });
+					// }
+					return firstResult;
+				})
 			);
+
+			// const pageHolder = [];
+			// for (let pageCount = targetInfo.pageRange[0]; pageCount <= targetInfo.pageRange[1]; pageCount += targetInfo.pageRange[2]) {
+			// 	await delay(300 * pageCount);
+			// 	const result = await axiosUniversalAccessor({ targetInfo, pageCount });
+			// 	pageHolder.push(result);
+			// }
 
 			// writeFile('./parallel.jsonc', JSON.stringify(pageHolder?.map(({ list }) => list).flat()));
 
@@ -42,10 +52,17 @@ export const parallelRunner = async () => {
 				if (e.name === targetInfo.name) e.on = true;
 				return e;
 			});
+			const isError = pageHolder.some((e) => e.isError);
 
-			console.log(`${targetInfo.name}: ${measure(st, performance.now(), 1000)} sec ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
+			console.log(
+				`${targetInfo.name}(${targetInfo.pageRange[1]}): ${isError ? 'error' : 'pass'} ${measure(
+					st,
+					performance.now(),
+					1000
+				)} sec ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`
+			);
 
-			return { count, isError: pageHolder.some((e) => e.isError), name: targetInfo.name };
+			return { count, isError, name: targetInfo.name };
 		})
 	);
 
@@ -66,8 +83,6 @@ export const parallelRunner = async () => {
 			serverState.isCrawling = false;
 			serverState.listStatus = serverState.listStatus.map((e) => ({ ...e, on: false }));
 		});
-
-	await browser.close();
 
 	// tempHolder?.map((e: any) => console.log(e?.info));
 	// writeFile('dummy1.jsonc', JSON.stringify(tempHolder));
