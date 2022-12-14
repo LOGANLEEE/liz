@@ -19,6 +19,7 @@ type Props = {
 	searchText: string;
 	clearSearchText: () => void;
 	searchTextHandler: (e: React.ChangeEvent<FormElement>) => void;
+	pageIndexHandler: (pageNum: number) => void;
 };
 
 const DesktopContainer = ({
