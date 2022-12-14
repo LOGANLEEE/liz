@@ -9,7 +9,7 @@ import { getRecentAccessLog } from 'lib/log';
 import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import useSWR from 'swr';
 
@@ -57,6 +57,15 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 		}
 	}, [data?.totalCount, totalCount]);
 
+	const pageOnKeyDownHandler = useCallback(
+		(e: KeyboardEvent<HTMLElement>) => {
+			if (e.key === 'ArrowLeft' && pageIdx > 1) pageIndexHandler(pageIdx - 1);
+			if (e.key === 'ArrowRight' && pageIdx <= Math.ceil(totalCount / limit)) pageIndexHandler(pageIdx + 1);
+			return;
+		},
+		[limit, pageIdx, pageIndexHandler, totalCount]
+	);
+
 	return (
 		<>
 			<div>
@@ -67,12 +76,7 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 					<meta name='viewport' content='initial-scale=1, width=device-width' />
 				</Head>
 
-				<main
-				// tabIndex={0}
-				// onKeyDown={(e) => {
-				// 	console.log('keyDown:', e.key);
-				// }}
-				>
+				<main tabIndex={0} onKeyDown={pageOnKeyDownHandler}>
 					{isMobile && (
 						<MobileContainer
 							{...order}
