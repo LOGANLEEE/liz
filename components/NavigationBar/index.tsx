@@ -1,11 +1,12 @@
-import { Grid, Navbar } from '@nextui-org/react';
+import { Button, Grid, Navbar } from '@nextui-org/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 
 const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
-export const BottomNavigation = () => {
+export const NavigationBar = () => {
 	const triplet = useCallback(
 		(e1: number, e2: number, e3: number) =>
 			keyStr.charAt(e1 >> 2) +
@@ -40,19 +41,20 @@ export const BottomNavigation = () => {
 					</Text> */}
 				</Navbar.Brand>
 				<Navbar.Content>
-					{/* <Navbar.Item>Community</Navbar.Item> */}
-					{/* <Navbar.Link isActive href='/#'>
+					<Link
+						// isActive
+						href='/'
+					>
 						Community
-					</Navbar.Link>
-					<Navbar.Link className='test' href='/freelancer'>
-						Freelancer
-					</Navbar.Link>
-					<Navbar.Link href='/about'>About</Navbar.Link> */}
+					</Link>
+
+					<Link href='/freelancer'>Freelancer</Link>
+					<Link href='/about'>About</Link>
 				</Navbar.Content>
 				{/* <Navbar.Content>
-					<Navbar.Link color='inherit' href='#'>
+					<Link color='inherit' href='#'>
 						Login
-					</Navbar.Link>
+					</Link>
 					<Navbar.Item>
 						<Button auto flat as={Link} href='#'>
 							Sign Up

@@ -4,7 +4,7 @@ import { ServerState } from 'lib/state';
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-export const TopNavigationBar = () => {
+export const InfoProvider = () => {
 	const [currentServerState, setCurrentServerState] = useState<ServerState>();
 
 	const callStatusAPI = useCallback(async () => {
