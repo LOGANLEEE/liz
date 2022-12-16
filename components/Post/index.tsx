@@ -7,18 +7,21 @@ import { numberFormat } from '../../lib/util';
 
 type Props = {
 	data: fresh_post;
+	clicked: boolean;
 };
-const Post = memo(({ data }: Props) => {
+const Post = memo(({ data, clicked }: Props) => {
 	const [visited, setVisited] = useState(false);
 
 	useEffect(() => {
 		const visitedList: VisitedList = JSON.parse(localStorage.getItem('visitedIdList') || '[]');
 		if (visitedList.length < 1) return;
-		const target = visitedList.find(({ id, title, name }) => id === data.id || (title === data.title && name === data.name));
+		const target = visitedList.find(
+			({ id, title, name }) => id === data.id || (title === data.title && name === data.name) || title === data.title
+		);
 		if (target?.id || target?.title) {
 			setVisited(true);
 		}
-	}, [data.id, data.name, data.title]);
+	}, [data.id, data.name, data.title, clicked]);
 
 	const visitHandler = useCallback(() => {
 		if (data.link) window.open(data.link);
