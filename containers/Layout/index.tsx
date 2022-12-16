@@ -1,14 +1,14 @@
-import { BottomNavigation } from 'components/BottomNavigation';
-import { TopNavigationBar } from 'components/TopNavigationBar';
+import { NavigationBar } from 'components/NavigationBar';
+import { InfoProvider } from 'components/InfoProvider';
 import type { ReactNode } from 'react';
 import styled from 'styled-components';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
 	return (
 		<Wrapper>
-			<TopNavigationBar />
+			<InfoProvider />
+			<NavigationBar />
 			<main>{children}</main>
-			<BottomNavigation />
 		</Wrapper>
 	);
 };
