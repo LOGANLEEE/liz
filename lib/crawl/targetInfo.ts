@@ -1,6 +1,6 @@
 export const names = {
-	pg: 'PGR21',
-	nt: '네이트판',
+	pg: 'PGR',
+	nt: '네판',
 	ud: '웃대',
 	gs: '가생이',
 	ou: '오유',
