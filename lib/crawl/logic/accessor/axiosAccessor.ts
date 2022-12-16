@@ -37,6 +37,7 @@ export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessor
 		.catch((err) => ({ err, data: undefined }));
 
 	if (!data && err) {
+		isError = true;
 		return result(`axios error: ${JSON.stringify(err)}`);
 	}
 
@@ -61,9 +62,13 @@ export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessor
 					}
 				});
 			}
-			const title = $(targetInfo.title ? targetInfo.title(postCount) : targetInfo.link(postCount))
+			let title = $(targetInfo.title ? targetInfo.title(postCount) : targetInfo.link(postCount))
 				.text()
 				?.trim();
+
+			if (targetInfo.titleHandler && title) {
+				title = targetInfo.titleHandler(title);
+			}
 
 			let link = $(targetInfo.link(postCount))?.attr('href');
 
