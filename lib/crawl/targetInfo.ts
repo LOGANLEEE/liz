@@ -1,4 +1,5 @@
 export const names = {
+	pg: 'PGR21',
 	nt: '네이트판',
 	ud: '웃대',
 	gs: '가생이',
@@ -31,6 +32,7 @@ export type TargetInfo = {
 	hit: (idx: number) => string;
 	uploadDate?: (idx: number) => string;
 	linkHandler?: (val: string) => string;
+	titleHandler?: (val: string) => string;
 };
 // https://www.ppomppu.co.kr/hot.php?id=&page=1&category=999&search_type=&keyword=&page_num=&del_flag=&bbs_list_category=0
 
@@ -246,9 +248,10 @@ const HUMOR_UNI_INFO: TargetInfo = {
 	name: names.ud,
 	targetBaseName: 'http://web.humoruniv.com/board/humor/',
 	enable: false,
-	targetUrl: (page: number) => `http://web.humoruniv.com/board/humor/list.html?table=pds&st=day&pg=${page}`,
-	pageRange: [1, 3, 1],
-	postRange: [1, 39, 1],
+	targetUrl: (page: number) => `http://web.humoruniv.com/board/humor/list.html?table=pds&st=day&pg=${page - 1}`,
+	pageRange: [1, 5, 1],
+	postRange: [1, 39, 2],
+	garbage: (idx: number) => [`#post_list > tbody > tr:nth-child(${idx}) > td.li_sbj > a > span`],
 	link: (idx: number) => `#post_list > tbody > tr:nth-child(${idx}) > td.li_sbj > a`,
 	author: (idx: number) => `#post_list > tbody > tr:nth-child(${idx}) > td.li_icn > table > tbody > tr > td.g6 > span > span`,
 	hit: (idx: number) => `#post_list > tbody > tr:nth-child(${idx}) > td:nth-child(5)`,
@@ -268,7 +271,22 @@ const NATE_INFO: TargetInfo = {
 	author: (idx: number) => ``,
 };
 
+const PGR_INFO: TargetInfo = {
+	name: names.pg,
+	targetBaseName: 'https://www.pgr21.com',
+	enable: false,
+	targetUrl: (page: number) => `https://www.pgr21.com/humor/0?1=1&page=${page}`,
+	pageRange: [1, 2, 1],
+	postRange: [0, 22, 1],
+	targetIndex: (idx: number) => `#TR${idx} > td.tdnum`,
+	titleHandler: (val: string) => val?.slice(4, -1),
+	link: (idx: number) => `#TR${idx} > td.tdsub.new > a`,
+	hit: (idx: number) => `#TR${idx} > td.tdhit`,
+	author: (idx: number) => `#TR${idx} > td.tdname > span`,
+};
+
 export const targetList: TargetInfo[] = [
+	PGR_INFO,
 	HUMOR_UNI_INFO,
 	NATE_INFO,
 	GASENGI_INFO,
