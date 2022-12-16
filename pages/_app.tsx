@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { createTheme, NextUIProvider } from '@nextui-org/react';
 
 import { Layout } from 'containers/Layout';
+import { ThemeProvider } from 'styled-components';
 
 export default function App({ Component, pageProps }: AppProps) {
 	// 2. Call `createTheme` and pass your custom values
@@ -16,6 +17,8 @@ export default function App({ Component, pageProps }: AppProps) {
 				primaryLightActive: '$green400',
 				primaryLightContrast: '$green600',
 				primary: '#4ADE7B',
+				// primary: '#27254b',
+
 				primaryBorder: '$green500',
 				primaryBorderHover: '$green600',
 				primarySolidHover: '$green700',
@@ -27,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
 				// you can also create your own color
 				myColor: '#ff4ecd',
-				secondary: '#193631',
+				secondary: '#173633',
 
 				// ...  more colors
 			},
@@ -38,9 +41,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
 	return (
 		<NextUIProvider theme={theme}>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
+			<ThemeProvider theme={theme}>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
+			</ThemeProvider>
 		</NextUIProvider>
 	);
 }
