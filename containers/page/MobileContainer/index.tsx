@@ -39,10 +39,10 @@ const MobileContainer = ({
 }: Props) => {
 	return (
 		<Wrapper direction='row' justify='center' gap={1}>
-			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
+			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center' className='item'>
 				<InfoText targetSiteCount={targetSiteCount} postCount={totalCount} recentAccessLog={recentAccessLog} />
 			</Grid>
-			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='space-between'>
+			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='space-between' className='item'>
 				<Input
 					clearable
 					underlined
@@ -54,13 +54,13 @@ const MobileContainer = ({
 				/>
 				<PostOrder orderByHit={orderByHit} toggleOrderByHit={toggleOrderByHit} />
 			</Grid>
-			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
+			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center' className='item'>
 				<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
 			</Grid>
-			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
+			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center' className='item'>
 				<PostContainer posts={freshPostList} />
 			</Grid>
-			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center'>
+			<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center' className='item'>
 				<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
 			</Grid>
 		</Wrapper>
@@ -74,4 +74,11 @@ const Wrapper = styled(Grid.Container)`
 	overflow-x: hidden;
 	padding-right: 0;
 	padding-left: 0;
+	margin-right: 0;
+	margin-left: 0;
+
+	.item {
+		padding-right: 0;
+		padding-left: 0;
+	}
 `;
