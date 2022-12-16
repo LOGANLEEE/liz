@@ -1,5 +1,6 @@
 import { Pagination } from '@nextui-org/react';
 import { memo } from 'react';
+import styled from 'styled-components';
 
 type BottomPaginationProps = {
 	totalCount: number;
@@ -9,13 +10,11 @@ type BottomPaginationProps = {
 };
 
 export const PaginationComp = memo(({ totalCount, limit, page, onChangeHandler }: BottomPaginationProps) => {
-	return (
-		// <Wrapper>
-		<Pagination onChange={onChangeHandler} color={'secondary'} total={Math.ceil(totalCount / limit)} page={page} />
-		// </Wrapper>
-	);
+	return <StyledPagination onChange={onChangeHandler} color={'secondary'} total={Math.ceil(totalCount / limit)} page={page} />;
 });
 
 PaginationComp.displayName = 'PaginationComp';
 
-// const Wrapper = styled.div``;
+const StyledPagination = styled(Pagination)`
+	z-index: 1;
+`;

@@ -1,4 +1,4 @@
-import { Button, Grid } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import { OrderBy } from 'lib/crawl/logic/post';
 import styled from 'styled-components';
 
@@ -14,6 +14,7 @@ export const PostOrder = ({ orderByHit, toggleOrderByHit }: Props) => {
 };
 
 const Wrapper = styled.div`
+	z-index: 1;
 	button {
 		height: 100%;
 	}
