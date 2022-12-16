@@ -4,7 +4,7 @@ import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
 import { targetList } from 'lib/crawl/targetInfo';
 import { writeLog } from 'lib/log';
 import { serverState } from 'lib/state';
-import { measure } from 'lib/util';
+import { delay, measure } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 
 export const axiosParallelRunner = async () => {
@@ -24,7 +24,8 @@ export const axiosParallelRunner = async () => {
 
 			const st = performance.now();
 			const pageHolder = await Promise.all(
-				pageRange.map(async (pageCount) => {
+				pageRange.map(async (pageCount, idx) => {
+					await delay(idx * 300);
 					const firstResult = await axiosAccessor({ targetInfo, pageCount });
 					// if (firstResult.isError) {
 					// 	return await pptrAccessor({ pageCount, targetInfo, browser: (await getBrowser()).browser });
@@ -55,14 +56,12 @@ export const axiosParallelRunner = async () => {
 			const isError = pageHolder.some((e) => e.isError);
 
 			console.log(
-				`${targetInfo.name}(${targetInfo.pageRange[1]}): ${isError ? 'error' : 'pass'} ${measure(
-					st,
-					performance.now(),
-					1000
-				)} sec ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`
+				`${targetInfo.name}(${targetInfo.pageRange[1]}): (${count} /${
+					((targetInfo.postRange[1] - targetInfo.postRange[0] + 1) / targetInfo.postRange[2]) * targetInfo.pageRange[1]
+				})${isError ? 'error' : 'pass'} ${measure(st, performance.now(), 1000)} sec ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`
 			);
 
-			return { count, isError, name: targetInfo.name };
+			return { count, isError, name: targetInfo.name, message: JSON.stringify(pageHolder.map((e) => e.message)) };
 		})
 	);
 
