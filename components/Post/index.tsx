@@ -34,21 +34,15 @@ const Post = memo(({ data, clicked }: Props) => {
 
 	return (
 		<Wrapper onClick={visitHandler} className={`${visited ? 'visited' : ''}`}>
-			<Grid.Container
-				className='container'
-				gap={0.5}
-				justify='flex-start'
-				// xs={10} sm={12}
-				direction='row'
-			>
-				<Grid xs={1.2} sm={1} md={1} className='name' justify='center'>
+			<Grid.Container gap={1} justify='flex-start' direction='row'>
+				<Grid xs={1.3} sm={0.5} md={0.5} className='name' justify='center'>
 					<Text className='text'>{data.name}</Text>
 				</Grid>
-				<Grid xs={7.8} sm={8} md={10}>
+				<Grid xs={7.9} sm={9.5} md={10.5}>
 					<Text className='title text'>{data.title}</Text>
 				</Grid>
 				{data.hit && (
-					<Grid xs={3} sm={3} md={1} justify='flex-end'>
+					<Grid justify='flex-end' xs={2.8} sm={2} md={1}>
 						<Text className='hit text'>🔥{numberFormat(data.hit)}</Text>
 					</Grid>
 				)}
@@ -62,19 +56,14 @@ export default Post;
 
 const Wrapper = styled.li`
 	width: 100%;
-	padding: 5px;
 	cursor: pointer;
 	border: 0.5px #3d582f solid;
-	border-radius: 14px;
-	margin: 5px;
+	border-radius: 8px;
 
-	.container {
-		padding-right: 0;
-		padding-left: 0;
-	}
+	margin-bottom: 10px;
 
 	.name {
-		background-color: #102d27;
+		background-color: ${(props) => props?.theme?.colors?.secondary};
 		border-radius: 8px;
 		text-overflow: ellipsis;
 		overflow: hidden;
@@ -83,7 +72,6 @@ const Wrapper = styled.li`
 
 	.title {
 		padding-left: 1px;
-		/* border-color: inherit; */
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
@@ -110,40 +98,3 @@ const Wrapper = styled.li`
 		color: #645959 !important;
 	}
 `;
-
-// const Wrapper = styled.li`
-// 	margin: 5px;
-// 	padding: 10px;
-// 	width: 100%;
-
-// 	display: flex;
-// 	flex-direction: row;
-// 	cursor: pointer;
-// 	border: 0.5px #3d582f solid;
-// 	border-radius: 14px;
-
-// 	.name {
-// 		width: 10%;
-// 		border-right: 0.5px solid;
-// 		padding-right: 5px;
-// 		margin-right: 10px;
-// 	}
-// 	.title {
-// 		width: 80%;
-// 	}
-
-// 	.hit {
-// 		width: 10%;
-// 		text-align: end;
-// 	}
-
-// 	:hover {
-// 		background-color: #4e2323;
-// 	}
-// 	:active {
-// 		background-color: #602b2b;
-// 	}
-// 	&.visited {
-// 		color: #645959 !important;
-// 	}
-// `;
