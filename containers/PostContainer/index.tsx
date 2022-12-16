@@ -12,6 +12,7 @@ declare type Props = {
 };
 export const PostContainer = memo(({ posts = [] }: Props) => {
 	const [showButton, setShowButton] = useState(false);
+	const [clicked, setClicked] = useState(false);
 
 	useEffect(() => {
 		if (isSafari && !isMobileSafari) {
@@ -19,34 +20,34 @@ export const PostContainer = memo(({ posts = [] }: Props) => {
 		}
 	}, []);
 
-	// todo 실행 후 실시간 반영 안됨
 	const openPosts = useCallback(async () => {
+		setClicked(true);
 		if (showButton) {
 			const visitedList: VisitedList = JSON.parse(localStorage.getItem('visitedIdList') || '[]');
 
 			for (const { post, idx } of posts.map((post, idx) => ({ idx, post }))) {
 				if (post.link) {
-					if (idx % 5 === 0) await delay(500);
-					const child = window.open(post.link, '');
-					child?.blur();
-					window.focus();
+					const visited = visitedList.find(({ title }) => post.title === title);
+					if (visited) continue;
+					if (idx % 5 === 0) await delay(1);
+					window.open(post.link, '');
 					visitedList.push({ id: post?.id, title: post?.title || undefined, name: post.name || '' });
 				}
 			}
-
 			localStorage.setItem('visitedIdList', JSON.stringify(visitedList));
 		}
+		setClicked(false);
 	}, [posts, showButton]);
 
 	return (
 		<Wrapper>
 			{posts && showButton && (
-				<Button shadow rounded bordered onClick={openPosts} size={'xs'}>
-					모두 보기
+				<Button shadow rounded bordered onClick={openPosts} size={'xs'} onKeyDown={(e) => console.log(e.key)}>
+					안읽은 글 모두 열기
 				</Button>
 			)}
 			{posts?.map((data) => (
-				<Post key={data.id} data={data} />
+				<Post key={data.id} data={data} clicked={clicked} />
 			))}
 		</Wrapper>
 	);
