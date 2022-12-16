@@ -29,48 +29,46 @@ export const pptrAccessor = async ({ browser, targetInfo, pageCount }: Universal
 	page.setDefaultNavigationTimeout(1000 * 60 * 3);
 	// page.setDefaultNavigationTimeout(0);
 
-	console.log(`===>  ${targetInfo.name}  ${pageCount}/${targetInfo.pageRange[1]} ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
+	// console.log(`===>  ${targetInfo.name}  ${pageCount}/${targetInfo.pageRange[1]} ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
 
 	try {
 		await page.goto(targetInfo.targetUrl(pageCount));
 	} catch (error) {
 		isError = true;
 		// console.log(error);
-		console.log(`page go to error occurred. skip ${targetInfo.name} ${pageCount} ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
 		await page.close();
-		return result('goto error');
+		return result(`page go to error occurred. skip ${targetInfo.name} ${pageCount} ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
 	}
 
 	try {
 		for (let postCount = targetInfo.postRange[0]; postCount <= targetInfo.postRange[1]; postCount += targetInfo.postRange[2]) {
 			if (targetInfo?.targetIndex) {
-				const postIndex =
-					(await page
-						.waitForSelector(targetInfo?.targetIndex ? targetInfo?.targetIndex(postCount) : '')
-						.then((element) => element?.evaluate((el) => el?.textContent?.trim()))
-						.catch((err) => {
-							// console.log('postIndex:', err);
-							return '';
-						})) || '';
+				if (targetInfo?.targetIndex(postCount) !== '') {
+					const postIndex =
+						(await page
+							.waitForSelector(targetInfo?.targetIndex ? targetInfo?.targetIndex(postCount) : '')
+							.then((element) => element?.evaluate((el) => el?.textContent?.trim()))
+							.catch((err) => {
+								// console.log('postIndex:', err);
+								return err;
+							})) || '';
 
-				if (isNaN(parseInt(postIndex))) continue;
+					if (isNaN(parseInt(postIndex))) continue;
+				}
 			}
 
 			// remove garbage tag
 			if (targetInfo?.garbage) {
-				await Promise.all(
-					targetInfo?.garbage(postCount)?.map(
-						async (path) =>
-							await page
-								.waitForSelector(path)
-								.then((element) => element?.evaluate((el) => el?.remove()))
-								.catch((err) => {
-									// console.log('garbage:', err);
-									isError = true;
-									return null;
-								})
-					)
-				);
+				targetInfo?.garbage(postCount)?.forEach((path) => {
+					if (path) {
+						page.waitForSelector(path)
+							.then((element) => element?.evaluate((el) => el?.remove()))
+							.catch((err) => {
+								isError = true;
+								return err;
+							});
+					}
+				});
 			}
 			const title = await page
 				.waitForSelector(targetInfo.title ? targetInfo.title(postCount) : targetInfo.link(postCount))
@@ -110,7 +108,6 @@ export const pptrAccessor = async ({ browser, targetInfo, pageCount }: Universal
 					)
 				)
 				.catch((err) => {
-					// console.log('hit:', err);
 					isError = true;
 					return -1;
 				});
