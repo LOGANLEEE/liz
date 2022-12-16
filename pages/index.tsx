@@ -1,6 +1,6 @@
-import { Grid, Text } from '@nextui-org/react';
 import type { api_log, fresh_post } from '@prisma/client';
 import { CustomLoading } from 'components/CustomLoading';
+import { Footer } from 'components/Footer';
 import { usePagination } from 'hook/usePagination';
 import { _axios } from 'lib/axiosInstance';
 import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
@@ -75,7 +75,6 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 					<link rel='icon' href='/favicon.ico' />
 					<meta name='viewport' content='initial-scale=1, width=device-width' />
 				</Head>
-
 				<main tabIndex={0} onKeyDown={pageOnKeyDownHandler}>
 					{isMobile && (
 						<MobileContainer
@@ -104,13 +103,7 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 						/>
 					)}
 				</main>
-
-				<footer>
-					<Grid.Container direction='column' justify='center'>
-						<Text css={{ textAlign: 'center' }}>Logan will deserve all rights.</Text>
-						<Text css={{ textAlign: 'center' }}>ver.0.0.1</Text>
-					</Grid.Container>
-				</footer>
+				<Footer />
 			</div>
 			{isValidating && <CustomLoading />}
 		</>
@@ -127,7 +120,7 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
 
 	return {
 		props: {
-			isMobile: detect?.isMobile || true,
+			isMobile: detect?.isMobile,
 			recentAccessLog: JSON.parse(JSON.stringify(recentAccessLog)),
 		},
 	};
