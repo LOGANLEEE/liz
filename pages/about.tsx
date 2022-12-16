@@ -1,10 +1,15 @@
+import { GetServerSidePropsContext } from 'next';
+import styled from 'styled-components';
+
 const About = () => {
-	<div>about</div>;
+	<Wrapper>about</Wrapper>;
 };
 
 export default About;
 
-function getStaticProps(context: any) {
+const Wrapper = styled.main``;
+
+function getServerSideProps(context: GetServerSidePropsContext) {
 	return {
 		props: {}, // will be passed to the page component as props
 	};
