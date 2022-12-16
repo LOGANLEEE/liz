@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"deploy": "./init-prod.sh",
-		"lint": "next lint",
+		"lint": "next lint --fix",
 		"pull-dev": "env-cmd -f ./.env.development yarn prisma db pull",
 		"push-dev": "env-cmd -f ./.env.development yarn prisma db push",
 		"generate-dev": "env-cmd -f ./.env.development yarn prisma generate",
