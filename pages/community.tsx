@@ -1,6 +1,5 @@
 import type { api_log, fresh_post } from '@prisma/client';
 import { CustomLoading } from 'components/CustomLoading';
-import { Footer } from 'components/Footer';
 import { usePagination } from 'hook/usePagination';
 import { _axios } from 'lib/axiosInstance';
 import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
@@ -17,8 +16,8 @@ type Props = {
 	isMobile: boolean;
 	recentAccessLog?: api_log;
 };
-const MobileContainer = dynamic(() => import('containers/page/MobileContainer'), {});
-const DesktopContainer = dynamic(() => import('containers/page/DesktopContainer'), {});
+const MobileContainer = dynamic(() => import('containers/page/community/MobileContainer'), {});
+const DesktopContainer = dynamic(() => import('containers/page/community/DesktopContainer'), {});
 
 const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 	const {
