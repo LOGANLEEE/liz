@@ -13,7 +13,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 			<InfoProvider />
 			{!isMobile && <NavigationBar />}
 			{isMobile && <MobileNavigationBar />}
-			<main>{children}</main>
+			{children}
 		</Wrapper>
 	);
 };
