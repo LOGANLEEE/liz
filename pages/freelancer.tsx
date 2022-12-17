@@ -1,73 +1,20 @@
 import { Grid, Text } from '@nextui-org/react';
-import type { api_log, fresh_post } from '@prisma/client';
-import { CustomLoading } from 'components/CustomLoading';
-import { Footer } from 'components/Footer';
-import { usePagination } from 'hook/usePagination';
-import { _axios } from 'lib/axiosInstance';
-import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
-import { names } from 'lib/crawl/targetInfo';
+import type { api_log } from '@prisma/client';
 import { getRecentAccessLog } from 'lib/log';
 import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import styled from 'styled-components';
-import useSWR from 'swr';
 
 type Props = {
 	isMobile: boolean;
 	recentAccessLog?: api_log;
 };
-const MobileContainer = dynamic(() => import('containers/page/MobileContainer'), {});
-const DesktopContainer = dynamic(() => import('containers/page/DesktopContainer'), {});
+// const MobileContainer = dynamic(() => import('containers/page/MobileContainer'), {});
+// const DesktopContainer = dynamic(() => import('containers/page/DesktopContainer'), {});
 
 const Home = ({ isMobile = true, recentAccessLog }: Props) => {
-	const {
-		pageIdx,
-		limit,
-		order,
-		actions: { pageIndexHandler },
-		search,
-	} = usePagination({});
-
-	const { data, error, isValidating } = useSWR<GetFreshPostReturn>(
-		`/api/crawl/getFreshPost/${pageIdx}/${order.orderByHit}/${search.searchText}`,
-		async () =>
-			await _axios
-				.post(`/api/crawl/getFreshPost`, {
-					orderByHit: order.orderByHit,
-					limit,
-					offset: (pageIdx - 1) * limit,
-					searchText: search.searchText,
-				})
-				.then((res) => res.data)
-	);
-
-	const [totalCount, setTotalCount] = useState(0);
-	const [freshPostList, setFreshPostList] = useState<fresh_post[]>([]);
-
-	useEffect(() => {
-		if (data?.list && data?.list?.length > 0) {
-			setFreshPostList(data.list);
-		}
-	}, [data?.list]);
-
-	useEffect(() => {
-		if (data?.totalCount && data?.totalCount > 0 && data?.totalCount !== totalCount) {
-			setTotalCount(data.totalCount);
-		}
-	}, [data?.totalCount, totalCount]);
-
-	const pageOnKeyDownHandler = useCallback(
-		(e: KeyboardEvent<HTMLElement>) => {
-			if (e.key === 'ArrowLeft' && pageIdx > 1) pageIndexHandler(pageIdx - 1);
-			if (e.key === 'ArrowRight' && pageIdx <= Math.ceil(totalCount / limit)) pageIndexHandler(pageIdx + 1);
-			return;
-		},
-		[limit, pageIdx, pageIndexHandler, totalCount]
-	);
-
 	return (
 		<>
 			<Wrapper>
@@ -84,9 +31,8 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 						</Grid>
 					</Grid.Container>
 				</main>
-				<Footer />
 			</Wrapper>
-			{isValidating && <CustomLoading />}
+			{/* {isValidating && <CustomLoading />} */}
 		</>
 	);
 };
