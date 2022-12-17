@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import dynamic from 'next/dynamic';
+import { Footer } from 'components/Footer';
 
 const NavigationBar = dynamic(() => import('components/desktop/NavigationBar'), { ssr: false });
 const MobileNavigationBar = dynamic(() => import('components/mobile/MobileNavigationBar'), { ssr: false });
@@ -14,11 +15,13 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 			{!isMobile && <NavigationBar />}
 			{isMobile && <MobileNavigationBar />}
 			{children}
+			<Footer />
 		</Wrapper>
 	);
 };
 
 export const Wrapper = styled.div`
+	height: 100%;
 	box-sizing: 'border-box';
 `;
 
