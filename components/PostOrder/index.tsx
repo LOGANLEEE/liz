@@ -3,7 +3,7 @@ import { OrderBy } from 'lib/crawl/logic/post';
 import styled from 'styled-components';
 
 type Props = { orderByHit: OrderBy; toggleOrderByHit: () => void };
-export const PostOrder = ({ orderByHit, toggleOrderByHit }: Props) => {
+const PostOrder = ({ orderByHit, toggleOrderByHit }: Props) => {
 	return (
 		<Wrapper>
 			<Button size='xs' onClick={toggleOrderByHit} color='secondary'>
@@ -12,10 +12,11 @@ export const PostOrder = ({ orderByHit, toggleOrderByHit }: Props) => {
 		</Wrapper>
 	);
 };
-
 const Wrapper = styled.div`
 	z-index: 1;
 	button {
 		height: 100%;
 	}
 `;
+
+export default PostOrder;

@@ -9,7 +9,7 @@ type BottomPaginationProps = {
 	onChangeHandler: (pageNum: number) => void;
 };
 
-export const PaginationComp = memo(({ totalCount, limit, page, onChangeHandler }: BottomPaginationProps) => {
+const PaginationComp = memo(({ totalCount, limit, page, onChangeHandler }: BottomPaginationProps) => {
 	return <StyledPagination onChange={onChangeHandler} color={'secondary'} total={Math.ceil(totalCount / limit)} page={page} />;
 });
 
@@ -18,3 +18,5 @@ PaginationComp.displayName = 'PaginationComp';
 const StyledPagination = styled(Pagination)`
 	z-index: 1;
 `;
+
+export default PaginationComp;

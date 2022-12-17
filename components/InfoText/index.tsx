@@ -9,7 +9,7 @@ type Props = {
 	targetSiteCount: number;
 	recentAccessLog?: api_log;
 };
-export const InfoText = memo(({ postCount, targetSiteCount, recentAccessLog }: Props) => {
+const InfoText = memo(({ postCount, targetSiteCount, recentAccessLog }: Props) => {
 	return (
 		<Wrapper justify='flex-start' gap={0.5} direction='column'>
 			{recentAccessLog?.create_date && (
@@ -46,6 +46,7 @@ export const InfoText = memo(({ postCount, targetSiteCount, recentAccessLog }: P
 });
 
 InfoText.displayName = 'InfoText';
+export default InfoText;
 
 const Wrapper = styled(Grid.Container)`
 	background-color: #193631;
