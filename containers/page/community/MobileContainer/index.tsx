@@ -7,6 +7,9 @@ import styled from 'styled-components';
 import { PostOrder } from 'components/PostOrder';
 import { OrderBy } from 'lib/crawl/logic/post';
 import React from 'react';
+import dynamic from 'next/dynamic';
+
+const MobileContainer = dynamic(() => import('containers/page/landingPage/MobileContainer'), {});
 
 type Props = {
 	totalCount: number;
