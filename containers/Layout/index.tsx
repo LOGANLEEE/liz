@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import dynamic from 'next/dynamic';
 import { Footer } from 'components/Footer';
+import { GetServerSidePropsContext } from 'next';
 
 const NavigationBar = dynamic(() => import('components/desktop/NavigationBar'), { ssr: false });
 const MobileNavigationBar = dynamic(() => import('components/mobile/MobileNavigationBar'), { ssr: false });
@@ -11,9 +12,9 @@ const MobileNavigationBar = dynamic(() => import('components/mobile/MobileNaviga
 export const Layout = ({ children }: { children: ReactNode }) => {
 	return (
 		<Wrapper>
-			<InfoProvider />
 			{!isMobile && <NavigationBar />}
 			{isMobile && <MobileNavigationBar />}
+			<InfoProvider />
 			{children}
 			<Footer />
 		</Wrapper>
@@ -25,54 +26,8 @@ export const Wrapper = styled.div`
 	box-sizing: 'border-box';
 `;
 
-// import { Navbar, Button, Link, Text } from '@nextui-org/react';
-
-// function App() {
-// 	const collapseItems = ['Features', 'Customers', 'Pricing', 'Company', 'Legal', 'Team', 'Help & Feedback', 'Login', 'Sign Up'];
-
-// 	return (
-// 		<>
-// 			<Navbar isBordered variant='sticky'>
-// 				<Navbar.Brand>
-// 					<Navbar.Toggle aria-label='toggle navigation' />
-// 					<Text b color='inherit' hideIn='xs'>
-// 						ACME
-// 					</Text>
-// 				</Navbar.Brand>
-// 				<Navbar.Content enableCursorHighlight hideIn='xs' variant='underline'>
-// 					<Navbar.Link href='#'>Features</Navbar.Link>
-// 					<Navbar.Link isActive href='#'>
-// 						Customers
-// 					</Navbar.Link>
-// 					<Navbar.Link href='#'>Pricing</Navbar.Link>
-// 					<Navbar.Link href='#'>Company</Navbar.Link>
-// 				</Navbar.Content>
-// 				<Navbar.Content>
-// 					<Navbar.Link color='inherit' href='#'>
-// 						Login
-// 					</Navbar.Link>
-// 					<Navbar.Item>
-// 						<Button auto flat as={Link} href='#'>
-// 							Sign Up
-// 						</Button>
-// 					</Navbar.Item>
-// 				</Navbar.Content>
-// 				<Navbar.Collapse>
-// 					{collapseItems.map((item, index) => (
-// 						<Navbar.CollapseItem key={item}>
-// 							<Link
-// 								color='inherit'
-// 								css={{
-// 									minWidth: '100%',
-// 								}}
-// 								href='#'
-// 							>
-// 								{item}
-// 							</Link>
-// 						</Navbar.CollapseItem>
-// 					))}
-// 				</Navbar.Collapse>
-// 			</Navbar>
-// 		</>
-// 	);
-// }
+export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {
+	return {
+		props: {},
+	};
+}
