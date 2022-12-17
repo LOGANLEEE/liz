@@ -1,9 +1,8 @@
 import { Grid, Navbar } from '@nextui-org/react';
 import { NavigationItems } from 'lib/util';
-import { rgbDataURL } from 'lib/util/imageLoader';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 type Props = {};
@@ -20,13 +19,13 @@ export const MobileNavigationBar = () => {
 				<Grid className='item' xs={2}>
 					<Navbar.Brand className='brand' onClick={() => (window.location.href = '/')}>
 						<Image
-							src='/images/l.jpg'
-							// src='/images/l.svg'
-							placeholder='blur'
-							blurDataURL={rgbDataURL(237, 181, 6)}
+							className='logo'
+							src='/images/illuminati.svg'
 							alt='Picture of the symbol'
 							width={50}
 							height={48}
+							// placeholder='blur'
+							// blurDataURL={rgbDataURL(237, 181, 6)}
 						/>
 					</Navbar.Brand>
 				</Grid>
@@ -59,6 +58,10 @@ const Wrapper = styled(Grid.Container)`
 	z-index: 201;
 	margin: 0;
 	padding: 0;
+
+	.logo {
+		filter: drop-shadow(16px 16px 20px red) invert(75%);
+	}
 
 	.item {
 		padding-top: 0;
