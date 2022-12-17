@@ -10,7 +10,7 @@ import { VisitedList } from 'types';
 declare type Props = {
 	posts?: fresh_post[];
 };
-export const PostContainer = memo(({ posts = [] }: Props) => {
+const PostContainer = memo(({ posts = [] }: Props) => {
 	const [showButton, setShowButton] = useState(false);
 	const [clicked, setClicked] = useState(false);
 
@@ -52,6 +52,8 @@ export const PostContainer = memo(({ posts = [] }: Props) => {
 		</Wrapper>
 	);
 });
+
+export default PostContainer;
 
 PostContainer.displayName = 'PostContainer';
 const Wrapper = styled.ul`
