@@ -1,6 +1,6 @@
 import type { api_log, fresh_post } from '@prisma/client';
 import { CustomLoading } from 'components/CustomLoading';
-import { usePagination } from 'hook/usePagination';
+import usePagination from 'hook/usePagination';
 import { _axios } from 'lib/axiosInstance';
 import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
 import { names } from 'lib/crawl/targetInfo';

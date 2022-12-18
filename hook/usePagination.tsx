@@ -27,7 +27,7 @@ const usePagination = ({ some }: usePaginationArgs) => {
 	}, [searchText]);
 
 	const debouncedSearchText = useDebounce({ value: searchText, delay: 300 });
-	const debouncedPageIdx = useDebounce({ value: pageIdx, delay: 300 });
+	const debouncedPageIdx = parseInt(useDebounce({ value: pageIdx, delay: 300 }) + '');
 
 	const clearSearchText = useCallback(() => {
 		setSearchText('');
