@@ -1,5 +1,4 @@
 import { Button, Grid, Navbar, Text } from '@nextui-org/react';
-import { rgbDataURL } from 'lib/util/imageLoader';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -10,16 +9,7 @@ export const NavigationBar = () => {
 			<Wrapper direction='row'>
 				<Grid sm={2}>
 					<Navbar.Brand>
-						{/* <AcmeLogo /> */}
-						<Image
-							className='logo'
-							src='/images/illuminati.svg'
-							alt='Picture of the author'
-							width={50}
-							height={50}
-							// placeholder='blur'
-							// blurDataURL={rgbDataURL(237, 181, 6)}
-						/>
+						<Image className='logo' src='/images/illuminati.svg' alt='Picture of the author' width={50} height={50} />
 						<Text b color='inherit'>
 							PROTAGONIST
 						</Text>
@@ -30,7 +20,7 @@ export const NavigationBar = () => {
 					<Navbar.Content>
 						<Navbar.Link
 							// isActive
-							href='/'
+							href='/community'
 						>
 							Community
 						</Navbar.Link>
