@@ -1,4 +1,5 @@
-import { Button, Grid, Navbar, Text } from '@nextui-org/react';
+import { Button, Grid, Navbar, Spacer, Text } from '@nextui-org/react';
+import { ThemeIcon } from 'components/HeartIcon';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -10,6 +11,7 @@ export const NavigationBar = () => {
 				<Grid sm={2}>
 					<Navbar.Brand>
 						<Image className='logo' src='/images/illuminati.svg' alt='Picture of the author' width={50} height={50} />
+						<Spacer x={1} />
 						<Text b color='inherit'>
 							PROTAGONIST
 						</Text>
@@ -32,13 +34,11 @@ export const NavigationBar = () => {
 
 				<Grid sm={2} justify='flex-end'>
 					<Navbar.Content>
-						<Navbar.Link color='inherit' href='#'>
+						{/* <Navbar.Link color='inherit' href='#'>
 							button
-						</Navbar.Link>
+						</Navbar.Link> */}
 						<Navbar.Item>
-							<Button auto flat>
-								toggle Mode
-							</Button>
+							<Button className='toggle-button' auto icon={<ThemeIcon isDark fill='currentColor' filled size={26} />} />
 						</Navbar.Item>
 					</Navbar.Content>
 				</Grid>
@@ -50,6 +50,12 @@ export const NavigationBar = () => {
 const Wrapper = styled(Grid.Container)`
 	.logo {
 		filter: drop-shadow(16px 16px 20px red) invert(75%);
+	}
+	.toggle-button {
+		background-color: transparent;
+
+		/* width: 100%; */
+		height: 100%;
 	}
 `;
 
