@@ -1,8 +1,9 @@
-import { Grid, Navbar } from '@nextui-org/react';
+import { Button, Grid, Navbar } from '@nextui-org/react';
+import { ThemeIcon } from 'components/HeartIcon';
 import { NavigationItems } from 'lib/util';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 type Props = {};
@@ -29,10 +30,22 @@ export const MobileNavigationBar = () => {
 						/>
 					</Navbar.Brand>
 				</Grid>
-				<Grid className='item' xs={9} justify='center'></Grid>
+				<Grid className='item' xs={7} justify='center'></Grid>
 
-				<Grid className='item' xs={1}>
-					<Navbar.Toggle ref={toggleRef} className='toggle-button' />
+				<Grid className='item' xs={3} justify='space-between'>
+					<Navbar.Content>
+						<Navbar.Item>
+							<Button
+								className='toggle-button'
+								auto
+								color='error'
+								icon={<ThemeIcon isDark fill='currentColor' filled size={26} />}
+							/>
+						</Navbar.Item>
+						<Navbar.Item>
+							<Navbar.Toggle ref={toggleRef} className='toggle-button' />
+						</Navbar.Item>
+					</Navbar.Content>
 				</Grid>
 			</Wrapper>
 			<StyledCollapse>
@@ -69,7 +82,9 @@ const Wrapper = styled(Grid.Container)`
 	}
 
 	.toggle-button {
-		width: 100%;
+		background-color: transparent;
+
+		/* width: 100%; */
 		height: 100%;
 	}
 `;
