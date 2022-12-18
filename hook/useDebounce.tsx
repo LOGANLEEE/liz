@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 type Props = {
-	value: number | string;
+	value: any;
 	delay: number;
 };
 const useDebounce = ({ value, delay }: Props) => {
