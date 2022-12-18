@@ -5,3 +5,5 @@ type templateHookArgs = {
 export const templateHook = ({ some }: templateHookArgs) => {
 	return { some };
 };
+
+export default templateHook;

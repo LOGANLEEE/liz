@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 // md 960
 // lg 1280
 // xl 1400
-export const useMediaQuery = (width: number) => {
+const useMediaQuery = (width: number) => {
 	const [targetReached, setTargetReached] = React.useState(false);
 
 	const updateTarget = React.useCallback((e: MediaQueryListEvent) => {
@@ -30,3 +30,5 @@ export const useMediaQuery = (width: number) => {
 
 	return targetReached;
 };
+
+export default useMediaQuery;

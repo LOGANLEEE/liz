@@ -1,4 +1,5 @@
 import { FormElement } from '@nextui-org/react';
+import useDebounce from 'hook/useDebounce';
 import { OrderBy } from 'lib/crawl/logic/post';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -12,15 +13,21 @@ type Pagination = {
 	pageIdx: number;
 };
 
-export const usePagination = ({ some }: usePaginationArgs) => {
+const usePagination = ({ some }: usePaginationArgs) => {
 	const [pageIdx, setPageIdx] = useState(1);
 	const [orderByHit, setOrderByHit] = useState<OrderBy>('desc');
 	const limit = 20;
 	const [searchText, setSearchText] = useState('');
-
 	const searchTextHandler = useCallback((e: React.ChangeEvent<FormElement>) => {
 		setSearchText(e.target.value);
 	}, []);
+
+	useEffect(() => {
+		setPageIdx(1);
+	}, [searchText]);
+
+	const debouncedSearchText = useDebounce({ value: searchText, delay: 300 });
+	const debouncedPageIdx = useDebounce({ value: pageIdx, delay: 300 });
 
 	const clearSearchText = useCallback(() => {
 		setSearchText('');
@@ -50,10 +57,12 @@ export const usePagination = ({ some }: usePaginationArgs) => {
 	}, []);
 
 	return {
-		pageIdx,
+		pageIdx: debouncedPageIdx,
 		limit,
 		order: { orderByHit, toggleOrderByHit },
 		actions: { pageIndexHandler },
-		search: { searchText, clearSearchText, searchTextHandler },
+		search: { searchText: debouncedSearchText, clearSearchText, searchTextHandler },
 	};
 };
+
+export default usePagination;
