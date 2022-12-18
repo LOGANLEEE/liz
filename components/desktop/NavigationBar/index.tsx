@@ -1,5 +1,5 @@
 import { Button, Grid, Navbar, Spacer, Text } from '@nextui-org/react';
-import { ThemeIcon } from 'components/HeartIcon';
+import { ThemeToggleButton } from 'components/ThemeToggleButton';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -38,7 +38,11 @@ export const NavigationBar = () => {
 							button
 						</Navbar.Link> */}
 						<Navbar.Item>
-							<Button className='toggle-button' auto icon={<ThemeIcon isDark fill='currentColor' filled size={26} />} />
+							<Button
+								className='toggle-button'
+								auto
+								icon={<ThemeToggleButton isDark fill='currentColor' filled size={26} />}
+							/>
 						</Navbar.Item>
 					</Navbar.Content>
 				</Grid>

@@ -1,5 +1,5 @@
 import { Button, Grid, Navbar } from '@nextui-org/react';
-import { ThemeIcon } from 'components/HeartIcon';
+import { ThemeToggleButton } from 'components/ThemeToggleButton';
 import { NavigationItems } from 'lib/util';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -39,7 +39,7 @@ export const MobileNavigationBar = () => {
 								className='toggle-button'
 								auto
 								color='error'
-								icon={<ThemeIcon isDark fill='currentColor' filled size={26} />}
+								icon={<ThemeToggleButton isDark fill='currentColor' filled size={26} />}
 							/>
 						</Navbar.Item>
 						<Navbar.Item>
