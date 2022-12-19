@@ -10,7 +10,7 @@ type Props = {
 	isDark?: boolean;
 };
 
-export const ThemeToggleButton = ({ fill = 'currentColor', filled, size, height, width, isDark = true, ...props }: Props) => {
+const ThemeToggleButton = ({ fill = 'currentColor', filled, size, height, width, isDark = true, ...props }: Props) => {
 	return (
 		<Wrapper
 			width={size || width || 24}
@@ -34,5 +34,7 @@ export const ThemeToggleButton = ({ fill = 'currentColor', filled, size, height,
 		</Wrapper>
 	);
 };
+
+export default ThemeToggleButton;
 
 const Wrapper = styled.svg``;
