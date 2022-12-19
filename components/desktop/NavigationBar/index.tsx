@@ -9,7 +9,7 @@ export const NavigationBar = () => {
 		<Navbar isBordered variant='sticky' maxWidth={'fluid'}>
 			<Wrapper direction='row'>
 				<Grid sm={2}>
-					<Navbar.Brand className='brand'>
+					<Navbar.Brand className='brand' onClick={() => (window.location.href = '/')}>
 						<Image className='logo' src='/images/illuminati.svg' alt='Picture of the author' width={50} height={50} />
 						<Spacer x={1} />
 						<Text b color='inherit'>
