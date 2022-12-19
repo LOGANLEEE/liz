@@ -1,4 +1,5 @@
-import type { api_log } from '@prisma/client';
+import type { api_log, fresh_post } from '@prisma/client';
+import { getFreshPostCount } from 'lib/crawl/logic/post';
 import { getRecentAccessLog } from 'lib/log';
 import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
@@ -8,11 +9,13 @@ import { getSelectorsByUserAgent } from 'react-device-detect';
 type Props = {
 	isMobile: boolean;
 	recentAccessLog?: api_log;
+	totalPostCount: number;
+	topPosts: fresh_post[];
 };
 const MobileContainer = dynamic(() => import('containers/page/landingPage/MobileContainer'), {});
 const DesktopContainer = dynamic(() => import('containers/page/landingPage/DesktopContainer'), {});
 
-const LandingPage = ({ isMobile = true, recentAccessLog }: Props) => {
+const LandingPage = ({ isMobile = true, ...props }: Props) => {
 	return (
 		<div>
 			<Head>
@@ -22,7 +25,7 @@ const LandingPage = ({ isMobile = true, recentAccessLog }: Props) => {
 				<meta name='viewport' content='initial-scale=1, width=device-width' />
 			</Head>
 			<main>
-				{isMobile && <MobileContainer />}
+				{isMobile && <MobileContainer {...props} />}
 				{!isMobile && <DesktopContainer />}
 			</main>
 			{/* {isValidating && <CustomLoading />} */}
@@ -38,10 +41,14 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
 
 	const recentAccessLog = await getRecentAccessLog();
 
+	const { topPosts, totalPostCount } = await getFreshPostCount();
+
 	return {
 		props: {
 			isMobile: detect?.isMobile,
 			recentAccessLog: JSON.parse(JSON.stringify(recentAccessLog)),
+			totalPostCount,
+			topPosts,
 		},
 	};
 }
