@@ -22,8 +22,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 };
 
 export const Wrapper = styled.div`
-	height: 100%;
-	box-sizing: 'border-box';
+	min-height: 100%;
+	min-width: 100%;
 `;
 
 export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {
