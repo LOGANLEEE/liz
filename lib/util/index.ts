@@ -65,6 +65,7 @@ export const humorUniCookie = `link=ok; c_cpuid_uuid=c26-f8a8-0e76; c_check=d2ac
 export const NavigationItems = [
 	{ name: 'Home', href: '/' },
 	{ name: 'Community', href: '/community' },
+	{ name: 'Visualize', href: '/visualize' },
 	{ name: 'Freelancer', href: '/freelancer' },
 	{ name: 'About', href: '/about' },
 ];
