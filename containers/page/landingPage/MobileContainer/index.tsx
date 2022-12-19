@@ -10,8 +10,8 @@ type Props = { totalPostCount: number; topPosts: fresh_post[] };
 const MobileContainer = ({ totalPostCount, topPosts }: Props) => {
 	const text = [
 		{
-			header: '커뮤니티',
-			subHeader: `국내 커뮤니티 ${Object.keys(names).length}곳에서 ${totalPostCount}개의 인기 게시글을 모았습니다 !`,
+			header: '실시간 인기글',
+			subHeader: `국내 커뮤니티 ${Object.keys(names).length}곳에서 ${totalPostCount}개의 인기 게시글을 모았습니다.`,
 			body: <PostContainer posts={topPosts} />,
 			link: '/community',
 			linkDescription: '더 보기',
@@ -19,7 +19,7 @@ const MobileContainer = ({ totalPostCount, topPosts }: Props) => {
 		{
 			header: '프리랜서',
 			subHeader: '프로젝트를 찾고 계신가요?',
-			body: '프로젝트를 찾고 계신가요?',
+			body: '준비 중 입니다.',
 			link: '/freelancer',
 			linkDescription: '바로가기',
 		},
