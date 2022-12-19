@@ -25,7 +25,7 @@ export const getFreshPostCount = async () => {
 		_prisma.fresh_post.findMany({
 			where: { mark: true },
 			skip: 0,
-			take: 5,
+			take: 10,
 			orderBy: { hit: 'desc' },
 		}),
 	]);
