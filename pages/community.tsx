@@ -19,7 +19,7 @@ type Props = {
 const MobileContainer = dynamic(() => import('containers/page/community/MobileContainer'), {});
 const DesktopContainer = dynamic(() => import('containers/page/community/DesktopContainer'), {});
 
-const Home = ({ isMobile = true, recentAccessLog }: Props) => {
+const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 	const {
 		pageIdx,
 		limit,
@@ -107,7 +107,7 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 		</>
 	);
 };
-export default Home;
+export default Community;
 
 export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {
 	const userAgent = req.headers['user-agent'] || '';
