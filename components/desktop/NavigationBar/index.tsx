@@ -1,5 +1,6 @@
 import { Button, Grid, Navbar, Spacer, Text } from '@nextui-org/react';
 import ThemeToggleButton from 'components/ThemeToggleButton';
+import { NavigationItems } from 'lib/util';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -20,15 +21,15 @@ export const NavigationBar = () => {
 
 				<Grid sm={8} justify='center'>
 					<Navbar.Content>
-						<Navbar.Link
-							// isActive
-							href='/community'
-						>
-							Community
-						</Navbar.Link>
-
-						<Navbar.Link href='/freelancer'>Freelancer</Navbar.Link>
-						<Navbar.Link href='/about'>About</Navbar.Link>
+						{NavigationItems.map((item) => (
+							<Navbar.Link
+								key={item.href}
+								// isActive
+								href={`${item.href}`}
+							>
+								{item.name}
+							</Navbar.Link>
+						))}
 					</Navbar.Content>
 				</Grid>
 
