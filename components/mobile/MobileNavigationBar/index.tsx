@@ -1,5 +1,5 @@
 import { Button, Grid, Navbar } from '@nextui-org/react';
-import { ThemeToggleButton } from 'components/ThemeToggleButton';
+import ThemeToggleButton from 'components/ThemeToggleButton';
 import { NavigationItems } from 'lib/util';
 import Image from 'next/image';
 import Link from 'next/link';
