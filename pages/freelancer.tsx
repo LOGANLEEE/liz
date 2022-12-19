@@ -9,12 +9,11 @@ import styled from 'styled-components';
 
 type Props = {
 	isMobile: boolean;
-	recentAccessLog?: api_log;
 };
 // const MobileContainer = dynamic(() => import('containers/page/MobileContainer'), {});
 // const DesktopContainer = dynamic(() => import('containers/page/DesktopContainer'), {});
 
-const Home = ({ isMobile = true, recentAccessLog }: Props) => {
+const Freelancer = ({ isMobile = true }: Props) => {
 	return (
 		<>
 			<Wrapper>
@@ -39,12 +38,12 @@ const Home = ({ isMobile = true, recentAccessLog }: Props) => {
 
 const Wrapper = styled.div`
 	/* min-height: 100vh; */
-	.container {
-		/* height: 30vh; */
-	}
+	/* .container { */
+	/* height: 30vh; */
+	/* } */
 `;
 
-export default Home;
+export default Freelancer;
 
 export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {
 	const userAgent = req.headers['user-agent'] || '';
