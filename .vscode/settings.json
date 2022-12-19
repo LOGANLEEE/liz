@@ -21,6 +21,8 @@
 		"PPOMPPU",
 		"pptr",
 		"Pressable",
-		"RULIWEB"
+		"RULIWEB",
+		"Xdata",
+		"Ydata"
 	]
 }
