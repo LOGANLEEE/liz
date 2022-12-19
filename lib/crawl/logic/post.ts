@@ -15,19 +15,20 @@ export declare type GetFreshPostReturn = {
 	list: fresh_post[];
 };
 
-export const getFreshPost = async ({ offset, limit, orderByHit, searchText }: GetFreshPostArgs): Promise<GetFreshPostReturn> => {
+export const getFreshPost = async ({ offset, limit, orderByHit = 'desc', searchText }: GetFreshPostArgs): Promise<GetFreshPostReturn> => {
 	const [totalCount, list] = await _prisma.$transaction([
 		_prisma.fresh_post.count({
-			where: { mark: true, title: { contains: searchText } },
-			skip: offset,
-			take: limit,
-			orderBy: { hit: orderByHit || undefined },
+			where: {
+				mark: true,
+				title: { contains: searchText },
+			},
+			orderBy: { hit: orderByHit },
 		}),
 		_prisma.fresh_post.findMany({
 			where: { mark: true, title: { contains: searchText } },
 			skip: offset,
 			take: limit,
-			orderBy: { hit: orderByHit || undefined },
+			orderBy: { hit: orderByHit },
 		}),
 	]);
 
