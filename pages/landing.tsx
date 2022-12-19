@@ -26,7 +26,7 @@ const LandingPage = ({ isMobile = true, ...props }: Props) => {
 			</Head>
 			<main>
 				{isMobile && <MobileContainer {...props} />}
-				{!isMobile && <DesktopContainer />}
+				{!isMobile && <DesktopContainer {...props} />}
 			</main>
 			{/* {isValidating && <CustomLoading />} */}
 		</div>
