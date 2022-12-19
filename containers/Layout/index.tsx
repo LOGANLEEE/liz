@@ -15,7 +15,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 			{!isMobile && <NavigationBar />}
 			{isMobile && <MobileNavigationBar />}
 			<InfoProvider />
-			<div style={{ height: '100vh' }}>{children}</div>
+			<div style={{ minHeight: '100vh' }}>{children}</div>
 			<Footer />
 		</Wrapper>
 	);
