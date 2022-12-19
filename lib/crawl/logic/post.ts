@@ -1,4 +1,5 @@
 import type { fresh_post } from '@prisma/client';
+import { names } from 'lib/crawl/targetInfo';
 import { _prisma } from 'prisma/prismaInstance';
 
 export declare type OrderBy = 'desc' | 'asc';
@@ -13,6 +14,32 @@ type GetFreshPostArgs = {
 export declare type GetFreshPostReturn = {
 	totalCount: number;
 	list: fresh_post[];
+};
+
+export const visualizeQuery = async () => {
+	return Promise.all(
+		Object.values(names).map(async (name) => {
+			const { _avg, _count, _max, _min, _sum } = await _prisma.fresh_post.aggregate({
+				_min: {
+					hit: true,
+				},
+				_max: {
+					hit: true,
+				},
+				_avg: {
+					hit: true,
+				},
+				_count: {
+					_all: true,
+				},
+				_sum: {
+					hit: true,
+				},
+				where: { mark: true, name },
+			});
+			return { avg: _avg.hit, count: _count._all, max: _max.hit, min: _min.hit, sum: _sum.hit, name };
+		})
+	);
 };
 
 export const getFreshPostCount = async () => {
