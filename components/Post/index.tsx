@@ -77,9 +77,9 @@ const Wrapper = styled.li`
 		white-space: nowrap;
 	}
 	.hit {
-		/* text-overflow: ellipsis;
+		text-overflow: ellipsis;
 		overflow: hidden;
-		white-space: nowrap; */
+		white-space: nowrap;
 	}
 
 	:hover {
