@@ -15,7 +15,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 			{!isMobile && <NavigationBar />}
 			{isMobile && <MobileNavigationBar />}
 			<InfoProvider />
-			{children}
+			<div style={{ height: '100vh' }}>{children}</div>
 			<Footer />
 		</Wrapper>
 	);
@@ -23,7 +23,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
 export const Wrapper = styled.div`
 	min-height: 100%;
-	min-width: 100%;
+	width: 100%;
 `;
 
 export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {

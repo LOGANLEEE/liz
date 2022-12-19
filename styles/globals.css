@@ -29,10 +29,10 @@ a {
 @media (prefers-color-scheme: dark) {
 	html {
 		color-scheme: dark;
-		width: 100vw;
-		height: 100vh;
 	}
 	body {
+		width: 100vw;
+		min-height: 100vh;
 		overflow-y: scroll;
 
 		color: #c6c6c6;
