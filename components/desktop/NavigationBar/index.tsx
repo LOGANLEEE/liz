@@ -9,7 +9,7 @@ export const NavigationBar = () => {
 		<Navbar isBordered variant='sticky' maxWidth={'fluid'}>
 			<Wrapper direction='row'>
 				<Grid sm={2}>
-					<Navbar.Brand>
+					<Navbar.Brand className='brand'>
 						<Image className='logo' src='/images/illuminati.svg' alt='Picture of the author' width={50} height={50} />
 						<Spacer x={1} />
 						<Text b color='inherit'>
@@ -52,8 +52,11 @@ export const NavigationBar = () => {
 };
 
 const Wrapper = styled(Grid.Container)`
-	.logo {
-		filter: drop-shadow(16px 16px 20px red) invert(75%);
+	.brand {
+		cursor: pointer;
+		.logo {
+			filter: drop-shadow(16px 16px 20px red) invert(75%);
+		}
 	}
 	.toggle-button {
 		background-color: transparent;
