@@ -35,10 +35,10 @@ const Post = memo(({ data, clicked }: Props) => {
 	return (
 		<Wrapper onClick={visitHandler} className={`${visited ? 'visited' : ''}`}>
 			<Grid.Container gap={1} justify='flex-start' direction='row'>
-				<Grid xs={1.3} sm={0.5} md={0.5} className='name' justify='center'>
+				<Grid xs={1.3} sm={1} md={0.5} className='name' justify='center'>
 					<Text className='text'>{data.name}</Text>
 				</Grid>
-				<Grid xs={7.9} sm={9.5} md={10.5}>
+				<Grid xs={7.9} sm={9} md={10.5}>
 					<Text className='title text'>{data.title}</Text>
 				</Grid>
 				{data.hit && (
