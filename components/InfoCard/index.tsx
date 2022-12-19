@@ -1,12 +1,13 @@
 import { Card, Grid, Link, Text } from '@nextui-org/react';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 type Props = {
-	header?: string;
-	subHeader?: string;
-	body: string;
+	header?: string | ReactNode;
+	subHeader?: string | ReactNode;
+	body: string | ReactNode;
 	link?: string;
-	linkDescription?: string;
+	linkDescription?: string | ReactNode;
 };
 const InfoCard = ({ body, header, link = '/#', linkDescription, subHeader }: Props) => {
 	return (
