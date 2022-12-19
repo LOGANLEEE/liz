@@ -1,5 +1,5 @@
 import { Card, Grid, Link, Text } from '@nextui-org/react';
-import { ReactNode } from 'react';
+import { isValidElement, ReactNode } from 'react';
 import styled from 'styled-components';
 
 type Props = {
@@ -15,23 +15,22 @@ const InfoCard = ({ body, header, link = '/#', linkDescription, subHeader }: Pro
 			<Grid xs sm md lg xl>
 				<Card>
 					<Card.Header>
-						<Grid.Container css={{ pl: '$6' }}>
+						<Grid.Container>
 							{header && (
 								<Grid xs={12}>
-									<Text h4 css={{ lineHeight: '$xs' }}>
-										{header}
-									</Text>
+									<Text h4>{header}</Text>
 								</Grid>
 							)}
 							{subHeader && (
 								<Grid xs={12}>
-									<Text css={{ color: '$accents8' }}>{subHeader}</Text>
+									<Text>{subHeader}</Text>
 								</Grid>
 							)}
 						</Grid.Container>
 					</Card.Header>
 					<Card.Body>
-						<Text>{body}</Text>
+						{typeof body === 'string' && <Text>{body}</Text>}
+						{isValidElement(body) && body}
 					</Card.Body>
 					<Card.Footer>
 						<Link
