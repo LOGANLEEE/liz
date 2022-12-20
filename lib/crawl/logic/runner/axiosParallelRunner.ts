@@ -53,7 +53,7 @@ export const axiosParallelRunner = async () => {
 				if (e.name === targetInfo.name) e.on = true;
 				return e;
 			});
-			const isError = pageHolder.some((e) => e.isError);
+			const isError = pageHolder.some((e) => e.isError === true);
 
 			console.log(
 				`${targetInfo.name}(${targetInfo.pageRange[1]}): (${count} /${
