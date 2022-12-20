@@ -10,7 +10,7 @@ type Props = {
 const DesktopContainer = ({ chartData }: Props) => {
 	return (
 		<Wrapper justify='center' direction='row' gap={1}>
-			<Grid xs={6} sm={6} md lg xl direction='column' justify='center'>
+			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
 				<CustomChart
 					chartData={chartData}
 					width={400}
@@ -21,7 +21,7 @@ const DesktopContainer = ({ chartData }: Props) => {
 					introText='평균 조회수'
 				/>
 			</Grid>
-			<Grid xs={6} sm={6} md lg xl direction='column' justify='center'>
+			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
 				<CustomChart
 					chartData={chartData}
 					width={400}
@@ -32,7 +32,7 @@ const DesktopContainer = ({ chartData }: Props) => {
 					introText='조회수 총합'
 				/>
 			</Grid>
-			<Grid xs={6} sm={6} md lg xl direction='column' justify='center'>
+			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
 				<CustomChart
 					chartData={chartData}
 					width={400}
@@ -43,7 +43,7 @@ const DesktopContainer = ({ chartData }: Props) => {
 					introText='최저 조회수'
 				/>
 			</Grid>
-			<Grid xs={6} sm={6} md lg xl direction='column' justify='center'>
+			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
 				<CustomChart
 					chartData={chartData}
 					width={400}
@@ -54,7 +54,7 @@ const DesktopContainer = ({ chartData }: Props) => {
 					introText='최대 조회수'
 				/>
 			</Grid>
-			<Grid xs={6} sm={6} md lg xl direction='column' justify='center'>
+			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
 				<CustomChart
 					chartData={chartData}
 					width={400}
@@ -62,12 +62,9 @@ const DesktopContainer = ({ chartData }: Props) => {
 					dataKeys={['count']}
 					XdataKey='name'
 					syncId='aa'
-					introText='총 갯수'
+					introText='총 게시물 갯수'
 				/>
 			</Grid>
-			{/* <Grid xs sm md lg xl>
-				<CustomAreaChart data={chartDummy} width={500} height={400} syncId='v-id' dataKey='amt' XdataKey='name' />
-			</Grid> */}
 		</Wrapper>
 	);
 };
