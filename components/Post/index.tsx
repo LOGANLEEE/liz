@@ -18,6 +18,7 @@ const Post = memo(({ data, clicked }: Props) => {
 		const target = visitedList.find(
 			({ id, title, name }) => id === data.id || (title === data.title && name === data.name) || title === data.title
 		);
+
 		if (target?.id || target?.title) {
 			setVisited(true);
 		}
