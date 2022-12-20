@@ -63,7 +63,7 @@ export const RULIWEB_INFO: TargetInfo = {
 	enable: false,
 	targetBaseName: '',
 	targetUrl: (page: number) => `https://bbs.ruliweb.com/best/all/now?orderby=readcount&range=24h&page=${page}`,
-	pageRange: [1, 5, 1],
+	pageRange: [1, 4, 1],
 	postRange: [1, 28, 1],
 	garbage: (idx: number) => [`#best_body > table > tbody > tr:nth-child(${idx}) > td > div > div > div.col_10.text_wrapper > a > span`],
 	link: (idx: number) => `#best_body > table > tbody > tr:nth-child(${idx}) > td > div > div > div.col_10.text_wrapper > a`,
@@ -286,6 +286,7 @@ const PGR_INFO: TargetInfo = {
 };
 
 export const targetList: TargetInfo[] = [
+	BOBAE_INFO,
 	PGR_INFO,
 	HUMOR_UNI_INFO,
 	NATE_INFO,
@@ -299,7 +300,6 @@ export const targetList: TargetInfo[] = [
 	FMKOREA_INFO,
 	ILBE_INFO,
 	CLIEN_INFO,
-	BOBAE_INFO,
 	INVEN_INFO,
 	ETOLAND_INFO,
 ];
