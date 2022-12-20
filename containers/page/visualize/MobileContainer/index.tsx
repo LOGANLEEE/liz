@@ -62,7 +62,7 @@ const MobileContainer = ({ chartData }: Props) => {
 					dataKeys={['count']}
 					XdataKey='name'
 					syncId='aa'
-					introText='총 갯수'
+					introText='총 게시물 갯수'
 				/>
 			</Grid>
 		</Wrapper>
