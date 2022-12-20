@@ -43,11 +43,25 @@ const CustomChart = ({ chartData, syncId, XdataKey, YdataKey, dataKeys, height, 
 					<Tooltip useTranslate3d />
 					{/* <Legend /> */}
 
-					{dataKeys?.map((dataKey) => (
-						<>
-							<Line layout='vertical' key={dataKey} type='monotone' dataKey={dataKey} stroke='#d4bb7f' fill='#e5460c' />
-							<Area layout='vertical' key={dataKey} type='monotone' dataKey={dataKey} stroke='#d4bb7f' fill='#96533b' />
-						</>
+					{dataKeys?.map((dataKey, idx) => (
+						<Area
+							key={`area::${idx}::${dataKey}`}
+							layout='vertical'
+							type='monotone'
+							dataKey={dataKey}
+							stroke='#d4bb7f'
+							fill='#96533b'
+						/>
+					))}
+					{dataKeys?.map((dataKey, idx) => (
+						<Line
+							key={`line::${idx}::${dataKey}`}
+							layout='vertical'
+							type='monotone'
+							dataKey={dataKey}
+							stroke='#d4bb7f'
+							fill='#e5460c'
+						/>
 					))}
 				</ComposedChart>
 			</Wrapper>
