@@ -16,6 +16,34 @@ export declare type GetFreshPostReturn = {
 	list: fresh_post[];
 };
 
+type AnalyzeQueryProps = {
+	searchText?: string;
+};
+export const analyzeQuery = async ({ searchText }: AnalyzeQueryProps) => {
+	return Promise.all(
+		Object.values(names).map(async (name) => {
+			const { _avg, _count, _max, _min, _sum } = await _prisma.fresh_post.aggregate({
+				_min: {
+					hit: true,
+				},
+				_max: {
+					hit: true,
+				},
+				_avg: {
+					hit: true,
+				},
+				_count: {
+					_all: true,
+				},
+				_sum: {
+					hit: true,
+				},
+				where: { mark: true, name, title: { contains: searchText } },
+			});
+			return { avg: _avg.hit, count: _count._all, max: _max.hit, min: _min.hit, sum: _sum.hit, name };
+		})
+	);
+};
 export const visualizeQuery = async () => {
 	return Promise.all(
 		Object.values(names).map(async (name) => {
@@ -42,7 +70,7 @@ export const visualizeQuery = async () => {
 	);
 };
 
-export const getFreshPostCount = async () => {
+export const getFreshPostCountQuery = async () => {
 	const [totalPostCount, topPosts] = await _prisma.$transaction([
 		_prisma.fresh_post.count({
 			where: {
@@ -59,7 +87,12 @@ export const getFreshPostCount = async () => {
 	return { totalPostCount, topPosts };
 };
 
-export const getFreshPost = async ({ offset, limit, orderByHit = 'desc', searchText }: GetFreshPostArgs): Promise<GetFreshPostReturn> => {
+export const getFreshPostQuery = async ({
+	offset,
+	limit,
+	orderByHit = 'desc',
+	searchText,
+}: GetFreshPostArgs): Promise<GetFreshPostReturn> => {
 	const [totalCount, list] = await _prisma.$transaction([
 		_prisma.fresh_post.count({
 			where: {
