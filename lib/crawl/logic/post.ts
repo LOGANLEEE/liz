@@ -5,6 +5,7 @@ import { _prisma } from 'prisma/prismaInstance';
 export declare type OrderBy = 'desc' | 'asc';
 
 type GetFreshPostArgs = {
+	sites: string[];
 	offset?: number;
 	limit?: number;
 	orderByHit?: 'desc' | 'asc';
@@ -88,21 +89,27 @@ export const getFreshPostCountQuery = async () => {
 };
 
 export const getFreshPostQuery = async ({
+	sites,
 	offset,
 	limit,
 	orderByHit = 'desc',
 	searchText,
 }: GetFreshPostArgs): Promise<GetFreshPostReturn> => {
+	const name: any = {};
+	if (sites?.length > 0) {
+		name.in = sites;
+	}
 	const [totalCount, list] = await _prisma.$transaction([
 		_prisma.fresh_post.count({
 			where: {
 				mark: true,
 				title: { contains: searchText },
+				name,
 			},
 			orderBy: { hit: orderByHit },
 		}),
 		_prisma.fresh_post.findMany({
-			where: { mark: true, title: { contains: searchText } },
+			where: { mark: true, title: { contains: searchText }, name },
 			skip: offset,
 			take: limit,
 			orderBy: { hit: orderByHit },
