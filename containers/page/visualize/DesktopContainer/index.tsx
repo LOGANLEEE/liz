@@ -1,5 +1,5 @@
 import { Grid } from '@nextui-org/react';
-import CustomChart from 'components/CustomChart';
+import CustomLineChart from 'components/CustomLineChart';
 import styled from 'styled-components';
 import { ChartData } from 'types';
 
@@ -11,7 +11,7 @@ const DesktopContainer = ({ chartData }: Props) => {
 	return (
 		<Wrapper justify='center' direction='row' gap={1}>
 			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
@@ -22,7 +22,7 @@ const DesktopContainer = ({ chartData }: Props) => {
 				/>
 			</Grid>
 			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
@@ -33,7 +33,7 @@ const DesktopContainer = ({ chartData }: Props) => {
 				/>
 			</Grid>
 			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
@@ -44,7 +44,7 @@ const DesktopContainer = ({ chartData }: Props) => {
 				/>
 			</Grid>
 			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
@@ -55,7 +55,7 @@ const DesktopContainer = ({ chartData }: Props) => {
 				/>
 			</Grid>
 			<Grid xs={6} sm={6} md={12} lg={12} xl={12} direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
