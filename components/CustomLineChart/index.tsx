@@ -3,7 +3,7 @@ import { Area, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip,
 import styled from 'styled-components';
 import { ChartComponentProps } from 'types';
 
-const CustomChart = ({ chartData, syncId, XdataKey, YdataKey, dataKeys, height, width, introText }: ChartComponentProps) => {
+const CustomLineChart = ({ chartData, syncId, XdataKey, YdataKey, dataKeys, height, width, introText }: ChartComponentProps) => {
 	// const CustomTooltip = ({ active, payload, label }) => {
 	// 	if (active && payload && payload.length) {
 	// 		return (
@@ -71,7 +71,7 @@ const CustomChart = ({ chartData, syncId, XdataKey, YdataKey, dataKeys, height, 
 
 const Wrapper = styled(ResponsiveContainer)``;
 
-export default CustomChart;
+export default CustomLineChart;
 
 // const checkContrast = (color1, color2) => {
 // 	const [r1, g1, b1] = getRGB(color1);
