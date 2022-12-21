@@ -1,5 +1,5 @@
 import { Grid } from '@nextui-org/react';
-import CustomChart from 'components/CustomChart';
+import CustomLineChart from 'components/CustomLineChart';
 import styled from 'styled-components';
 import { ChartData } from 'types';
 
@@ -11,7 +11,7 @@ const MobileContainer = ({ chartData }: Props) => {
 	return (
 		<Wrapper direction='column' justify='center' gap={1}>
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
@@ -22,7 +22,7 @@ const MobileContainer = ({ chartData }: Props) => {
 				/>
 			</Grid>
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
@@ -33,7 +33,7 @@ const MobileContainer = ({ chartData }: Props) => {
 				/>
 			</Grid>
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
@@ -44,7 +44,7 @@ const MobileContainer = ({ chartData }: Props) => {
 				/>
 			</Grid>
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
@@ -55,7 +55,7 @@ const MobileContainer = ({ chartData }: Props) => {
 				/>
 			</Grid>
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
-				<CustomChart
+				<CustomLineChart
 					chartData={chartData}
 					width={400}
 					height={300}
