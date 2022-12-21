@@ -66,6 +66,7 @@ export const NavigationItems = [
 	{ name: 'Home', href: '/' },
 	{ name: 'Community', href: '/community' },
 	{ name: 'Visualize', href: '/visualize' },
+	{ name: 'Analyze', href: '/analyze' },
 	{ name: 'Freelancer', href: '/freelancer' },
 	{ name: 'About', href: '/about' },
 ];
