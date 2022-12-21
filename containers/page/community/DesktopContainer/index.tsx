@@ -1,5 +1,6 @@
 import { FormElement, Grid, Input } from '@nextui-org/react';
 import type { api_log, fresh_post } from '@prisma/client';
+import TargetSiteSelector from 'components/TargetSiteSelector';
 import { OrderBy } from 'lib/crawl/logic/post';
 import dynamic from 'next/dynamic';
 import React from 'react';
@@ -22,6 +23,8 @@ type Props = {
 	clearSearchText: () => void;
 	searchTextHandler: (e: React.ChangeEvent<FormElement>) => void;
 	pageIndexHandler: (pageNum: number) => void;
+	selectedSites: string[];
+	targetSiteHandler: (val: string) => void;
 };
 
 const DesktopContainer = ({
@@ -37,9 +40,11 @@ const DesktopContainer = ({
 	clearSearchText,
 	searchText,
 	searchTextHandler,
+	selectedSites,
+	targetSiteHandler,
 }: Props) => {
 	return (
-		<Grid.Container justify='center' direction='row' gap={1}>
+		<Grid.Container justify='center' direction='row' gap={0.5}>
 			<Grid xs={1} sm={2} md={1} lg={1} xl={1}>
 				left
 			</Grid>
@@ -73,7 +78,7 @@ const DesktopContainer = ({
 				</Grid.Container>
 			</Grid>
 			<Grid xs={1} sm={2} md={1} lg={1} xl={1}>
-				right
+				<TargetSiteSelector selectedSites={selectedSites} targetSiteHandler={targetSiteHandler} />
 			</Grid>
 		</Grid.Container>
 	);
