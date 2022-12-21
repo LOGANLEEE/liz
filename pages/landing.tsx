@@ -1,5 +1,5 @@
 import type { api_log, fresh_post } from '@prisma/client';
-import { getFreshPostCount } from 'lib/crawl/logic/post';
+import { getFreshPostCountQuery } from 'lib/crawl/logic/post';
 import { getRecentAccessLog } from 'lib/log';
 import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
@@ -43,7 +43,7 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
 
 	const recentAccessLog = await getRecentAccessLog();
 
-	const { topPosts, totalPostCount } = await getFreshPostCount();
+	const { topPosts, totalPostCount } = await getFreshPostCountQuery();
 
 	return {
 		props: {
