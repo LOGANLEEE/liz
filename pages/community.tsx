@@ -1,6 +1,7 @@
 import type { api_log, fresh_post } from '@prisma/client';
 import { CustomLoading } from 'components/CustomLoading';
 import usePagination from 'hook/usePagination';
+import useSiteSelector from 'hook/useSiteSelector';
 import { _axios } from 'lib/axiosInstance';
 import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
 import { names } from 'lib/crawl/targetInfo';
@@ -28,8 +29,9 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 		search,
 	} = usePagination({});
 
+	const siteSelector = useSiteSelector({});
 	const { data, error, isValidating } = useSWR<GetFreshPostReturn>(
-		`/api/crawl/getFreshPost/${pageIdx}/${order.orderByHit}/${search.searchText}`,
+		`/api/crawl/getFreshPost/${pageIdx}/${order.orderByHit}/${search.searchText}/${siteSelector.selectedSites}`,
 		async () =>
 			await _axios
 				.post(`/api/crawl/getFreshPost`, {
@@ -37,6 +39,7 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 					limit,
 					offset: (pageIdx - 1) * limit,
 					searchText: search.searchText,
+					sites: siteSelector.selectedSites,
 				})
 				.then((res) => res?.data)
 	);
@@ -90,6 +93,8 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 					)}
 					{!isMobile && (
 						<DesktopContainer
+							selectedSites={siteSelector.selectedSites}
+							{...siteSelector.action}
 							{...order}
 							{...search}
 							recentAccessLog={recentAccessLog}
