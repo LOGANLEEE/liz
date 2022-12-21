@@ -1,8 +1,8 @@
-type templateHookArgs = {
+type TemplateHookArgs = {
 	some?: any;
 };
 
-export const templateHook = ({ some }: templateHookArgs) => {
+export const templateHook = ({ some }: TemplateHookArgs) => {
 	return { some };
 };
 
