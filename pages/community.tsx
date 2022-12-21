@@ -38,7 +38,7 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 					offset: (pageIdx - 1) * limit,
 					searchText: search.searchText,
 				})
-				.then((res) => res.data)
+				.then((res) => res?.data)
 	);
 
 	const [totalCount, setTotalCount] = useState(0);
