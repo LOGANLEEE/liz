@@ -1,8 +1,8 @@
-import { getFreshPost } from 'lib/crawl/logic/post';
+import { getFreshPostQuery } from 'lib/crawl/logic/post';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { _prisma } from 'prisma/prismaInstance';
 
-const getFreshPostHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method !== 'POST') {
 		res.status(401).json({ message: 'wrong http method' });
 		return;
@@ -13,10 +13,10 @@ const getFreshPostHandler = async (req: NextApiRequest, res: NextApiResponse) =>
 	// console.log('offset:', offset);
 
 	await _prisma.$connect();
-	const data = await getFreshPost({ limit, offset, orderByHit, searchText });
+	const data = await getFreshPostQuery({ limit, offset, orderByHit, searchText });
 	res.status(200).json(data);
 	await _prisma.$disconnect();
 	return;
 };
 
-export default getFreshPostHandler;
+export default handler;
