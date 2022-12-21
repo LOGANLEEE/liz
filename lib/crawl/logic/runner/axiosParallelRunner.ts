@@ -25,7 +25,7 @@ export const axiosParallelRunner = async () => {
 			const st = performance.now();
 			const pageHolder = await Promise.all(
 				pageRange.map(async (pageCount, idx) => {
-					await delay(idx * 300);
+					await delay(idx * 800);
 					const firstResult = await axiosAccessor({ targetInfo, pageCount });
 					// if (firstResult.isError) {
 					// 	return await pptrAccessor({ pageCount, targetInfo, browser: (await getBrowser()).browser });
