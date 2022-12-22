@@ -3,10 +3,15 @@ import { OrderBy } from 'lib/crawl/logic/post';
 import styled from 'styled-components';
 
 type Props = { orderByHit: OrderBy; toggleOrderByHit: () => void };
-const PostOrder = ({ orderByHit, toggleOrderByHit }: Props) => {
+const PostOrderButton = ({ orderByHit, toggleOrderByHit }: Props) => {
 	return (
 		<Wrapper>
-			<Button size='xs' onClick={toggleOrderByHit} color='secondary'>
+			<Button
+				auto
+				//  size='xs'
+				onClick={toggleOrderByHit}
+				color='secondary'
+			>
 				조회순 {orderByHit === 'desc' ? '⬆' : '⬇'}
 			</Button>
 		</Wrapper>
@@ -19,4 +24,4 @@ const Wrapper = styled.div`
 	}
 `;
 
-export default PostOrder;
+export default PostOrderButton;
