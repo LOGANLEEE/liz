@@ -6,8 +6,8 @@ import dynamic from 'next/dynamic';
 import { Footer } from 'components/Footer';
 import { GetServerSidePropsContext } from 'next';
 
-const NavigationBar = dynamic(() => import('components/desktop/NavigationBar'), { ssr: false });
-const MobileNavigationBar = dynamic(() => import('components/mobile/MobileNavigationBar'), { ssr: false });
+const NavigationBar = dynamic(() => import('components/Desktop/NavigationBar'), { ssr: false });
+const MobileNavigationBar = dynamic(() => import('components/Mobile/MobileNavigationBar'), { ssr: false });
 
 export const Layout = ({ children }: { children: ReactNode }) => {
 	return (
