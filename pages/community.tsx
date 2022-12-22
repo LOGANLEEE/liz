@@ -27,9 +27,14 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 		order,
 		actions: { pageIndexHandler },
 		search,
-	} = usePagination({});
+	} = usePagination();
 
-	const siteSelector = useSiteSelector({});
+	const siteSelector = useSiteSelector();
+
+	useEffect(() => {
+		pageIndexHandler(1);
+	}, [pageIndexHandler, siteSelector.selectedSites]);
+
 	const { data, error, isValidating } = useSWR<GetFreshPostReturn>(
 		`/api/crawl/getFreshPost/${pageIdx}/${order.orderByHit}/${search.searchText}/${siteSelector.selectedSites}`,
 		async () =>
@@ -80,6 +85,8 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 				<main tabIndex={0} onKeyDown={pageOnKeyDownHandler}>
 					{isMobile && (
 						<MobileContainer
+							selectedSites={siteSelector.selectedSites}
+							{...siteSelector.action}
 							{...order}
 							{...search}
 							recentAccessLog={recentAccessLog}
