@@ -5,15 +5,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 const paginationKey = 'pagination';
 
-type UsePaginationArgs = {
-	some?: any;
-};
-
 type Pagination = {
 	pageIdx: number;
 };
 
-const usePagination = ({ some }: UsePaginationArgs) => {
+const usePagination = () => {
 	const [pageIdx, setPageIdx] = useState(1);
 	const [orderByHit, setOrderByHit] = useState<OrderBy>('desc');
 	const limit = 20;
