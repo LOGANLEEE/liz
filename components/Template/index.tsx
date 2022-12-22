@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-const Template = () => {
+type Props = {
+	some?: string;
+};
+
+const Template = ({ some }: Props) => {
 	return <Wrapper>Template</Wrapper>;
 };
 
