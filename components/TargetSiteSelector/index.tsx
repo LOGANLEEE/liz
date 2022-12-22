@@ -6,9 +6,10 @@ import styled from 'styled-components';
 type Props = {
 	targetSiteHandler: (val: string) => void;
 	selectedSites: string[];
+	useTitle?: boolean;
 };
 
-const TargetSiteSelector = ({ selectedSites, targetSiteHandler }: Props) => {
+const TargetSiteSelector = ({ selectedSites, targetSiteHandler, useTitle = false }: Props) => {
 	const onClickHandler = useCallback(
 		(val: string) => {
 			targetSiteHandler(val);
@@ -18,10 +19,12 @@ const TargetSiteSelector = ({ selectedSites, targetSiteHandler }: Props) => {
 
 	return (
 		<Wrapper justify='flex-start' direction='column' gap={0.5}>
-			<Grid>
-				<Text className='text'>보고자하는 사이트를</Text>
-				<Text className='text'>골라보세요.</Text>
-			</Grid>
+			{useTitle && (
+				<Grid>
+					<Text className='text'>보고자하는 사이트를</Text>
+					<Text className='text'>골라보세요.</Text>
+				</Grid>
+			)}
 			<Grid>
 				<StyledUl>
 					{Object.values(names).map((name) => (
@@ -59,8 +62,10 @@ const StyledUl = styled.ul`
 		border-radius: 15px;
 
 		&:hover {
-			background-color: #bbbbbb;
-			color: #000000;
+			background-color: #633939;
+		}
+		&.active {
+			background-color: #7e4949;
 		}
 	}
 `;
