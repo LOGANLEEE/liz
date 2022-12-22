@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 
-type TemplateHookArgs = {
-	some?: any;
-};
-
-export const useSiteSelector = ({ some }: TemplateHookArgs) => {
+export const useSiteSelector = () => {
 	const [selectedSites, setSelectedSites] = useState<string[]>([]);
+
+	const resetSelectedSites = useCallback(() => {
+		setSelectedSites(['']);
+	}, []);
 
 	const targetSiteHandler = useCallback(
 		(val: string) => {
@@ -26,7 +26,7 @@ export const useSiteSelector = ({ some }: TemplateHookArgs) => {
 		[selectedSites]
 	);
 
-	return { selectedSites, action: { targetSiteHandler } };
+	return { selectedSites, action: { targetSiteHandler, resetSelectedSites } };
 };
 
 export default useSiteSelector;
