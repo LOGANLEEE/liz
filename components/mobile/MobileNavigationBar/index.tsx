@@ -36,6 +36,7 @@ export const MobileNavigationBar = () => {
 					<Navbar.Content>
 						<Navbar.Item>
 							<Button
+								onClick={() => alert('준비 중입니다.')}
 								className='toggle-button'
 								auto
 								color='error'

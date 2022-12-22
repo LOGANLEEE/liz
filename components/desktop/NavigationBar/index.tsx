@@ -40,6 +40,7 @@ export const NavigationBar = () => {
 						</Navbar.Link> */}
 						<Navbar.Item>
 							<Button
+								onClick={() => alert('준비 중입니다.')}
 								className='toggle-button'
 								auto
 								icon={<ThemeToggleButton isDark fill='currentColor' filled size={26} />}
