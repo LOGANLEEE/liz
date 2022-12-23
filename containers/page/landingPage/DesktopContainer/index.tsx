@@ -1,16 +1,13 @@
 import { Grid } from '@nextui-org/react';
-import { fresh_post } from '@prisma/client';
-import PostContainer from 'containers/PostContainer';
 import { names } from 'lib/crawl/targetInfo';
 import dynamic from 'next/dynamic';
-import type { ChartData } from 'types';
-
-type Props = { totalPostCount: number; topPosts: fresh_post[]; chartData: ChartData[] };
+import type { LandingPageProps } from 'pages/landing';
 
 const CustomLineChart = dynamic(() => import('components/CustomLineChart'), {});
 const InfoCard = dynamic(() => import('components/InfoCard'), {});
+const PostContainer = dynamic(() => import('containers/PostContainer'), {});
 
-const DesktopContainer = ({ topPosts, totalPostCount, chartData }: Props) => {
+const DesktopContainer = ({ topPosts, totalPostCount, chartData }: LandingPageProps) => {
 	const text = [
 		{
 			header: '프리랜서',
