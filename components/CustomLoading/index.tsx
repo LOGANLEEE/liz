@@ -2,7 +2,7 @@ import { Loading } from '@nextui-org/react';
 import { memo } from 'react';
 import styled from 'styled-components';
 
-export const CustomLoading = memo(() => {
+const CustomLoading = memo(() => {
 	return <StyledLoading type='spinner' size='lg' />;
 });
 
@@ -14,3 +14,5 @@ const StyledLoading = styled(Loading)`
 	/* bottom: 0; */
 	right: 0;
 `;
+
+export default CustomLoading;
