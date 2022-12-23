@@ -1,9 +1,7 @@
-import { FormElement, Grid, Input, Spacer } from '@nextui-org/react';
-import type { api_log, fresh_post } from '@prisma/client';
+import { Grid, Input, Spacer } from '@nextui-org/react';
 import useControlModal from 'hook/useControlModal';
-import { OrderBy } from 'lib/crawl/logic/post';
 import dynamic from 'next/dynamic';
-import { ChangeEvent } from 'react';
+import type { CommunityContainerProps } from 'pages/community';
 import styled from 'styled-components';
 
 const SiteSelectModal = dynamic(() => import('components/Modal/SiteSelectModal'), {});
@@ -14,31 +12,13 @@ const PostContainer = dynamic(() => import('containers/PostContainer'), {});
 const PostOrder = dynamic(() => import('components/PostOrderButton'), {});
 const PaginationComp = dynamic(() => import('components/PaginationComp'), {});
 
-type Props = {
-	totalCount: number;
-	targetSiteCount: number;
-	limit: number;
-	pageIdx: number;
-	pageIndexHandler: (pageNum: number) => void;
-	freshPostList: fresh_post[];
-	recentAccessLog?: api_log;
-	orderByHit: OrderBy;
-	toggleOrderByHit: () => void;
-	searchText: string;
-	clearSearchText: () => void;
-	searchTextHandler: (e: ChangeEvent<FormElement>) => void;
-	selectedSites: string[];
-	targetSiteHandler: (val: string) => void;
-	resetSelectedSites: () => void;
-};
-
 const MobileContainer = ({
 	limit,
 	pageIndexHandler,
 	pageIdx,
 	recentAccessLog,
 	targetSiteCount,
-	totalCount,
+	postCount,
 	freshPostList,
 	orderByHit,
 	toggleOrderByHit,
@@ -48,7 +28,8 @@ const MobileContainer = ({
 	selectedSites,
 	targetSiteHandler,
 	resetSelectedSites,
-}: Props) => {
+	totalPostCount,
+}: CommunityContainerProps) => {
 	const {
 		isOpen,
 		action: { modalCloseHandler, modalOpenHandler },
@@ -58,7 +39,7 @@ const MobileContainer = ({
 		<>
 			<Wrapper direction='row' justify='center' gap={1}>
 				<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center' className='item'>
-					<InfoText targetSiteCount={targetSiteCount} postCount={totalCount} recentAccessLog={recentAccessLog} />
+					<InfoText targetSiteCount={targetSiteCount} postCount={totalPostCount} recentAccessLog={recentAccessLog} />
 				</Grid>
 				<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='flex-end' className='item'>
 					<SiteSelectorButton onClickHandler={modalOpenHandler} />
@@ -78,13 +59,13 @@ const MobileContainer = ({
 				</Grid>
 
 				<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center' className='item'>
-					<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
+					<PaginationComp limit={limit} totalCount={postCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
 				</Grid>
 				<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center' className='item'>
 					<PostContainer posts={freshPostList} />
 				</Grid>
 				<Grid xs={11.5} sm={11.5} md={11.5} lg={11.5} xl={11.5} justify='center' className='item'>
-					<PaginationComp limit={limit} totalCount={totalCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
+					<PaginationComp limit={limit} totalCount={postCount} page={pageIdx} onChangeHandler={pageIndexHandler} />
 				</Grid>
 			</Wrapper>
 			<SiteSelectModal visible={isOpen} onCloseHandler={modalCloseHandler} onReset={resetSelectedSites}>
