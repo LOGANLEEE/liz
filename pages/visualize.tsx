@@ -1,5 +1,5 @@
 import { visualizeQuery } from 'lib/crawl/logic/post';
-import { GetServerSidePropsContext } from 'next';
+import type { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { getSelectorsByUserAgent } from 'react-device-detect';

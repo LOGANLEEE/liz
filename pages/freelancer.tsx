@@ -1,8 +1,6 @@
 import { Grid, Text } from '@nextui-org/react';
-import type { api_log } from '@prisma/client';
-import { getRecentAccessLog } from 'lib/log';
-import { GetServerSidePropsContext } from 'next';
-import dynamic from 'next/dynamic';
+import { getRecentAccessLogQuery } from 'lib/log';
+import type { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import styled from 'styled-components';
@@ -50,7 +48,7 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
 
 	const detect = getSelectorsByUserAgent(userAgent);
 
-	const recentAccessLog = await getRecentAccessLog();
+	const recentAccessLog = await getRecentAccessLogQuery();
 
 	return {
 		props: {
