@@ -1,13 +1,13 @@
-import { InfoProvider } from 'components/InfoProvider';
 import type { ReactNode } from 'react';
 import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import dynamic from 'next/dynamic';
-import { Footer } from 'components/Footer';
-import { GetServerSidePropsContext } from 'next';
+import type { GetServerSidePropsContext } from 'next';
 
-const NavigationBar = dynamic(() => import('components/Desktop/NavigationBar'), { ssr: false });
-const MobileNavigationBar = dynamic(() => import('components/Mobile/MobileNavigationBar'), { ssr: false });
+const NavigationBar = dynamic(() => import('components/Desktop/NavigationBar'), { ssr: true });
+const MobileNavigationBar = dynamic(() => import('components/Mobile/MobileNavigationBar'), { ssr: true });
+const InfoProvider = dynamic(() => import('components/InfoProvider'), { ssr: true });
+const Footer = dynamic(() => import('components/Footer'), { ssr: true });
 
 export const Layout = ({ children }: { children: ReactNode }) => {
 	return (
