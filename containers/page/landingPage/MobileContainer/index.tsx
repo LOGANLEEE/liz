@@ -16,7 +16,7 @@ const MobileContainer = ({ totalPostCount, topPosts, chartData }: LandingPagePro
 			body: <PostContainer posts={topPosts} />,
 			link: '/community',
 			linkDescription: '더 보기',
-			xs: 6,
+			xs: 12,
 		},
 		{
 			header: '프리랜서',
@@ -24,7 +24,7 @@ const MobileContainer = ({ totalPostCount, topPosts, chartData }: LandingPagePro
 			body: '준비 중 입니다.',
 			link: '/freelancer',
 			linkDescription: '바로가기',
-			xs: 6,
+			xs: 12,
 		},
 		{
 			header: '시각화된 게시글 분석을 확인해보세요',
