@@ -1,7 +1,7 @@
 import { Grid, Text } from '@nextui-org/react';
 import styled from 'styled-components';
 
-export const Footer = () => {
+const Footer = () => {
 	return (
 		<Wrapper>
 			<Grid.Container xs sm md lg xl direction='row' justify='center' gap={1} className='container'>
@@ -29,3 +29,5 @@ const Wrapper = styled.footer`
 		margin-bottom: 0;
 	}
 `;
+
+export default Footer;
