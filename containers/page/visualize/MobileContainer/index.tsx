@@ -13,7 +13,7 @@ const MobileContainer = ({ chartData }: Props) => {
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
 				<CustomLineChart
 					chartData={chartData}
-					width={400}
+					width={1000}
 					height={300}
 					dataKeys={['avg']}
 					XdataKey='name'
@@ -24,7 +24,7 @@ const MobileContainer = ({ chartData }: Props) => {
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
 				<CustomLineChart
 					chartData={chartData}
-					width={400}
+					width={1000}
 					height={300}
 					dataKeys={['sum']}
 					XdataKey='name'
@@ -35,7 +35,7 @@ const MobileContainer = ({ chartData }: Props) => {
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
 				<CustomLineChart
 					chartData={chartData}
-					width={400}
+					width={1000}
 					height={300}
 					dataKeys={['min']}
 					XdataKey='name'
@@ -46,7 +46,7 @@ const MobileContainer = ({ chartData }: Props) => {
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
 				<CustomLineChart
 					chartData={chartData}
-					width={400}
+					width={1000}
 					height={300}
 					dataKeys={['max']}
 					XdataKey='name'
@@ -57,7 +57,7 @@ const MobileContainer = ({ chartData }: Props) => {
 			<Grid xs={12} sm md lg xl direction='column' justify='center'>
 				<CustomLineChart
 					chartData={chartData}
-					width={400}
+					width={1000}
 					height={300}
 					dataKeys={['count']}
 					XdataKey='name'
