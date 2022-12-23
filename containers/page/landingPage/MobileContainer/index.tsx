@@ -1,13 +1,14 @@
 import { Grid } from '@nextui-org/react';
-import { fresh_post } from '@prisma/client';
-import InfoCard from 'components/InfoCard';
-import PostContainer from 'containers/PostContainer';
 import { names } from 'lib/crawl/targetInfo';
+import dynamic from 'next/dynamic';
+import type { LandingPageProps } from 'pages/landing';
 import styled from 'styled-components';
 
-type Props = { totalPostCount: number; topPosts: fresh_post[] };
+const InfoCard = dynamic(() => import('components/InfoCard'), {});
+const CustomLineChart = dynamic(() => import('components/CustomLineChart'), {});
+const PostContainer = dynamic(() => import('containers/PostContainer'), {});
 
-const MobileContainer = ({ totalPostCount, topPosts }: Props) => {
+const MobileContainer = ({ totalPostCount, topPosts, chartData }: LandingPageProps) => {
 	const text = [
 		{
 			header: '실시간 인기글',
@@ -15,6 +16,7 @@ const MobileContainer = ({ totalPostCount, topPosts }: Props) => {
 			body: <PostContainer posts={topPosts} />,
 			link: '/community',
 			linkDescription: '더 보기',
+			xs: 6,
 		},
 		{
 			header: '프리랜서',
@@ -22,13 +24,32 @@ const MobileContainer = ({ totalPostCount, topPosts }: Props) => {
 			body: '준비 중 입니다.',
 			link: '/freelancer',
 			linkDescription: '바로가기',
+			xs: 6,
+		},
+		{
+			header: '시각화된 게시글 분석을 확인해보세요',
+			// subHeader: `게시글 시각화`,
+			body: (
+				<CustomLineChart
+					chartData={chartData}
+					width={1000}
+					height={500}
+					dataKeys={['count']}
+					XdataKey='name'
+					syncId='aa'
+					introText='사이트별 게시물 갯수'
+				/>
+			),
+			xs: 12,
+			link: '/visualize',
+			linkDescription: '확인하기',
 		},
 	];
 
 	return (
-		<Wrapper justify='center' direction='row' gap={2}>
+		<Wrapper justify='center' direction='row' gap={1}>
 			{text.map((e) => (
-				<Grid xs={12} sm md lg xl key={e.header}>
+				<Grid xs={e.xs} sm md lg xl key={e.header}>
 					<InfoCard {...e} />
 				</Grid>
 			))}
