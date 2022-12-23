@@ -8,8 +8,8 @@ import { getSelectorsByUserAgent } from 'react-device-detect';
 import styled from 'styled-components';
 import { ChartData } from 'types';
 
-type Props = {
-	isMobile: boolean;
+export type LandingPageProps = {
+	isMobile?: boolean;
 	recentAccessLog?: api_log;
 	totalPostCount: number;
 	topPosts: fresh_post[];
@@ -18,7 +18,7 @@ type Props = {
 const MobileContainer = dynamic(() => import('containers/page/landingPage/MobileContainer'), {});
 const DesktopContainer = dynamic(() => import('containers/page/landingPage/DesktopContainer'), {});
 
-const LandingPage = ({ isMobile = true, ...props }: Props) => {
+const LandingPage = ({ isMobile = true, ...props }: LandingPageProps) => {
 	return (
 		<Wrapper>
 			<Head>
