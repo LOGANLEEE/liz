@@ -1,17 +1,19 @@
 import type { api_log, fresh_post } from '@prisma/client';
-import { getFreshPostCountQuery } from 'lib/crawl/logic/post';
-import { getRecentAccessLog } from 'lib/log';
-import { GetServerSidePropsContext } from 'next';
+import { getFreshPostCountQuery, visualizeQuery } from 'lib/crawl/logic/post';
+import { getRecentAccessLogQuery } from 'lib/log';
+import type { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import styled from 'styled-components';
+import { ChartData } from 'types';
 
 type Props = {
 	isMobile: boolean;
 	recentAccessLog?: api_log;
 	totalPostCount: number;
 	topPosts: fresh_post[];
+	chartData: ChartData[];
 };
 const MobileContainer = dynamic(() => import('containers/page/landingPage/MobileContainer'), {});
 const DesktopContainer = dynamic(() => import('containers/page/landingPage/DesktopContainer'), {});
@@ -41,9 +43,11 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
 
 	const detect = getSelectorsByUserAgent(userAgent);
 
-	const recentAccessLog = await getRecentAccessLog();
+	const recentAccessLog = await getRecentAccessLogQuery();
 
 	const { topPosts, totalPostCount } = await getFreshPostCountQuery();
+
+	const chartData = await visualizeQuery();
 
 	return {
 		props: {
@@ -51,6 +55,7 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
 			recentAccessLog: JSON.parse(JSON.stringify(recentAccessLog)),
 			totalPostCount,
 			topPosts,
+			chartData,
 		},
 	};
 }
