@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
-type Props = {};
 export const MobileNavigationBar = () => {
 	const toggleRef = useRef<HTMLButtonElement>(null);
 
