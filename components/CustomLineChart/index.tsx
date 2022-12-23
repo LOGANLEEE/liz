@@ -15,8 +15,8 @@ const CustomLineChart = ({ chartData, syncId, XdataKey, YdataKey, dataKeys, heig
 					syncId={syncId}
 					margin={{
 						top: 10,
-						right: 10,
-						left: 10,
+						right: 0,
+						left: 0,
 						bottom: 0,
 					}}
 				>
