@@ -1,26 +1,46 @@
+import type { FormElement } from '@nextui-org/react';
 import type { api_log, fresh_post } from '@prisma/client';
-import { CustomLoading } from 'components/CustomLoading';
 import usePagination from 'hook/usePagination';
 import useSiteSelector from 'hook/useSiteSelector';
 import { _axios } from 'lib/axiosInstance';
-import type { GetFreshPostReturn } from 'lib/crawl/logic/post';
+import type { GetFreshPostReturn, OrderBy } from 'lib/crawl/logic/post';
 import { names } from 'lib/crawl/targetInfo';
-import { getRecentAccessLog } from 'lib/log';
-import { GetServerSidePropsContext } from 'next';
+import { getRecentAccessLogQuery } from 'lib/log';
+import type { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import useSWR from 'swr';
 
 type Props = {
 	isMobile: boolean;
 	recentAccessLog?: api_log;
+	totalPostCount: number;
+};
+export type CommunityContainerProps = {
+	totalPostCount: number;
+	postCount: number;
+	targetSiteCount: number;
+	limit: number;
+	pageIdx: number;
+	pageIndexHandler: (pageNum: number) => void;
+	freshPostList: fresh_post[];
+	recentAccessLog?: api_log;
+	orderByHit: OrderBy;
+	toggleOrderByHit: () => void;
+	searchText: string;
+	clearSearchText: () => void;
+	searchTextHandler: (e: ChangeEvent<FormElement>) => void;
+	selectedSites: string[];
+	targetSiteHandler: (val: string) => void;
+	resetSelectedSites: () => void;
 };
 const MobileContainer = dynamic(() => import('containers/page/community/MobileContainer'), {});
 const DesktopContainer = dynamic(() => import('containers/page/community/DesktopContainer'), {});
+const CustomLoading = dynamic(() => import('components/CustomLoading'), {});
 
-const Community = ({ isMobile = true, recentAccessLog }: Props) => {
+const Community = ({ isMobile = true, recentAccessLog, totalPostCount }: Props) => {
 	const {
 		pageIdx,
 		limit,
@@ -49,7 +69,7 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 				.then((res) => res?.data)
 	);
 
-	const [totalCount, setTotalCount] = useState(0);
+	const [postCount, setPostCount] = useState(0);
 	const [freshPostList, setFreshPostList] = useState<fresh_post[]>([]);
 
 	useEffect(() => {
@@ -59,18 +79,18 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 	}, [data?.list]);
 
 	useEffect(() => {
-		if (data?.totalCount && data?.totalCount > 0 && data?.totalCount !== totalCount) {
-			setTotalCount(data.totalCount);
+		if (data?.postCount && data?.postCount > 0 && data?.postCount !== postCount) {
+			setPostCount(data.postCount);
 		}
-	}, [data?.totalCount, totalCount]);
+	}, [data?.postCount, postCount]);
 
 	const pageOnKeyDownHandler = useCallback(
 		(e: KeyboardEvent<HTMLElement>) => {
 			if (e.key === 'ArrowLeft' && pageIdx > 1) pageIndexHandler(pageIdx - 1);
-			if (e.key === 'ArrowRight' && pageIdx <= Math.ceil(totalCount / limit)) pageIndexHandler(pageIdx + 1);
+			if (e.key === 'ArrowRight' && pageIdx <= Math.ceil(postCount / limit)) pageIndexHandler(pageIdx + 1);
 			return;
 		},
-		[limit, pageIdx, pageIndexHandler, totalCount]
+		[limit, pageIdx, pageIndexHandler, postCount]
 	);
 
 	return (
@@ -85,12 +105,13 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 				<main tabIndex={0} onKeyDown={pageOnKeyDownHandler}>
 					{isMobile && (
 						<MobileContainer
+							totalPostCount={totalPostCount}
 							selectedSites={siteSelector.selectedSites}
 							{...siteSelector.action}
 							{...order}
 							{...search}
 							recentAccessLog={recentAccessLog}
-							totalCount={totalCount}
+							postCount={postCount}
 							targetSiteCount={Object.keys(names).length}
 							limit={limit}
 							pageIdx={pageIdx}
@@ -100,12 +121,13 @@ const Community = ({ isMobile = true, recentAccessLog }: Props) => {
 					)}
 					{!isMobile && (
 						<DesktopContainer
+							totalPostCount={totalPostCount}
 							selectedSites={siteSelector.selectedSites}
 							{...siteSelector.action}
 							{...order}
 							{...search}
 							recentAccessLog={recentAccessLog}
-							totalCount={totalCount}
+							postCount={postCount}
 							targetSiteCount={Object.keys(names).length}
 							limit={limit}
 							pageIdx={pageIdx}
@@ -126,12 +148,13 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
 
 	const detect = getSelectorsByUserAgent(userAgent);
 
-	const recentAccessLog = await getRecentAccessLog();
+	const { recentAccessLog, totalPostCount } = await getRecentAccessLogQuery();
 
 	return {
 		props: {
 			isMobile: detect?.isMobile,
 			recentAccessLog: JSON.parse(JSON.stringify(recentAccessLog)),
+			totalPostCount,
 		},
 	};
 }
