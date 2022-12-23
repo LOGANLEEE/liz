@@ -1,5 +1,5 @@
-import { Button, Modal, Row, Text } from '@nextui-org/react';
-import { ReactNode, useCallback } from 'react';
+import { Button, Modal, Text } from '@nextui-org/react';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 type Props = {
