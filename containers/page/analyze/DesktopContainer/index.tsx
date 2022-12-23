@@ -81,7 +81,7 @@ const DesktopContainer = ({ clearSearchText, searchText, searchTextHandler }: Pr
 					dataKeys={['count']}
 					XdataKey='name'
 					syncId='aa'
-					introText='총 게시물 갯수'
+					introText='사이트별 게시물 갯수'
 				/>
 			</Grid>
 		</Wrapper>
