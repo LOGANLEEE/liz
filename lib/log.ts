@@ -12,7 +12,10 @@ export const writeLog = async (args: WriteLogArgs) => {
 	return;
 };
 
-export const getRecentAccessLog = async (): Promise<api_log | null> => {
-	const recentAccessLog = await _prisma.api_log.findFirst({ where: { name: 'accessor' }, orderBy: { create_date: 'desc' } });
-	return recentAccessLog;
+export const getRecentAccessLogQuery = async (): Promise<{ recentAccessLog: api_log | null; totalPostCount: number }> => {
+	const [recentAccessLog, totalPostCount] = await _prisma.$transaction([
+		_prisma.api_log.findFirst({ where: { name: 'accessor' }, orderBy: { create_date: 'desc' } }),
+		_prisma.fresh_post.count({ where: { mark: true } }),
+	]);
+	return { recentAccessLog, totalPostCount };
 };
