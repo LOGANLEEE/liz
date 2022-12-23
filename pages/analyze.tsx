@@ -1,9 +1,9 @@
-import { GetServerSidePropsContext } from 'next';
+import useSearch from 'hook/useSearch';
+import type { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import styled from 'styled-components';
-import useSearch from '../hook/useSearch';
 
 const MobileContainer = dynamic(() => import('containers/page/analyze/MobileContainer'), {});
 const DesktopContainer = dynamic(() => import('containers/page/analyze/DesktopContainer'), {});
