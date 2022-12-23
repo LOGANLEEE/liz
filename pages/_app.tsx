@@ -1,10 +1,9 @@
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
 import { createTheme, NextUIProvider } from '@nextui-org/react';
+import type { AppProps } from 'next/app';
+import '../styles/globals.css';
 
 import { Layout } from 'containers/Layout';
 import { ThemeProvider } from 'styled-components';
-import Head from 'next/head';
 
 export default function App({ Component, pageProps }: AppProps) {
 	// 2. Call `createTheme` and pass your custom values
@@ -43,13 +42,6 @@ export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<NextUIProvider theme={theme}>
 			<ThemeProvider theme={theme}>
-				<Head>
-					<script
-						async
-						src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3039415986725164'
-						crossOrigin='anonymous'
-					></script>
-				</Head>
 				<Layout>
 					<Component {...pageProps} />
 				</Layout>
