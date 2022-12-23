@@ -4,7 +4,7 @@ import { ServerState } from 'lib/state';
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-export const InfoProvider = () => {
+const InfoProvider = () => {
 	const [currentServerState, setCurrentServerState] = useState<ServerState>();
 
 	const callStatusAPI = useCallback(async () => {
@@ -48,3 +48,5 @@ export const InfoProvider = () => {
 const Wrapper = styled(Grid.Container)`
 	width: 100%;
 `;
+
+export default InfoProvider;
