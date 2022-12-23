@@ -8,12 +8,12 @@ type GetFreshPostArgs = {
 	sites: string[];
 	offset?: number;
 	limit?: number;
-	orderByHit?: 'desc' | 'asc';
+	orderByHit?: OrderBy;
 	searchText: string;
 };
 
 export declare type GetFreshPostReturn = {
-	totalCount: number;
+	postCount: number;
 	list: fresh_post[];
 };
 
@@ -99,7 +99,7 @@ export const getFreshPostQuery = async ({
 	if (sites?.length > 0) {
 		name.in = sites;
 	}
-	const [totalCount, list] = await _prisma.$transaction([
+	const [postCount, list] = await _prisma.$transaction([
 		_prisma.fresh_post.count({
 			where: {
 				mark: true,
@@ -116,5 +116,5 @@ export const getFreshPostQuery = async ({
 		}),
 	]);
 
-	return { totalCount, list };
+	return { postCount, list };
 };
