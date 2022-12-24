@@ -1,5 +1,5 @@
 import { Grid } from '@nextui-org/react';
-import { names } from 'lib/crawl/targetInfo';
+import { communityNames } from 'lib/crawl/targetSiteInfo';
 import dynamic from 'next/dynamic';
 import type { LandingPageProps } from 'pages/landing';
 
@@ -19,7 +19,7 @@ const DesktopContainer = ({ topPosts, totalPostCount, chartData }: LandingPagePr
 		},
 		{
 			header: '실시간 인기글',
-			subHeader: `국내 커뮤니티 ${Object.keys(names).length}곳에서 ${totalPostCount}개의 인기 게시글을 모았습니다.`,
+			subHeader: `국내 커뮤니티 ${Object.keys(communityNames).length}곳에서 ${totalPostCount}개의 인기 게시글을 모았습니다.`,
 			body: <PostContainer posts={topPosts} />,
 			link: '/community',
 			linkDescription: '더 보기',
