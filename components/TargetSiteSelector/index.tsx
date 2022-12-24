@@ -1,5 +1,5 @@
 import { Grid, Text } from '@nextui-org/react';
-import { names } from 'lib/crawl/targetInfo';
+import { communityNames } from 'lib/crawl/targetSiteInfo';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 
@@ -27,7 +27,7 @@ const TargetSiteSelector = ({ selectedSites, targetSiteHandler, useTitle = false
 			)}
 			<Grid>
 				<StyledUl>
-					{Object.values(names).map((name) => (
+					{Object.values(communityNames).map((name) => (
 						<li
 							className={`item ${selectedSites.find((site) => site === name) ? 'selected' : ''}`}
 							key={name}
