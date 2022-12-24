@@ -1,5 +1,5 @@
 import { writeFile } from 'fs/promises';
-import { INVEN_INFO } from 'lib/crawl/targetInfo';
+import { INVEN_INFO } from 'lib/crawl/targetSiteInfo';
 import { puppeteerUserAgent } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 import { Browser } from 'puppeteer';

@@ -1,12 +1,12 @@
 import { Prisma } from '@prisma/client';
 import { format } from 'date-fns';
-import type { TargetInfo } from 'lib/crawl/targetInfo';
+import type { TargetSiteInfo } from 'lib/crawl/targetSiteInfo';
 import { puppeteerUserAgent } from 'lib/util';
 import type { Browser } from 'puppeteer';
 
 type UniversalAccessorArgs = {
 	// page: Page;
-	targetInfo: TargetInfo;
+	targetInfo: TargetSiteInfo;
 	browser: Browser;
 	pageCount: number;
 };

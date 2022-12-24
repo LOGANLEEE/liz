@@ -1,4 +1,4 @@
-export const names = {
+export const communityNames = {
 	pg: 'PGR',
 	nt: '네판',
 	ud: '웃대',
@@ -17,7 +17,7 @@ export const names = {
 	et: '이토',
 };
 
-export type TargetInfo = {
+export type TargetSiteInfo = {
 	name: string;
 	enable: boolean;
 	targetBaseName?: string;
@@ -34,10 +34,9 @@ export type TargetInfo = {
 	linkHandler?: (val: string) => string;
 	titleHandler?: (val: string) => string;
 };
-// https://www.ppomppu.co.kr/hot.php?id=&page=1&category=999&search_type=&keyword=&page_num=&del_flag=&bbs_list_category=0
 
-export const DCINSIDE_INFO: TargetInfo = {
-	name: names.dc,
+export const DCINSIDE_INFO: TargetSiteInfo = {
+	name: communityNames.dc,
 	enable: false,
 	targetBaseName: 'https://gall.dcinside.com',
 	targetUrl: (page: number) => `https://gall.dcinside.com/board/lists/?id=dcbest&list_num=100&sort_type=N&search_head=9&page=${page}`,
@@ -58,8 +57,8 @@ export const DCINSIDE_INFO: TargetInfo = {
 		`#container > section.left_content > article:nth-child(3) > div.gall_listwrap.list > table > tbody > tr:nth-child(${idx}) > td.gall_count`,
 };
 
-export const RULIWEB_INFO: TargetInfo = {
-	name: names.rr,
+export const RULIWEB_INFO: TargetSiteInfo = {
+	name: communityNames.rr,
 	enable: false,
 	targetBaseName: '',
 	targetUrl: (page: number) => `https://bbs.ruliweb.com/best/all/now?orderby=readcount&range=24h&page=${page}`,
@@ -72,8 +71,8 @@ export const RULIWEB_INFO: TargetInfo = {
 	author: (idx: number) => `#best_body > table > tbody > tr:nth-child(${idx}) > td > div > div > div.col_10.text_wrapper > div > a.nick`,
 };
 
-export const FMKOREA_INFO: TargetInfo = {
-	name: names.fm,
+export const FMKOREA_INFO: TargetSiteInfo = {
+	name: communityNames.fm,
 	enable: false,
 	targetBaseName: 'https://www.fmkorea.com',
 	targetUrl: (page: number) => `https://www.fmkorea.com/index.php?mid=best&listStyle=list&page=${page}`,
@@ -86,8 +85,8 @@ export const FMKOREA_INFO: TargetInfo = {
 	uploadDate: (idx: number) => `#bd_189545458_0 > div > table > tbody > tr:nth-child(${idx}) > td.time`,
 };
 
-export const PPOMPPU_INFO: TargetInfo = {
-	name: names.pp,
+export const PPOMPPU_INFO: TargetSiteInfo = {
+	name: communityNames.pp,
 	enable: false,
 	targetBaseName: 'https://www.ppomppu.co.kr',
 	targetUrl: (page: number) =>
@@ -104,8 +103,8 @@ export const PPOMPPU_INFO: TargetInfo = {
 		`body > div > div.contents > div.container > div:nth-child(2) > div.board_box > table.board_table > tbody > tr:nth-child(${idx}) > td:nth-child(7)`,
 };
 
-export const ILBE_INFO: TargetInfo = {
-	name: names.ilbe,
+export const ILBE_INFO: TargetSiteInfo = {
+	name: communityNames.ilbe,
 	targetBaseName: 'https://www.ilbe.com',
 	enable: false,
 	targetUrl: (page: number) => `https://www.ilbe.com/list/ilbe?page=${page}&listSize=60&listStyle=list`,
@@ -118,8 +117,8 @@ export const ILBE_INFO: TargetInfo = {
 	hit: (idx: number) => `#content-wrap > div > div.board-list > ul > li:nth-child(${idx}) > span.view`,
 };
 
-export const CLIEN_INFO: TargetInfo = {
-	name: names.clien,
+export const CLIEN_INFO: TargetSiteInfo = {
+	name: communityNames.clien,
 	targetBaseName: 'https://www.clien.net',
 	enable: false,
 	targetUrl: (page: number) => `https://www.clien.net/service/recommend`,
@@ -133,8 +132,8 @@ export const CLIEN_INFO: TargetInfo = {
 	hit: (idx: number) => `#div_content > div.recommend_underList > div:nth-child(${idx}) > div.list_hit > span`,
 };
 
-export const BOBAE_INFO: TargetInfo = {
-	name: names.bobae,
+export const BOBAE_INFO: TargetSiteInfo = {
+	name: communityNames.bobae,
 	targetBaseName: 'https://www.bobaedream.co.kr',
 	enable: false,
 	targetUrl: (page: number) =>
@@ -147,8 +146,8 @@ export const BOBAE_INFO: TargetInfo = {
 	hit: (idx: number) => `#boardlist > tbody > tr:nth-child(${idx}) > td.count`,
 };
 
-export const INVEN_INFO: TargetInfo = {
-	name: names.iv,
+export const INVEN_INFO: TargetSiteInfo = {
+	name: communityNames.iv,
 	targetBaseName: '',
 	enable: false,
 	targetUrl: (page: number) => `https://www.inven.co.kr/board/webzine/2097?my=chu&p=${page}`,
@@ -163,8 +162,8 @@ export const INVEN_INFO: TargetInfo = {
 	hit: (idx: number) => `#new-board > form > div > table > tbody > tr:nth-child(${idx}) > td.view`,
 };
 
-export const ETOLAND_INFO: TargetInfo = {
-	name: names.et,
+export const ETOLAND_INFO: TargetSiteInfo = {
+	name: communityNames.et,
 	targetBaseName: 'https://www.etoland.co.kr/bbs',
 	enable: false,
 	targetUrl: (page: number) => `https://www.etoland.co.kr/bbs/hit.php?stx_h=day&bo_table_n=&page=${page}&sword=`,
@@ -184,9 +183,8 @@ export const ETOLAND_INFO: TargetInfo = {
 	author: (idx: number) => `#container > div.right > div.board_hit_wrap > ul > li:nth-child(${idx}) > div.writer > a > span`,
 	hit: (idx: number) => `#container > div.right > div.board_hit_wrap > ul > li:nth-child(${idx}) > div.wr_hit`,
 };
-// http://www.slrclub.com/bbs/zboard.php?id=best_article
-const SLR_INFO: TargetInfo = {
-	name: names.slr,
+const SLR_INFO: TargetSiteInfo = {
+	name: communityNames.slr,
 	targetBaseName: 'http://www.slrclub.com',
 	enable: false,
 	// 12975
@@ -198,8 +196,8 @@ const SLR_INFO: TargetInfo = {
 	hit: (idx: number) => `#bbs_list > tbody > tr:nth-child(${idx}) > td.list_click.no_att`,
 };
 
-const COOK_INFO: TargetInfo = {
-	name: names.ck,
+const COOK_INFO: TargetSiteInfo = {
+	name: communityNames.ck,
 	targetBaseName: 'https://www.82cook.com',
 	enable: false,
 	targetUrl: (page: number) => `https://www.82cook.com/entiz/enti.php?bn=15&page=${page}`,
@@ -211,8 +209,8 @@ const COOK_INFO: TargetInfo = {
 	hit: (idx: number) => ``,
 };
 
-const TODAY_HUMOR_INFO: TargetInfo = {
-	name: names.ou,
+const TODAY_HUMOR_INFO: TargetSiteInfo = {
+	name: communityNames.ou,
 	targetBaseName: 'https://www.todayhumor.co.kr',
 	enable: false,
 	targetUrl: (page: number) => `https://www.todayhumor.co.kr/board/list.php?table=bestofbest&page=${page}`,
@@ -223,8 +221,8 @@ const TODAY_HUMOR_INFO: TargetInfo = {
 	hit: (idx: number) => `body > div.whole_box > div > div > table > tbody > tr:nth-child(${idx}) > td.hits`,
 };
 
-const GASENGI_INFO: TargetInfo = {
-	name: names.gs,
+const GASENGI_INFO: TargetSiteInfo = {
+	name: communityNames.gs,
 	targetBaseName: 'http://www.gasengi.com',
 	enable: false,
 	targetUrl: (page: number) => {
@@ -244,8 +242,8 @@ const GASENGI_INFO: TargetInfo = {
 	hit: (idx: number) => ``,
 };
 
-const HUMOR_UNI_INFO: TargetInfo = {
-	name: names.ud,
+const HUMOR_UNI_INFO: TargetSiteInfo = {
+	name: communityNames.ud,
 	targetBaseName: 'http://web.humoruniv.com/board/humor/',
 	enable: false,
 	targetUrl: (page: number) => `http://web.humoruniv.com/board/humor/list.html?table=pds&st=day&pg=${page - 1}`,
@@ -256,9 +254,8 @@ const HUMOR_UNI_INFO: TargetInfo = {
 	author: (idx: number) => `#post_list > tbody > tr:nth-child(${idx}) > td.li_icn > table > tbody > tr > td.g6 > span > span`,
 	hit: (idx: number) => `#post_list > tbody > tr:nth-child(${idx}) > td:nth-child(5)`,
 };
-// https://pann.nate.com/talk/ranking?rankingType=total&page=1
-const NATE_INFO: TargetInfo = {
-	name: names.nt,
+const NATE_INFO: TargetSiteInfo = {
+	name: communityNames.nt,
 	targetBaseName: 'https://pann.nate.com',
 	enable: false,
 	targetUrl: (page: number) => `https://pann.nate.com/talk/ranking?rankingType=total&page=${page}`,
@@ -271,8 +268,8 @@ const NATE_INFO: TargetInfo = {
 	author: (idx: number) => ``,
 };
 
-const PGR_INFO: TargetInfo = {
-	name: names.pg,
+const PGR_INFO: TargetSiteInfo = {
+	name: communityNames.pg,
 	targetBaseName: 'https://www.pgr21.com',
 	enable: false,
 	targetUrl: (page: number) => `https://www.pgr21.com/humor/0?1=1&page=${page}`,
@@ -285,7 +282,7 @@ const PGR_INFO: TargetInfo = {
 	author: (idx: number) => `#TR${idx} > td.tdname > span`,
 };
 
-export const targetList: TargetInfo[] = [
+export const targetSiteList: TargetSiteInfo[] = [
 	SLR_INFO,
 	BOBAE_INFO,
 	PGR_INFO,
@@ -303,3 +300,17 @@ export const targetList: TargetInfo[] = [
 	INVEN_INFO,
 	ETOLAND_INFO,
 ];
+const WANTED_INFO: TargetSiteInfo = {
+	name: communityNames.pg,
+	targetBaseName: 'https://www.pgr21.com',
+	enable: false,
+	targetUrl: (page: number) => `https://www.pgr21.com/humor/0?1=1&page=${page}`,
+	pageRange: [1, 2, 1],
+	postRange: [0, 22, 1],
+	targetIndex: (idx: number) => `#TR${idx} > td.tdnum`,
+	titleHandler: (val: string) => val?.slice(4, -1),
+	link: (idx: number) => `#TR${idx} > td.tdsub.new > a`,
+	hit: (idx: number) => `#TR${idx} > td.tdhit`,
+	author: (idx: number) => `#TR${idx} > td.tdname > span`,
+};
+export const targetJobSiteList: TargetSiteInfo[] = [WANTED_INFO];

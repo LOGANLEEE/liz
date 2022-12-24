@@ -1,5 +1,5 @@
 import type { fresh_post } from '@prisma/client';
-import { names } from 'lib/crawl/targetInfo';
+import { communityNames } from 'lib/crawl/targetSiteInfo';
 import { _prisma } from 'prisma/prismaInstance';
 
 export declare type OrderBy = 'desc' | 'asc';
@@ -22,7 +22,7 @@ type AnalyzeQueryProps = {
 };
 export const analyzeQuery = async ({ searchText }: AnalyzeQueryProps) => {
 	return Promise.all(
-		Object.values(names).map(async (name) => {
+		Object.values(communityNames).map(async (name) => {
 			const { _avg, _count, _max, _min, _sum } = await _prisma.fresh_post.aggregate({
 				_min: {
 					hit: true,
@@ -47,7 +47,7 @@ export const analyzeQuery = async ({ searchText }: AnalyzeQueryProps) => {
 };
 export const visualizeQuery = async () => {
 	return Promise.all(
-		Object.values(names).map(async (name) => {
+		Object.values(communityNames).map(async (name) => {
 			const { _avg, _count, _max, _min, _sum } = await _prisma.fresh_post.aggregate({
 				_min: {
 					hit: true,

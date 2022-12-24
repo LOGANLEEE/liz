@@ -4,7 +4,7 @@ import usePagination from 'hook/usePagination';
 import useSiteSelector from 'hook/useSiteSelector';
 import { _axios } from 'lib/axiosInstance';
 import type { GetFreshPostReturn, OrderBy } from 'lib/crawl/logic/post';
-import { names } from 'lib/crawl/targetInfo';
+import { communityNames } from 'lib/crawl/targetSiteInfo';
 import { getRecentAccessLogQuery } from 'lib/log';
 import type { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
@@ -112,7 +112,7 @@ const Community = ({ isMobile = true, recentAccessLog, totalPostCount }: Props) 
 							{...search}
 							recentAccessLog={recentAccessLog}
 							postCount={postCount}
-							targetSiteCount={Object.keys(names).length}
+							targetSiteCount={Object.keys(communityNames).length}
 							limit={limit}
 							pageIdx={pageIdx}
 							pageIndexHandler={pageIndexHandler}
@@ -128,7 +128,7 @@ const Community = ({ isMobile = true, recentAccessLog, totalPostCount }: Props) 
 							{...search}
 							recentAccessLog={recentAccessLog}
 							postCount={postCount}
-							targetSiteCount={Object.keys(names).length}
+							targetSiteCount={Object.keys(communityNames).length}
 							limit={limit}
 							pageIdx={pageIdx}
 							pageIndexHandler={pageIndexHandler}

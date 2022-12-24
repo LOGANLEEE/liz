@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { pptrAccessor } from 'lib/crawl/logic/accessor/pptrAccessor';
 import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
-import { targetList } from 'lib/crawl/targetInfo';
+import { targetSiteList } from 'lib/crawl/targetSiteInfo';
 import { writeLog } from 'lib/log';
 import { getBrowser } from 'lib/pptrInstace';
 import { serverState } from 'lib/state';
@@ -19,7 +19,7 @@ export const pptrParallelRunner = async () => {
 
 	// stage 1
 	const stage1Holder = await Promise.all(
-		targetList.map(async (targetInfo) => {
+		targetSiteList.map(async (targetInfo) => {
 			const pageRange = Array.from(
 				Array(targetInfo.pageRange[1] - targetInfo.pageRange[0] + 1).keys(),
 				(x) => x + targetInfo.pageRange[2]

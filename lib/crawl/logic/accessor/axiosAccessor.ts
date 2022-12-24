@@ -2,12 +2,12 @@ import { Prisma } from '@prisma/client';
 import { load } from 'cheerio';
 import { format } from 'date-fns';
 import { _axiosCrawler } from 'lib/axiosInstance';
-import { names, TargetInfo } from 'lib/crawl/targetInfo';
+import { communityNames, TargetSiteInfo } from 'lib/crawl/targetSiteInfo';
 import { humorUniCookie } from 'lib/util';
 
 type UniversalAccessorArgs = {
 	// page: Page;
-	targetInfo: TargetInfo;
+	targetInfo: TargetSiteInfo;
 	pageCount: number;
 };
 
@@ -26,7 +26,7 @@ export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessor
 
 	const headers: any = {};
 
-	if (targetInfo.name === names.ud) {
+	if (targetInfo.name === communityNames.ud) {
 		headers.Cookie = humorUniCookie;
 	}
 	const { data, err } = await _axiosCrawler

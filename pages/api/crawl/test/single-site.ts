@@ -1,11 +1,11 @@
 import { axiosAccessor } from 'lib/crawl/logic/accessor/axiosAccessor';
-import { targetList } from 'lib/crawl/targetInfo';
+import { targetSiteList } from 'lib/crawl/targetSiteInfo';
 import { writeLog } from 'lib/log';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { targetName } = req.query;
-	const targetInfo = targetList.find((e) => e.name === targetName);
+	const targetInfo = targetSiteList.find((e) => e.name === targetName);
 	if (!targetInfo) {
 		res.status(200).json({ message: 'no targetInfo' });
 		return;

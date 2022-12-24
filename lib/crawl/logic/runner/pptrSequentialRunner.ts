@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { pptrAccessor } from 'lib/crawl/logic/accessor/pptrAccessor';
 import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
-import { targetList } from 'lib/crawl/targetInfo';
+import { targetSiteList } from 'lib/crawl/targetSiteInfo';
 import { writeLog } from 'lib/log';
 import { getBrowser } from 'lib/pptrInstace';
 import { serverState } from 'lib/state';
@@ -20,7 +20,7 @@ export const pptrSequentialRunner = async () => {
 	const stage1startTime = performance.now();
 
 	// stage 1
-	for (const targetInfo of targetList) {
+	for (const targetInfo of targetSiteList) {
 		const st = performance.now();
 		for (let pageCount = targetInfo.pageRange[0]; pageCount <= targetInfo.pageRange[1]; pageCount += targetInfo.pageRange[2]) {
 			try {

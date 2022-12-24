@@ -1,4 +1,4 @@
-import { names } from 'lib/crawl/targetInfo';
+import { communityNames } from 'lib/crawl/targetSiteInfo';
 
 export type ServerState = {
 	isCrawling: boolean;
@@ -12,7 +12,7 @@ export type ServerState = {
 
 export const serverState: ServerState = {
 	isCrawling: false,
-	listStatus: Object.values(names).map((e) => ({
+	listStatus: Object.values(communityNames).map((e) => ({
 		name: e,
 		// eng: names[e],
 		on: false,

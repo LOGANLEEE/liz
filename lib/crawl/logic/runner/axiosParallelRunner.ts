@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { axiosAccessor } from 'lib/crawl/logic/accessor/axiosAccessor';
 import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
-import { targetList } from 'lib/crawl/targetInfo';
+import { targetSiteList } from 'lib/crawl/targetSiteInfo';
 import { writeLog } from 'lib/log';
 import { serverState } from 'lib/state';
 import { delay, measure } from 'lib/util';
@@ -16,7 +16,7 @@ export const axiosParallelRunner = async () => {
 
 	// stage 1
 	const stage1Holder = await Promise.all(
-		targetList.map(async (targetInfo) => {
+		targetSiteList.map(async (targetInfo) => {
 			const pageRange = Array.from(
 				Array(targetInfo.pageRange[1] - targetInfo.pageRange[0] + 1).keys(),
 				(x) => x + targetInfo.pageRange[2]
