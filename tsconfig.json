@@ -16,6 +16,6 @@
 		"jsx": "preserve",
 		"incremental": true
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index.tsx.bak", "lib/crawl/logic/accessor/dcinside.ts.bak"],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index.tsx.bak", "lib/crawl/logic/community/accessor/dcinside.ts.bak"],
 	"exclude": ["node_modules"]
 }
