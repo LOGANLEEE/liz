@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { pptrSequentialRunner } from 'lib/crawl/logic/runner/pptrSequentialRunner';
+import { pptrSequentialRunner } from 'lib/crawl/logic/community/runner/pptrSequentialRunner';
 import { serverState } from 'lib/state';
 import type { NextApiRequest, NextApiResponse } from 'next';
 // const fetcher = (url) => axios.get(url).then((res) => res.data);
