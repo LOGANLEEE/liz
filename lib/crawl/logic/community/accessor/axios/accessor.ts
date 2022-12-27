@@ -18,7 +18,7 @@ type UniversalAccessorReturn = {
 	name: string;
 };
 
-export const axiosAccessor = async ({ targetInfo, pageCount }: UniversalAccessorArgs): Promise<UniversalAccessorReturn> => {
+export const accessor = async ({ targetInfo, pageCount }: UniversalAccessorArgs): Promise<UniversalAccessorReturn> => {
 	let isError = false;
 
 	const tempHolder: Prisma.fresh_postCreateInput[] = [];
