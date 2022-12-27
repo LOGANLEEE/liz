@@ -1,4 +1,4 @@
-import { axiosAccessor } from 'lib/crawl/logic/accessor/axiosAccessor';
+import { accessor } from 'lib/crawl/logic/community/accessor/axios/accessor';
 import { targetSiteList } from 'lib/crawl/targetSiteInfo';
 import { writeLog } from 'lib/log';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 	const pageCount = 1;
-	let result = await axiosAccessor({ targetInfo, pageCount });
+	let result = await accessor({ targetInfo, pageCount });
 
 	// if (result.isError) {
 	// 	result = await pptrAccessor({ pageCount, targetInfo, browser: (await getBrowser()).browser });
