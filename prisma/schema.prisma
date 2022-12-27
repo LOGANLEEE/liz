@@ -13,8 +13,8 @@ model fresh_post {
   name    String? @db.VarChar
   content String? @db.VarChar
   title   String? @db.VarChar
-  type    Int?
   hit     Int?
+  type    Int     @default(0)
   minumum Int?    @default(0)
   maximum Int?    @default(0)
   period  Int?    @default(0)
@@ -27,6 +27,10 @@ model old_post {
   link    String? @db.VarChar
   name    String? @db.VarChar
   content String? @db.VarChar
+  type    Int     @default(0)
+  minumum Int?    @default(0)
+  maximum Int?    @default(0)
+  period  Int?    @default(0)
   title   String? @db.VarChar
   hit     Int?
   author  String? @db.VarChar
