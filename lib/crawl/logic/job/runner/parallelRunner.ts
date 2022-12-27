@@ -1,19 +1,16 @@
 import { format } from 'date-fns';
-import { pptrAccessor } from 'lib/crawl/logic/accessor/pptrAccessor';
+import { accessor } from 'lib/crawl/logic/community/accessor/axios/accessor';
 import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
 import { targetSiteList } from 'lib/crawl/targetSiteInfo';
 import { writeLog } from 'lib/log';
-import { getBrowser } from 'lib/pptrInstace';
 import { serverState } from 'lib/state';
-import { measure } from 'lib/util';
+import { delay, measure } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 
-export const pptrParallelRunner = async () => {
+export const parallelRunner = async () => {
 	serverState.isCrawling = true;
 
 	serverState.listStatus = serverState.listStatus.map((e) => ({ ...e, on: false }));
-
-	const { browser } = await getBrowser();
 
 	const stage1startTime = performance.now();
 
@@ -27,8 +24,22 @@ export const pptrParallelRunner = async () => {
 
 			const st = performance.now();
 			const pageHolder = await Promise.all(
-				pageRange.map(async (pageCount) => await pptrAccessor({ targetInfo, pageCount, browser }))
+				pageRange.map(async (pageCount, idx) => {
+					await delay(idx * 800);
+					const firstResult = await accessor({ targetInfo, pageCount });
+					// if (firstResult.isError) {
+					// 	return await pptrAccessor({ pageCount, targetInfo, browser: (await getBrowser()).browser });
+					// }
+					return firstResult;
+				})
 			);
+
+			// const pageHolder = [];
+			// for (let pageCount = targetInfo.pageRange[0]; pageCount <= targetInfo.pageRange[1]; pageCount += targetInfo.pageRange[2]) {
+			// 	await delay(300 * pageCount);
+			// 	const result = await axiosUniversalAccessor({ targetInfo, pageCount });
+			// 	pageHolder.push(result);
+			// }
 
 			// writeFile('./parallel.jsonc', JSON.stringify(pageHolder?.map(({ list }) => list).flat()));
 
@@ -42,10 +53,15 @@ export const pptrParallelRunner = async () => {
 				if (e.name === targetInfo.name) e.on = true;
 				return e;
 			});
+			const isError = pageHolder.some((e) => e.isError === true);
 
-			console.log(`${targetInfo.name}: ${measure(st, performance.now(), 1000)} sec ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`);
+			console.log(
+				`${targetInfo.name}(${targetInfo.pageRange[1]}): (${count} /${
+					((targetInfo.postRange[1] - targetInfo.postRange[0] + 1) / targetInfo.postRange[2]) * targetInfo.pageRange[1]
+				})${isError ? 'error' : 'pass'} ${measure(st, performance.now(), 1000)} sec ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`
+			);
 
-			return { count, isError: pageHolder.some((e) => e.isError), name: targetInfo.name };
+			return { count, isError, name: targetInfo.name, message: JSON.stringify(pageHolder.map((e) => e.message)) };
 		})
 	);
 
@@ -66,8 +82,6 @@ export const pptrParallelRunner = async () => {
 			serverState.isCrawling = false;
 			serverState.listStatus = serverState.listStatus.map((e) => ({ ...e, on: false }));
 		});
-
-	await browser.close();
 
 	// tempHolder?.map((e: any) => console.log(e?.info));
 	// writeFile('dummy1.jsonc', JSON.stringify(tempHolder));
