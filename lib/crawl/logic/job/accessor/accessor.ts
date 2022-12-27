@@ -13,7 +13,7 @@ type UniversalAccessorArgs = {
 };
 
 type UniversalAccessorReturn = {
-	list: Prisma.fresh_[];
+	list: Prisma.fresh_postCreateInput[];
 	isError: boolean;
 	message: string;
 	name: string;
