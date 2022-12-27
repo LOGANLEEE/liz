@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { load } from 'cheerio';
 import { format } from 'date-fns';
 import { _axiosCrawler } from 'lib/axiosInstance';
@@ -103,6 +103,7 @@ export const accessor = async ({ targetInfo, pageCount }: UniversalAccessorArgs)
 				hit: isNaN(hit) ? -1 : hit,
 				name: targetInfo.name,
 				author,
+				type: 0,
 				mark: false,
 				content: null,
 			});

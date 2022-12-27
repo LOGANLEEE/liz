@@ -39,7 +39,7 @@ export const analyzeQuery = async ({ searchText }: AnalyzeQueryProps) => {
 				_sum: {
 					hit: true,
 				},
-				where: { mark: true, name, title: { contains: searchText } },
+				where: { mark: true, type: 0, name, title: { contains: searchText } },
 			});
 			return { avg: _avg.hit, count: _count._all, max: _max.hit, min: _min.hit, sum: _sum.hit, name };
 		})
@@ -64,7 +64,7 @@ export const visualizeQuery = async () => {
 				_sum: {
 					hit: true,
 				},
-				where: { mark: true, name },
+				where: { mark: true, name, type: 0 },
 			});
 			return { avg: _avg.hit, count: _count._all, max: _max.hit, min: _min.hit, sum: _sum.hit, name };
 		})
@@ -76,10 +76,11 @@ export const getFreshPostCountQuery = async () => {
 		_prisma.fresh_post.count({
 			where: {
 				mark: true,
+				type: 0,
 			},
 		}),
 		_prisma.fresh_post.findMany({
-			where: { mark: true },
+			where: { mark: true, type: 0 },
 			skip: 0,
 			take: 10,
 			orderBy: { hit: 'desc' },
@@ -105,11 +106,12 @@ export const getFreshPostQuery = async ({
 				mark: true,
 				title: { contains: searchText },
 				name,
+				type: 0,
 			},
 			orderBy: { hit: orderByHit },
 		}),
 		_prisma.fresh_post.findMany({
-			where: { mark: true, title: { contains: searchText }, name },
+			where: { mark: true, title: { contains: searchText }, name, type: 0 },
 			skip: offset,
 			take: limit,
 			orderBy: { hit: orderByHit },
