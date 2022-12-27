@@ -1,8 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  // previewFeatures = ["postgresqlExtensions"]
-  // binaryTargets = ["native"]
-  // engineType = "binary"
 }
 
 datasource db {
@@ -16,7 +13,11 @@ model fresh_post {
   name    String? @db.VarChar
   content String? @db.VarChar
   title   String? @db.VarChar
+  type    Int?
   hit     Int?
+  minumum Int?    @default(0)
+  maximum Int?    @default(0)
+  period  Int?    @default(0)
   author  String? @db.VarChar
   mark    Boolean
 }
