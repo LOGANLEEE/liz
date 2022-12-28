@@ -57,7 +57,7 @@ export const pptrSequentialRunner = async () => {
 	// stage1Holder?.map((e) => console.log(e));
 
 	const stage2startTime = performance.now();
-	await afterStageCleanUp()
+	await afterStageCleanUp({ type: 0 })
 		.then(async ({ deletedCount, movedCount, updatedCount }) => {
 			console.log(`stage2 >> ${deletedCount} deleted / ${movedCount} moved / ${updatedCount} updated`);
 			await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify({ deletedCount, movedCount }) });
