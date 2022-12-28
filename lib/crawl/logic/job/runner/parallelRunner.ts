@@ -1,11 +1,11 @@
 import { format } from 'date-fns';
 import { accessor } from 'lib/crawl/logic/community/accessor/axios/accessor';
 import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
-import { targetSiteList } from 'lib/crawl/targetSiteInfo';
 import { writeLog } from 'lib/log';
 import { serverState } from 'lib/state';
 import { delay, measure } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
+import { targetJobSiteList } from 'lib/crawl/targetJobSiteInfo';
 
 export const parallelRunner = async () => {
 	serverState.isCrawling = true;
@@ -16,7 +16,7 @@ export const parallelRunner = async () => {
 
 	// stage 1
 	const stage1Holder = await Promise.all(
-		targetSiteList.map(async (targetInfo) => {
+		targetJobSiteList.map(async (targetInfo) => {
 			const pageRange = Array.from(
 				Array(targetInfo.pageRange[1] - targetInfo.pageRange[0] + 1).keys(),
 				(x) => x + targetInfo.pageRange[2]
@@ -71,7 +71,7 @@ export const parallelRunner = async () => {
 	// stage1Holder?.map((e) => console.log(e));
 
 	const stage2startTime = performance.now();
-	await afterStageCleanUp()
+	await afterStageCleanUp({ type: 1 })
 		.then(async ({ deletedCount, movedCount, updatedCount }) => {
 			console.log(`stage2 >> ${deletedCount} deleted / ${movedCount} moved / ${updatedCount} updated`);
 			await writeLog({ name: 'moveMarkedPosts', result: 1, body: JSON.stringify({ deletedCount, movedCount }) });
