@@ -300,17 +300,3 @@ export const targetSiteList: TargetSiteInfo[] = [
 	INVEN_INFO,
 	ETOLAND_INFO,
 ];
-const WANTED_INFO: TargetSiteInfo = {
-	name: communityNames.pg,
-	targetBaseName: 'https://www.pgr21.com',
-	enable: false,
-	targetUrl: (page: number) => `https://www.pgr21.com/humor/0?1=1&page=${page}`,
-	pageRange: [1, 2, 1],
-	postRange: [0, 22, 1],
-	targetIndex: (idx: number) => `#TR${idx} > td.tdnum`,
-	titleHandler: (val: string) => val?.slice(4, -1),
-	link: (idx: number) => `#TR${idx} > td.tdsub.new > a`,
-	hit: (idx: number) => `#TR${idx} > td.tdhit`,
-	author: (idx: number) => `#TR${idx} > td.tdname > span`,
-};
-export const targetJobSiteList: TargetSiteInfo[] = [WANTED_INFO];
