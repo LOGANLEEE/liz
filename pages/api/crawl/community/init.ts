@@ -7,10 +7,10 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	// res.status(200).json({ message: 'crawling is starting...' });
 	if (serverState.isCrawling) {
-		res.status(200).json({ message: 'axios parallel crawling is proceeding...' });
+		res.status(200).json({ message: 'community parallel crawling is proceeding...' });
 		return;
 	}
-	res.status(200).json({ message: 'axios parallel start crawling...' });
+	res.status(200).json({ message: 'community parallel start crawling...' });
 
 	parallelRunner();
 	return;
