@@ -78,33 +78,29 @@ export const accessor = async ({ targetInfo, pageCount }: UniversalAccessorArgs)
 				link = targetInfo.linkHandler(link);
 			}
 
-			const author = $(targetInfo.author(postCount))?.text()?.trim();
+			// const author = $(targetInfo.author(postCount))?.text()?.trim();
 
-			const hit = parseInt(
-				$(targetInfo.hit(postCount))
-					?.text()
-					?.trim()
-					?.replaceAll(' ', '')
-					.replaceAll(',', '')
-					.replaceAll('.', '')
-					.replaceAll('k', '00')
-					.replaceAll('조회', ''),
-				10
-			);
-
-			// console.log('title:', title);
-			// console.log('link:', `${targetInfo.targetBaseName}${link}`);
-			// console.log('hit:', isNaN(hit) ? -1 : hit);
-			// console.log('author:', author);
+			// const hit = parseInt(
+			// 	$(targetInfo.hit(postCount))
+			// 		?.text()
+			// 		?.trim()
+			// 		?.replaceAll(' ', '')
+			// 		.replaceAll(',', '')
+			// 		.replaceAll('.', '')
+			// 		.replaceAll('k', '00')
+			// 		.replaceAll('조회', ''),
+			// 	10
+			// );
 
 			if (!title && !link) continue;
 
 			tempHolder.push({
 				title,
 				link: `${targetInfo.targetBaseName}${link}`,
-				hit: isNaN(hit) ? -1 : hit,
+				// hit: isNaN(hit) ? -1 : hit,
 				name: targetInfo.name,
-				author,
+				// author,
+				type: 1,
 				mark: false,
 				content: null,
 			});
