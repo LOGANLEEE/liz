@@ -1,4 +1,4 @@
-import { parallelRunner } from 'lib/crawl/logic/job/runner/parallelRunner';
+import { parallelRunner } from 'lib/crawl/logic/job/runner/axios/parallelRunner';
 import { serverState } from 'lib/state';
 import type { NextApiRequest, NextApiResponse } from 'next';
 // const fetcher = (url) => axios.get(url).then((res) => res.data);
