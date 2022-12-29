@@ -20,7 +20,7 @@
 	"dependencies": {
 		"@fontsource/roboto": "^4.5.8",
 		"@nextui-org/react": "^1.0.0-beta.10",
-		"@prisma/client": "^4.7.1",
+		"@prisma/client": "^4.8.0",
 		"@types/node": "18.11.10",
 		"@types/react": "18.0.26",
 		"@types/react-dom": "18.0.9",
@@ -49,6 +49,6 @@
 		"eslint-plugin-react": "^7.31.11",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"husky": "^8.0.2",
-		"prisma": "^4.7.1"
+		"prisma": "^4.8.0"
 	}
 }
