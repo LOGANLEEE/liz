@@ -15,26 +15,26 @@ model fresh_post {
   title   String? @db.VarChar
   hit     Int?
   type    Int     @default(0)
-  minumum Int?    @default(0)
-  maximum Int?    @default(0)
-  period  Int?    @default(0)
   author  String? @db.VarChar
-  mark    Boolean
+  mark    Boolean @default(false)
 }
 
-model old_post {
-  id      Int     @id @default(autoincrement())
-  link    String? @db.VarChar
-  name    String? @db.VarChar
-  content String? @db.VarChar
-  type    Int     @default(0)
-  minumum Int?    @default(0)
-  maximum Int?    @default(0)
-  period  Int?    @default(0)
-  title   String? @db.VarChar
-  hit     Int?
-  author  String? @db.VarChar
-  mark    Boolean
+model fresh_job_post {
+  id          Int     @id @default(autoincrement())
+  link        String? @db.VarChar
+  name        String? @db.VarChar
+  content     String? @db.VarChar
+  title       String? @db.VarChar
+  hit         Int?
+  work_type   Int?    @default(0)
+  pay_type    String? @db.VarChar
+  minumum     Int?    @default(0)
+  maximum     Int?    @default(0)
+  period      Int?    @default(0)
+  period_unit String? @db.VarChar
+  start_at    String? @db.VarChar
+  author      String? @db.VarChar
+  mark        Boolean
 }
 
 model api_log {
@@ -43,4 +43,16 @@ model api_log {
   name        String?  @db.VarChar
   body        String?  @db.VarChar
   result      Int
+}
+
+model old_post {
+  id      Int     @id @default(autoincrement())
+  link    String? @db.VarChar
+  name    String? @db.VarChar
+  content String? @db.VarChar
+  type    Int     @default(0)
+  title   String? @db.VarChar
+  hit     Int?
+  author  String? @db.VarChar
+  mark    Boolean @default(false)
 }
