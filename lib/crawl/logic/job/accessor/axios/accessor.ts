@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { load } from 'cheerio';
 import { format } from 'date-fns';
+import { writeFile } from 'fs/promises';
 import { _axiosCrawler } from 'lib/axiosInstance';
 import { TargetJobSiteInfo } from 'lib/crawl/targetJobSiteInfo';
 import { communityNames } from 'lib/crawl/targetSiteInfo';
@@ -43,7 +44,7 @@ export const accessor = async ({ targetInfo, pageCount }: UniversalAccessorArgs)
 		return result(`axios error: ${JSON.stringify(err)}`);
 	}
 
-	// await writeFile('./dummy.html', data);
+	await writeFile('./dummy.html', data);
 
 	try {
 		const $ = load(data);

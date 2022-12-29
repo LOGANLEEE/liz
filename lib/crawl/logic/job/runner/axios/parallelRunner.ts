@@ -1,11 +1,11 @@
 import { format } from 'date-fns';
-import { accessor } from 'lib/crawl/logic/community/accessor/axios/accessor';
 import { afterStageCleanUp } from 'lib/crawl/logic/cleaner';
 import { writeLog } from 'lib/log';
 import { serverState } from 'lib/state';
 import { delay, measure } from 'lib/util';
 import { _prisma } from 'prisma/prismaInstance';
 import { targetJobSiteList } from 'lib/crawl/targetJobSiteInfo';
+import { accessor } from 'lib/crawl/logic/job/accessor/axios/accessor';
 
 export const parallelRunner = async () => {
 	serverState.isCrawling = true;
